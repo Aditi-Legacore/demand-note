@@ -2,14 +2,14 @@ FROM node:22.14-slim
 
 WORKDIR /app
 
-# Install system dependencies
+# Install system dependencies - FIXED package name
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libnss3 \
     libatk1.0-0 \
     libatk-bridge2.0-0 \
     libcups2 \
     libgbm1 \
-    libasound2t64 \
+    libasound2 \  # Changed from libasound2t64 to libasound2
     libpangocairo-1.0-0 \
     libxss1 \
     libgtk-3-0 \
