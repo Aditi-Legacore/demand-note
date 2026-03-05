@@ -22,7 +22,7 @@ RUN npx prisma generate
 COPY . .
 
 # Install TypeScript manually before build
-RUN npm install --save-dev typescript @types/node @types/react @types/react-dom
+RUN npm install --save-dev --legacy-peer-deps --force typescript @types/node @types/react @types/react-dom
 
 # Build the application
 RUN npm run build
