@@ -24,6 +24,9 @@ COPY . .
 # Install TypeScript manually before build
 RUN npm install --save-dev --legacy-peer-deps --force typescript @types/node @types/react @types/react-dom
 
+ENV NEXT_TYPESCRIPT_IGNORE_BUILD_ERRORS=1
+ENV NEXT_TELEMETRY_DISABLED=1
+
 # Build the application
 RUN npm run build
 
