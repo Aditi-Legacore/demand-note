@@ -1,0 +1,78 @@
+=== PAGE 18 START ===
+py TR
+EE Mw sey
+ROPE
+ESS
+A
+TENTSA
+,
+SHC Virtual Location
+5651 Copley Drive; Suite A
+SAN DIEGO CA 92111-7903
+07/11/2024 - ED in Sharp Memorial Hospital Emergency (continued)
+Imaging (continued)
+-Question
+Answer.
+Releasetopatient
+7-day release
+Use of contrastmaterial atthe disc
+a fe
+“
+retion of the radiologist
+Yes.
+No
+Resulted: 07/12/24 1024, Result status: Edited
+po,
+t
+CT Head WO IV Contrast
+Result - FINAL
+:.Completed
+:
+1
+* Interface, Radiology Results In 07/12/24 1028
+~
+4
+>:POWERSCRIBE
+ADDENDUM:
+_
+7
+4
+“y
+EXAMINATION: CT HEAD WO IV CONTRAST
+HISTORY: Injury, head,
+initial encounter; ; ;
+COMPARISON: None
+FINDINGS:
+The ventricles and sulci are normal. There is no focal mass, mass effect, midline shift, intracranial hemorrhage, or evidence of
+acute infarction.
+There are nofractures.
+IMPRESSION:
+'
+:
+No acute intracranial abnormality.
+Study CTDI vol Max: ;Study DLP Sum: ;Associated accessions:
+This exam was performed using dose optimization techniques including automated exposure control, adjustment of m A and/or
+k V according to patient size, and/or iterative reconstruction.
+J
+:
+17
+re
+o N
+Performed By
+Address
+Unknown
+~Abbreviation
+Valid Date Range
+Name
+POWERSCRIBE
+Director.
+Unknown
+Signed
+CT Chest Abdomen Pelvis WO IV Contrast (Edited Result - FINAL)
+s::Completed
+This order may
+be acted on in another encounter.
+Christopher Ho, MD 07/11/24 1559
+Christopher Ho, MD
+Page 18
+=== PAGE 18 END ===

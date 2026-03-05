@@ -1,0 +1,60 @@
+=== PAGE 5 START ===
+Incident Number:
+22168897
+Patient Name:
+Gladstone, Abbie L.
+D.O.B.:
+12/14/1999
+Unit Notified by 07/11/2024
+Current Incident
+Billed
+Status:
+Back/Spine
+Lumbar-Midltine:
+Normal
+Pain
+Lung
+Chest
+Normal Findings
+Skin;
+Mental Status;
+Neurological;
+Head;
+Face;
+Eye({);
+Shoulder (Shoulder-Left, Shoulder-Right);
+Heart;
+Abdomen ( Generalized, Left Lower Quadrant, Left Upper Quadrant, Periumbilical, Right Lower Quadrant, Right Upper Quadrant, Epigastric};
+Pelvis;
+Hip (Hip-Left, Hip-Right);
+Whole Leg (Leg-Whole Leg-Left, Leg-Whole Leg-Right);
+Upper Leg (Leg-Upper-Left, Leg-Upper-Right);
+Knee (Knee-Left, Knee-Right);
+Lower Leg (Leg-Lower-Left, Leg-Lower-Right);
+Ankle (Ankle-Left, Ankle-Right);
+Foot ( Foot-Dorsal-Left, Foot-Dorsal-Right, Foot-Plantar-Left, Foot-Plantar-Right, Tee-1 st
+(Big)-Left, Toe-1 st (Big)-Right, Toe-2 nd-Left, Toe-
+I 2 nd-Right, Toe-3 rd-Left, Toe-3 rd-Right, Toe-4 th-Left, Toe-4 th-Right, Toe-Sth (Smallest)-Left, Toe-5 th (Smallest)-Right, Foot-whole Foot-
+Left, Foot-whole Foot-Right );
+Whole Arm (Arm-Whole Arm and Hand-Left, Arm-Whole Arm and Hand-Right);
+Upper Arm ( Arm-Upper-Left, Arm-Upper-Right) ;
+Elbow (Elbow-Left, Elbow-Right);
+Forearm (Forearm-Left, Forearm-Right);
+Wrist {Wrist-Left, Wrist-Right);
+Back/Spine ( Back-General, Cervical-Left, Cervical-Midline, Cervical-Right, Lumbar-Left, Lumbar-Midline, Lumbar-Right, Sacral-Left, Sacral-
+IMidline, Sacral-Right, Thoracic-Left, Thoracic-Midline, Thoracic-Right) ;
+Lung (Left, Right, Bilateral) ;
+Chest (Left - Anterior, Left - Posterior, Right - Anterior, Right - Posterior, General - Anterior, General - Posterior, Left - Side, Right - Side);
+Not Done
+:
+:
+:
+CARDIAC ARREST.
+Cardiac Arrest: No
+Possible STEMI:
+No
+atte)s 3
+Possible Stroke/TIA:
+No
+Page 5 of 15
+=== PAGE 5 END ===

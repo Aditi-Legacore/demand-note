@@ -1,0 +1,59 @@
+=== PAGE 19 START ===
+?
+Tha n T AL FN mm
+ay
+FES
+A
+SN FINES
+A
+SHC Virtual Location
+Gladstone, Abbie L
+2
+07/11/2024 - ED in Sharp Memorial Hospital Emergency (continued)
+Imaging (continued)
+:Christopher Ho, MD
+Standard
+Hospital Performed
+Edited Result - FINAL
+1 TRAUMA
+Christopher Ho, MD (auto-released)
+Questionnaire
+tion
+Answer
+No
+Immediate
+No Sedation
+:
+Yes
+Is the patient pregnant?
+Unknown
+Resulted: 07/12/24 0930, Result status: Edited
+CT Chest Abdomen Pelvis WO IV Contrast
+Result - FINAL
+:.Completed
+* Interface, Radiology Results In 07/12/24 0934
+William Millard, MD
+ADDENDUM:
+Radiation Dose:
+Addendum finalized 7/12/2024 9:30 AM by William Millard
+EXAMINATION: CT CHEST ABDOMEN PELVIS WO IV CONTRAST
+HISTORY: TRAUMA.
+COMPARISON: CT abdomen pelvis 12/16/2023
+TECHNIQUE: Contiguous axial CT images of the chest, abdomen, and pelviswere obtained without contrast. Coronal and
+sagittal reformatted images were generated.
+This exam was performed using dose optimization techniques including automated
+exposure control, adjustment of m A and/or k V according to patient size, and/or iterative reconstruction.
+FINDINGS:
+Chronic sub-4 mm left lower lobe granulomas. Otherwise, the lungs are clear. There is no pleural effusion or pneumothorax. The
+heart size is within normal limits.
+There is no pericardial effusion. There is no evidence for axillary, hilar, or mediastinal
+lymphadenopathy.
+The liver, spleen, pancreas, kidneys, and adrenal glands are within normal limits.
+The visualized Gl tract is within normal limits.
+Images through the pelvis demonstrate no mass lymphadenopathy or ascites. Tamponin the vagina.
+No acute osseous abnormality is visible.
+IMPRESSION:
+1.
+Negative CT of the chest, abdomen, and pelvis.
+Study CTDI vol Max: ;Study DLP Sum: ;Associated accessions:
+=== PAGE 19 END ===

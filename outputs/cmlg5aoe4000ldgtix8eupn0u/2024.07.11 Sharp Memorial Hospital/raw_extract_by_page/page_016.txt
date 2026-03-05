@@ -1,0 +1,109 @@
+=== PAGE 16 START ===
+—
+TTT FAS A
+Trew TAL Mn ane,
+Tee
+eee
+A
+-_AM.Ee
+Sharp Health Care
+SHC Virtual Location
+5651 Copley Drive; Suite A
+SAN DIEGO CA 92111-7903
+07/11/2024 - ED in Sharp Memorial Hospital Emergency (continued)
+Labs (continued)
+h CG, serum,»qualitative (Final result)
+Completed
+Christopher Ho, MD
+Standard
+Lab Collect
+Final result
+Questionnaire
+Question
+“Release to patient
+ee:
+Answer
+Immediate
+Specimen Information
+|
+y
+t
+:
+l
+Source
+ID
+Type
+rs
+ie
+|
+Blood
+ricia *
+por
+ps
+h CG, serum, qualitative (Normal)
+Resulted: 07/11/24 1549, Result status: Final result
+SSSA
+:Completed
+:Patricia Howard 07/11/24 1455
+1
+“y
+Components
+ae
+Tals
+Se
+SS
+Tae
+ee
+Gomponent
+Value
+Reference Range Flag
+hae
+h CG Qual
+Negative
+Negative
+_—
+SMHLab
+Testing Performed By
+q
+Io
+AUa tt
+:
+Rivne
+Roto
+VI
+Rady Bag
+wokab«Abbreviation Name
+Director
+Address
+Valid Date Range
+32- SMHLab
+SMH HOSPITAL LAB
+Arturo Mendoza,
+7901 FROST STREET
+SAN DIEGO CA 92123
+MD
+Imaging
+Imaging
+CT Cervical Spine WO IV Contrast (Edited Result- FINAL)
+Completed
+This order may be acted on in another encounter.
+Andrew Williamson, MD 07/11/24 1426
+Andrew Williamson, MD
+Andrew Williamson, MD
+s:Standard
+: Hospital Performed
+:. Edited Result - FINAL
+=. Neck injury, acute
+Andrew Williamson, MD (auto-released)
+Questionnaire
+4
+uestion
+Answer
+Is the patient pregnant?
+Resulted: 07/12/24 0930, Result status: Edited
+CT Cervical Spine WO IV Contrast
+Result - FINAL
+William Millard, MD
+Interface, Radiology Results In
+07/12/24 0934
+=== PAGE 16 END ===

@@ -1,0 +1,208 @@
+=== PAGE 3 START ===
+Patient Name:
+Gladstone, Abbie L.
+Incident Number:
+22168897
+Unit Notified by 07/11/2024
+Current Incident
+Billed
+itatus:
+Complaint
+Duration of Complaint
+Time Units of Duration of Complaint
+Neck pain
+4
+Hours
+Proto:
+Polici
+Protocol/Policy Used
+Protocol/Policy Age Category
+Adult Only
+Skills (Adult $-104/Pediatric$-104)
+Primary impression:
+Traumatic Injury
+Pregnancy:
+No
+Barriers to Pt Care:
+None Noted
+Alcohol/Drug Use:
+None Reported
+Work-Related
+Illness/Injury:
+No
+Le SS
+Vitals
+Blood
+Blood
+Temp
+Obtained Prior tothis
+D/T Vital
+Resp
+Pulse/Hea Method of
+Cardiac
+EKG
+Glucose
+Glucose
+Meth
+Units EMS Care
+Signs Taken
+Crew Member Effort rt Rate
+Pulse/Heart Rate
+RR
+SBP
+DBP
+Method of BP Rhythm
+Type Level
+Other
+Temp od
+No
+12:54:46
+Carrillo, Daniel Normal 82
+Electronic Monitor-
+18
+142
+96
+Cuff-Manual
+Sinus
+4
+'P 44617)
+Pulse Oximeter
+Auscultated
+Rhythm
+Lead
+No
+13:14:39
+Carrillo, Daniel
+Normal 90
+Electronic Monitor-
+19
+122
+71
+ Cuff-
+Sinus
+4
+(P 44617)
+Pulse Oximeter
+Automated
+Rhythm
+Lead
+Other Vitals
+Carbon
+Obtained Prior to this
+D/T Vital
+Pulse
+Pulse Ox
+Method of EKG
+Monoxide
+Units EMS Care
+Signs Taken
+Crew Member
+ETCO 2
+Ox
+Qualifier
+Airway
+Interpretation
+(Co)
+APGAR
+No
+12:54:46
+Carrillo, Daniel
+99
+At Room
+Patent
+Computer
+(P 44617)
+Air
+Interpretation
+No
+13:14:39
+Carrillo, Daniel
+95
+At Room
+Patent
+Computer
+{P 44617)
+Air
+interpretation
+GCS/Revised Trauma Score/AVPU
+Obtained
+D/T
+Revised
+Priortothis
+Vital
+Trauma —_Level of
+Units EMS
+Signs
+Crew
+Total
+Score
+Responsiveness
+Care
+Taken
+Member
+GCS-Eye
+GCS - Verbal
+GCS - Motor
+Gcs
+(RTS)
+(AVPU)
+No
+12:54:46
+Carrillo,
+Opens Eyes
+Oriented (>2 Years);
+Obeys commands
+15
+12
+Alert
+Daniel
+spontaneously
+Smiles, oriented to
+(>2 Years); Appropriate
+(P 44617)
+(All Age
+sounds, Follows objects,
+response to
+Groups)
+interacts
+stimulation
+No
+13:14:39
+Carrillo,
+Alert
+Pain/PORST
+Pain
+Obtained Priorto this
+D/T Vital
+Crew
+Scale
+Pain Scale
+Time
+PQRST
+Units EMS Care
+Signs Taken
+Member
+Score
+Type
+Provoked
+Quality
+Radiation
+Time
+Units
+Narrative
+No
+12:54:46
+Carrillo,
+3
+‘Wong-
+Lie/Sit
+Sharp
+Non-
+1
+Hours
+Daniel
+Baker
+radiating
+Secondary Assessment
+Page 3 of 15
+=== PAGE 3 END ===

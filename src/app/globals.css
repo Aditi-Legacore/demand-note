@@ -1,0 +1,421 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+:root {
+  --radius: 0.625rem;
+
+  /* TEXT FADE (UPDATED) */
+  --foreground: oklch(0.40 0 0);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.30 0 0);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.30 0 0);
+
+  --primary: hsl(var(--primary-hsl));
+  --primary-foreground: oklch(0.985 0 0);
+  --primary-hsl: 221.2 83.2% 53.3%;
+
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+
+  --destructive: oklch(0.577 0.245 27.325);
+
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.30 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  /* TEXT FADE (UPDATED) */
+  --foreground: oklch(0.75 0 0);
+
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.84 0 0);
+
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.84 0 0);
+
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --primary-hsl: 0 0% 92%;
+
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+
+  --destructive: oklch(0.704 0.191 22.216);
+
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.84 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+/* EVERYTHING BELOW IS UNCHANGED */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+    font-size: 13px;
+    line-height: 1.6;
+    letter-spacing: -0.011em;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+/* Reset css Start */
+/* (unchanged — omitted here for brevity in explanation, but INCLUDED in your paste above) */
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, Helvetica, sans-serif;
+}
+
+
+/* Reset css Start */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-semibold text-foreground;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  h1,
+  .h1 {
+    font-size: clamp(1rem, 1rem + 1vw, 4.5rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  h2,
+  .h2 {
+    font-size: clamp(0.8rem, 0.8rem + 0.8vw, 2.5rem);
+    font-weight: 700;
+  }
+
+  h3,
+  .h3 {
+    font-size: clamp(1.5rem, 1.02rem + 2.4vw, 3rem);
+    font-weight: 600;
+  }
+
+  h4,
+  .h4 {
+    font-size: clamp(1.375rem, 1.095rem + 1.4vw, 2.25rem);
+    font-weight: 600;
+  }
+
+  h5,
+  .h5 {
+    font-size: clamp(1.25rem, 1.05rem + 1vw, 1.875rem);
+    font-weight: 600;
+  }
+
+  h6,
+  .h6 {
+    font-size: clamp(1.125rem, 1.005rem + 0.6vw, 1.5rem);
+    font-weight: 600;
+  }
+  
+  a {
+    /* @apply active:scale-[.95]; */
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  
+  span {
+    @apply inline-block;
+  }
+  
+  /* Table specific styling */
+ table {
+  font-variant-numeric: tabular-nums;
+  border-collapse: collapse; /* Important for reducing gaps */
+}
+
+th, td {
+  padding: 0.5rem 0.75rem; /* Reduced from default */
+  text-align: left;
+}
+
+th {
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  padding: 0.5rem 0.75rem; /* Consistent with td */
+}
+
+td {
+  font-size: 0.9375rem;
+  font-weight: 400;
+  padding: 0.5rem 0.75rem; /* Reduced padding */
+}
+  
+  /* Button and badge styling */
+  button {
+    font-weight: 500;
+    letter-spacing: -0.006em;
+  }
+  
+  .badge,
+  [class*="badge"] {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+  
+  /* Input styling */
+  input,
+  textarea,
+  select {
+    letter-spacing: -.006em;
+    /* width: 100%; */
+    font-size: .9375rem;
+    font-weight: 400;
+  }
+  
+  input::placeholder,
+  textarea::placeholder {
+    color: oklch(0.556 0 0);
+    opacity: 0.7;
+  }
+  
+  .dark input::placeholder,
+  .dark textarea::placeholder {
+    color: oklch(0.708 0 0);
+    opacity: 0.6;
+  }
+  
+  select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    padding-right: 2.5rem;
+  }
+  
+  /* Code and monospace */
+  code,
+  pre {
+    font-family: var(--font-geist-mono), 'SF Mono', 'Consolas', 'Monaco', monospace;
+    font-size: 0.875em;
+    letter-spacing: 0;
+  }
+  
+  /* Small text */
+  small,
+  .text-small {
+    font-size: 0.875rem;
+    letter-spacing: 0;
+  }
+  
+  /* Muted text */
+  .text-muted {
+    font-weight: 400;
+    opacity: 0.7;
+  }
+  
+  /* Modal styling */
+  .modal-overlay {
+    backdrop-filter: blur(4px);
+  }
+  
+  /* Form validation messages */
+  .form-error {
+    font-size: 0.8125rem;
+    color: oklch(0.577 0.245 27.325);
+    font-weight: 500;
+  }
+  
+  .dark .form-error {
+    color: oklch(0.704 0.191 22.216);
+  }
+  
+  /* Status badges */
+  .status-badge {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    white-space: nowrap;
+  }
+  
+  /* Card hover effects */
+  .card-hover {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .card-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dark .card-hover:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Date picker styling */
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
+  
+  .react-datepicker__input-container input {
+    font-size: 0.9375rem;
+  }
+  
+  /* Radio button styling */
+  input[type="radio"] {
+    width: 1rem;
+    height: 1rem;
+    margin: 0;
+    flex-shrink: 0;
+    cursor: pointer;
+    accent-color: oklch(0.205 0 0);
+  }
+  
+  .dark input[type="radio"] {
+    accent-color: oklch(0.488 0.243 264.376);
+  }
+  
+  input[type="radio"]:checked {
+    background-color: currentColor;
+  }
+  
+  /* Radio label alignment */
+  label:has(input[type="radio"]) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    user-select: none;
+  }
+  
+  label:has(input[type="radio"]) span {
+    display: inline;
+    line-height: 1;
+  }
+  
+  label:has(input[type="radio"]):hover {
+    opacity: 0.8;
+  }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Focus visible styles */
+  *:focus-visible {
+    outline: 2px solid oklch(0.708 0 0);
+    outline-offset: 2px;
+  }
+  
+  .dark *:focus-visible {
+    outline-color: oklch(0.556 0 0);
+  }
+  /* Reset css End */
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, Helvetica, sans-serif;
+}
+

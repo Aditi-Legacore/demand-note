@@ -1,0 +1,57 @@
+=== PAGE 1 START ===
+SHC Virtual Location
+Gladstone, Abbie L
+SAN DIEGO CA 92111-7903
+Visit date: 7/18/2024
+07/18/2024 - Ancillary Procedure in Sharp Rees-Stealy Santee Ultrasound (continued)
+Visit Information (continued)
+Department
+Sharp Rees-Stealy Santee Ultrasound
+8701 Cuyamaca St.
+Santee CA 92071-4253
+Imaging
+Imaging
+US Pelvis W Transvag (Final result)
+: Raheleh Esfandiari, MD on 07/05/24 1010
+This order may be acted on in another encounter.
+Raheleh Esfandiari, MD 07/05/24 1010
+Raheleh Esfandiari, MD
+© Raheleh Esfandiari, MD
+Standard
+: Ancillary Performed
+Final result
+Pelvic pain [R 10.2]
+Questionnaire
+_Question
+Answer.
+tion, Deppler may be performed
+Yes
+Where should the exam be performed?
+Rees-Stealy
+US Pelvis W Transvaq
+Resulted: 07/19/24 1306, Result status: Final result
+Completed
+Raheleh Esfandiari, MD 07/18/24 1638
+Amber Dechambeau, DO
+Interface, Radiology Results In
+07/19/24 1311
+POWERSCRIBE
+TRANSABDOMINAL AND TRANSVAGINAL PELVIC ULTRASOUND
+HISTORY: Pelvic mass or swelling
+TECHNIQUE:
+Real-time grayscale and spectral Doppler imaging of the pelvis was performed.
+FINDINGS:
+The anteverted uterus measures 6.44 cmx 3.00 cmx 4.21 cm.
+Myometrial echotexture is within normal limits.
+No uterine
+masses are identified.
+The endometrial stripe measures 5 mm. The endometrial stripe appears within normal limits for thickness and echotexture.
+The right ovary measures 3.03 cmx 1.88 cmx 3.07 cm. The left ovary measures 2.99 cmx 1.64 cm x 1.59 cm. Ovaries appear
+sonographically within normal limits.
+There are no adnexal masses seen. The ovaries demonstrate normal color-flow.
+No free fluid is identified.
+IMPRESSION:
+Unremarkable pelvic ultrasound for age.
+Finalized 7/19/2024 1:06 PM by Amber Dechambeau
+: Raheleh Esfandiari, MD on 07/25/24 0219
+=== PAGE 1 END ===

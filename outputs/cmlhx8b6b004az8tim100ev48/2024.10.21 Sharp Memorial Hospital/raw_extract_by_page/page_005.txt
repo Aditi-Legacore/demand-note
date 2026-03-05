@@ -1,0 +1,54 @@
+=== PAGE 5 START ===
+SHC Virtual Location
+Gladstone, Abbie L
+10/21/2024 - Ancillary Procedure in Sharp Rees-Stealy Mira Mesa MRI (continued)
+Imaging (continued)
+NOORONS
+COMPARISON:
+MR IAC with contrast 8/3/2017.
+TECHNIQUE:
+The following sequences were performed:
+. T 1 weighted sagittal.
+. T 2 weighted TSE axial.
+FLAIR axial.
+EPI diffusion weighted axial.
+T 1 weighted axial.
+. Cor T 2 with fat saturation a
+. Axial 3-D FIESTAthrough the IACs sequences were also performed.
+No intravenous gadolinium was administered.
+FINDINGS:
+Sagittal images demonstrate no Chiari malformation. The brain parenchyma demonstrates normal gray/white matter
+differentiation with no apparent mass effect.
+The ventricles and sulci are within normal limits in size for age.
+No extra-axial fluid
+collections identified.
+No evidence of infarct or intracranial hemorrhage is seen.
+Normal major cerebral vessel T 2 flow voids are
+identified.
+No abnormal restricted diffusion is seen.
+No abnormal foci of subcortical white matter T 2 prolongation are seen, which are non-specific and most likely represent chronic
+ischemic changes secondary to hypertension or small vessel disease.
+Axial 3-D FIESTA images through the bilateral |ACs demonstrate normal-appearing bilateral CN VII and VIII complexes. No
+abnormal nodularity is seen to suggest a vestibular schwannoma. The visualized bilateral cerebellar pontine angle cisternsare
+clear. No definite aberrant vessel loop is seen.
+The visualized paranasal sinuses and mastoid air cells are clear.
+IMPRESSION:
+1. Essentially unremarkable brain MRI without gadolinium enhancement .
+2. Optional axial 3-D FIESTA images through
+the bilateral [ACs or also obtained and demonstrate normal-appearing bilateral CN
+VIl and VIII complexes. No abnormal nodularity is seen to suggest a vestibular schwannoma. The visualized bilateral cerebellar
+pontine angle cisterns are clear. No definite aberrant vessel loop is seen.
+Testing Performed By
+Lab - Abbreviation
+Name
+Director.
+Address
+Valid Date Range
+Indications
+Nonintractable episodic headache, unspecified headache type [R 51.9 (ICD-10-CM)]
+Facial numbness [R 20.0 (ICD-10-CM)]
+Signed
+LSResult Notes
+Justin Dominick, MD
+Noted. Images reviewed and message sent to patient through portal.
+=== PAGE 5 END ===

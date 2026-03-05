@@ -1,0 +1,56 @@
+=== PAGE 2 START ===
+Incident Number:
+22168897
+Patient Name:
+Gladstone, Abbie L.
+D.O.B.:
+12/14/1999
+Unit Notified by 07/11/2024
+Current Incident
+Billed
+Status:
+Pt Address:
+2105 Arnold way
+Ee Residesin
+Is Patient
+No
+Homeless?:
+Pt's Driver License
+State Issuing Dr
+#
+License:
+Pt SSN:
+Patient Phone #
+Pt Phone
+Patient Email Addresses
+Patient's Email Address
+Na@na.com
+RELATIVE/GUARDIAN
+[ete
+na LENS
+k A
+Current Medications
+Medication
+Dosage
+Dosage Unit
+Route
+Med C
+None Reported
+Medication Allergies
+Medication Allergies
+Medication Allergy Comments
+Allergy status to penicillin
+Environmental/Other Allergies
+other Allergies
+Environmental/Other Allergy C
+NKA - No Known Allergies
+Medical History:
+None Reported
+COMPLAINT/PROVIDER IMPRESSION / PROTOCOLS and POLICIES
+D/T of Symptom 07/11/2024 11:50:46
+Initial Acuity: Mild/Lower Acuity (Green)
+Onset:
+Pt
+Complain:
+Page 2 of 15
+=== PAGE 2 END ===

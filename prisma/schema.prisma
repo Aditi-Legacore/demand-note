@@ -1,0 +1,533 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                 String    @id @default(cuid())
+  email              String    @unique
+  password           String?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  dob                DateTime?
+  firstName          String?
+  lastName           String?
+  salutation         String?
+  uniqueUserId       String?   @unique
+  caseType           String?
+  emailVerified      DateTime?
+  image              String?
+  status             Boolean   @default(false)
+
+  roles              String[] @default([])
+  createdById        String?
+  forcePasswordReset Boolean   @default(false)
+  requestPassword    Boolean   @default(false)
+  isDeletedUser      Boolean   @default(false)
+
+  accounts        Account[]
+  uploadedFiles   DemandFile[]
+  internalNotes   DemandInternalNote[]
+  demandNotes     DemandNote[]
+  statusHistories DemandStatusHistory[]
+  formSubmissions FormSubmission[]
+  intakes         IntakeInfo[]
+  jobs            Job[]
+  notes           Note[]
+  sessions        Session[]
+
+  // self-relation (already correct)
+  createdBy    User?  @relation("CreatedUsers", fields: [createdById], references: [id])
+  createdUsers User[] @relation("CreatedUsers")
+
+  notifications        Notification[]       @relation("UserNotifications")
+  createdNotifications Notification[]       @relation("CreatedNotifications")
+  demandNoteEditLocks  DemandNoteEditLock[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model IntakeInfo {
+  id                           String        @id @default(cuid())
+  userId                       String?
+  clientName                   String
+  gender                       String?
+  phoneNumber                  String?
+  email                        String?
+  address                      String?
+  city                         String?
+  zip                          String?
+  dateOfBirth                  DateTime?
+  ssn                          String?
+  accidentDate                 DateTime?
+  accidentTime                 String?
+  accidentLocation             String?
+  accidentDescription          String?
+  passenger                    String?
+  passengerName                String?
+  workAtAccident               String?
+  defendant1Name               String?
+  defendant1Address            String?
+  defendant1Carrier            String?
+  defendant1CarrierPhone       String?
+  defendant1Year               String?
+  defendant1Make               String?
+  defendant1Model              String?
+  defendant1Damage             String?
+  defendant2Name               String?
+  defendant2Address            String?
+  defendant2Carrier            String?
+  defendant2CarrierPhone       String?
+  defendant2Year               String?
+  defendant2Make               String?
+  defendant2Model              String?
+  defendant2Damage             String?
+  autoName                     String?
+  autoPhone                    String?
+  autoAddress                  String?
+  autoAgent                    String?
+  autoPolicy                   String?
+  autoClaim                    String?
+  autoAdditionalinfo           String?
+  healthCarrier                String?
+  healthPhone                  String?
+  healthAddress                String?
+  healthPolicy                 String?
+  healthClaim                  String?
+  healthAdjuster               String?
+  healthAgent                  String?
+  healthAdditionalinfo         String?
+  medicare                     String?
+  medicareNumber               String?
+  medicaid                     String?
+  medicaidNumber               String?
+  ambulance                    String?
+  ambulanceCompany             String?
+  admitted                     String?
+  lengthOfStay                 String?
+  bodyPartsAffected            String?
+  priorInjuries                String?
+  priorDoctorHospital          String?
+  priorHospitalAddressPhone    String?
+  priorTreatmentDetails        String?
+  priorTreatmentFrom           DateTime?
+  priorTreatmentTo             DateTime?
+  priorInsuranceClaims         String?
+  priorAttorneys               String?
+  currentTreatment             String?
+  currentDoctorHospital        String?
+  currentHospitalAddressPhone  String?
+  currentTreatmentDetails      String?
+  currentTreatmentFrom         DateTime?
+  currentTreatmentTo           DateTime?
+  hearAboutUs                  String?
+  hearAboutUsDetail            String?
+  createdAt                    DateTime      @default(now())
+  updatedAt                    DateTime      @updatedAt
+  currentDoctorHospital2       String?
+  currentDoctorHospital3       String?
+  currentHospitalAddressPhone2 String?
+  currentHospitalAddressPhone3 String?
+  currentTreatmentDetails2     String?
+  currentTreatmentDetails3     String?
+  currentTreatmentFrom2        DateTime?
+  currentTreatmentFrom3        DateTime?
+  currentTreatmentTo2          DateTime?
+  currentTreatmentTo3          DateTime?
+  defendant3Address            String?
+  defendant3Carrier            String?
+  defendant3CarrierPhone       String?
+  defendant3Damage             String?
+  defendant3Make               String?
+  defendant3Model              String?
+  defendant3Name               String?
+  defendant3Year               String?
+  hospitalName                 String?
+  hospitalized                 String?
+  injuryDescription            String?
+  isDraft                      Boolean       @default(true)
+  passengerAge                 String?
+  priorAttorneys2              String?
+  priorAttorneys3              String?
+  priorDoctorHospital2         String?
+  priorDoctorHospital3         String?
+  priorHospitalAddressPhone2   String?
+  priorHospitalAddressPhone3   String?
+  priorInsuranceClaims2        String?
+  priorInsuranceClaims3        String?
+  priorTreatmentDetails2       String?
+  priorTreatmentDetails3       String?
+  priorTreatmentFrom2          DateTime?
+  priorTreatmentFrom3          DateTime?
+  priorTreatmentTo2            DateTime?
+  priorTreatmentTo3            DateTime?
+  referenceId                  String?
+  relationshipToYou            String?
+  seatbeltUsed                 String?
+  treatmentDetails             String?
+  LeadId                       String?       @unique
+  activityLogs                 ActivityLog[] @relation("IntakeToActivityLogs")
+  Document                     Document[]
+  Lead                         Lead?         @relation(fields: [LeadId], references: [id])
+  user                         User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Notes                        Note[]
+}
+
+model Lead {
+  id             String      @id @default(cuid())
+  dueDate        DateTime
+  name           String
+  caseType       String
+  status         String      @default("new")
+  contact        String
+  phone          String
+  matter         String      @default("-")
+  description    String?
+  referralSource String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  dateOfBirth    DateTime?
+  email          String
+  referenceId    String?     @unique
+  intakeInfo     IntakeInfo?
+}
+
+model Document {
+  id         String     @id @default(cuid())
+  intakeId   String
+  fileName   String
+  filePath   String
+  mimeType   String?
+  uploadedAt DateTime   @default(now())
+  intake     IntakeInfo @relation(fields: [intakeId], references: [id], onDelete: Cascade)
+}
+
+model Matter {
+  id              String           @id @default(cuid())
+  title           String
+  description     String?
+  status          String           @default("Open")
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  formSubmissions FormSubmission[]
+}
+
+model FormTemplate {
+  id          String           @id @default(cuid())
+  title       String
+  language    String           @default("English")
+  fields      Json
+  createdBy   String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  submissions FormSubmission[]
+}
+
+model FormSubmission {
+  id         String       @id @default(cuid())
+  templateId String
+  userId     String?
+  matterId   String?
+  status     String       @default("Pending")
+  data       Json
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  matter     Matter?      @relation(fields: [matterId], references: [id])
+  template   FormTemplate @relation(fields: [templateId], references: [id])
+  user       User?        @relation(fields: [userId], references: [id])
+}
+
+model Note {
+  id          String     @id @default(cuid())
+  intakeId    String
+  content     String
+  createdById String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  createdBy   User       @relation(fields: [createdById], references: [id])
+  intake      IntakeInfo @relation(fields: [intakeId], references: [id], onDelete: Cascade)
+}
+
+model ActivityLog {
+  id               String     @id @default(uuid())
+  intakeId         String
+  activityType     String
+  shortDescription String
+  longDescription  String
+  createdBy        String
+  createdAt        DateTime   @default(now())
+  intake           IntakeInfo @relation("IntakeToActivityLogs", fields: [intakeId], references: [id], onDelete: Cascade)
+}
+
+model OTP {
+  id        String   @id @default(cuid())
+  email     String
+  otp       String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@unique([email, otp])
+}
+
+model DemandNote {
+  id              String    @id @default(cuid())
+  createdById     String
+  title           String
+  description     String?
+  referenceNumber String?   @unique
+  totalAmount     Float     @default(0)
+  dueDate         DateTime?
+  status          String    @default("draft")
+  priority        String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  clientName          String?
+  salutation          String?
+  firstName           String?
+  middleName          String?
+  lastName            String?
+  defendantPhoneEmail String?
+
+  // Defendant / insurance
+  defendantName    String?
+  claimNumber      String?
+  insuranceName    String?
+  adjuster         String?
+  insuranceAddress String?
+  phone            String?
+  fax              String?
+  claimType        String?
+  additionalNotes  String?
+  clientPhoneEmail String?
+
+  // Relations
+  files         DemandFile[]
+  internalNotes DemandInternalNote[]
+  notifications Notification[]
+  editLocks     DemandNoteEditLock[]
+  clients       DefedantClient[]
+  createdBy     User                  @relation(fields: [createdById], references: [id])
+  tags          DemandNoteTag[]
+  reminders     DemandReminder[]
+  statusHistory DemandStatusHistory[]
+  timeline      DemandTimeline[]
+  jobs          Job?
+}
+
+model DefedantClient {
+  id           String  @id @default(cuid())
+  demandNoteId String?
+
+  salutation String?
+  firstName  String?
+  middleName String?
+  lastName   String?
+  name       String
+  email      String?
+  phone      String?
+  address    String?
+  gstNumber  String?
+  panNumber  String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  demandNote DemandNote? @relation(fields: [demandNoteId], references: [id], onDelete: Cascade)
+}
+
+
+model DemandFile {
+  id            String     @id @default(cuid())
+  demandNoteId  String
+  uploadedById  String
+  fileName      String
+  fileUrl       String
+  fileType      String?
+  size          Int?
+  createdAt     DateTime   @default(now())
+  fileCategory  String?
+  status        String     @default("uploaded")
+  filePath      String?
+  summaryStatus String     @default("not_summarized")
+  demandNote    DemandNote @relation(fields: [demandNoteId], references: [id], onDelete: Cascade)
+  uploadedBy    User       @relation(fields: [uploadedById], references: [id])
+  tasks         Task[]
+}
+
+model Job {
+  id              String     @id @default(cuid())
+  demandNoteId    String     @unique
+  createdById     String
+  status          String     @default("pending")
+  numTasks        Int        @default(0)
+  createTs        DateTime   @default(now())
+  updateTs        DateTime   @updatedAt
+  combinedSummary String?
+  publishStatus   String     @default("draft")
+  createdBy       User       @relation(fields: [createdById], references: [id])
+  demandNote      DemandNote @relation(fields: [demandNoteId], references: [id], onDelete: Cascade)
+  tasks           Task[]
+}
+
+model Task {
+  id              String     @id @default(cuid())
+  jobId           String
+  fileName        String
+  filePath        String
+  status          String     @default("pending")
+  pid             Int?
+  startTs         DateTime?
+  endTs           DateTime?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  outputSummary   String?
+  demandFileId    String
+  outputFilePath  String?
+  editedSummary   String?
+  editedSummaryTs DateTime?
+  demandFile      DemandFile @relation(fields: [demandFileId], references: [id])
+  job             Job        @relation(fields: [jobId], references: [id], onDelete: Cascade)
+}
+
+model DemandInternalNote {
+  id           String     @id @default(cuid())
+  demandNoteId String
+  createdById  String
+  content      String
+  createdAt    DateTime   @default(now())
+  createdBy    User       @relation(fields: [createdById], references: [id])
+  demandNote   DemandNote @relation(fields: [demandNoteId], references: [id], onDelete: Cascade)
+}
+
+model DemandTimeline {
+  id           String     @id @default(cuid())
+  demandNoteId String
+  type         String
+  message      String
+  metadata     Json?
+  createdAt    DateTime   @default(now())
+  demandNote   DemandNote @relation(fields: [demandNoteId], references: [id], onDelete: Cascade)
+}
+
+
+model DemandNoteEditLock {
+  id           String     @id @default(cuid())
+  demandNoteId String
+  userId       String
+  userName     String
+  updatedAt    DateTime   @updatedAt
+  createdAt    DateTime   @default(now())
+
+  demandNote   DemandNote @relation(fields: [demandNoteId], references: [id], onDelete: Cascade)
+  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([demandNoteId, userId])
+  @@index([demandNoteId, updatedAt])
+}
+
+model DemandStatusHistory {
+  id           String     @id @default(cuid())
+  demandNoteId String
+  changedById  String
+  oldStatus    String?
+  newStatus    String
+  createdAt    DateTime   @default(now())
+  changedBy    User       @relation(fields: [changedById], references: [id])
+  demandNote   DemandNote @relation(fields: [demandNoteId], references: [id], onDelete: Cascade)
+}
+
+model DemandReminder {
+  id           String     @id @default(cuid())
+  demandNoteId String
+  remindAt     DateTime
+  sent         Boolean    @default(false)
+  type         String
+  createdAt    DateTime   @default(now())
+  demandNote   DemandNote @relation(fields: [demandNoteId], references: [id], onDelete: Cascade)
+}
+
+model DemandTag {
+  id        String          @id @default(cuid())
+  name      String          @unique
+  color     String?
+  createdAt DateTime        @default(now())
+  notes     DemandNoteTag[]
+}
+
+model DemandNoteTag {
+  id           String     @id @default(cuid())
+  demandNoteId String
+  tagId        String
+  demandNote   DemandNote @relation(fields: [demandNoteId], references: [id], onDelete: Cascade)
+  tag          DemandTag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id           String    @id @default(cuid())
+  userId       String
+  demandNoteId String
+  title        String
+  message      String
+  createdById  String
+  readAt       DateTime?
+  createdAt    DateTime  @default(now())
+
+  user       User       @relation("UserNotifications", fields: [userId], references: [id], onDelete: Cascade)
+  demandNote DemandNote @relation(fields: [demandNoteId], references: [id], onDelete: Cascade)
+  createdBy  User       @relation("CreatedNotifications", fields: [createdById], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+model Prompt {
+  id         String   @id @default(cuid())
+  docType    String   @map("doc_type")
+  prompt     String
+  version    Int
+  createdBy  String?  @map("created_by")
+  activeFlag Boolean  @default(false) @map("active_flag")
+  deletedFlag Boolean @default(false) @map("deleted_flag")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@unique([docType, version, createdBy])
+  @@index([docType])
+  @@index([docType, activeFlag])
+  @@map("Prompt")
+}
+

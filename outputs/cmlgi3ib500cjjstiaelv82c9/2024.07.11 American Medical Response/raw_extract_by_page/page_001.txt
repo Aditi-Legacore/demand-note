@@ -1,0 +1,102 @@
+=== PAGE 1 START ===
+Incident Number;
+22168897
+Patient Name:
+Gladstone, Abbie L
+D.O.B.:
+12/14/1999
+Unit Notified by 07/11/2024
+Current Incident
+Billed
+Status:
+AMR o
+A Global Medical Response Solution
+Co SD LEMSIS Full PCR Report
+USSU Meet eele eh
+take
+Tyredie
+Incident #:
+22168897
+Unit Notified D/T:
+07/11/2024
+#of Pts at Scene: Single
+EMS Agency Name: American Medical Response (AMR) - 530
+Call Sign:
+EC 438
+Vehicle Unit #:
+EC 438
+Crew Members
+Crew Member ID
+Crew Member Level
+Crew Member Response Rote
+Litzenberg, Kyle
+Emergency Medical
+Driver/Pilot-Response ; Driver/Pilot-Transport ; Other Patient Caregiver-At Scene; Other
+{E 167399)
+Technician (EMT)
+Patient Caregiver-Transport
+Carrillo, Daniel
+Paramedic
+Primary Patient Caregiver-At Scene;
+Primary Patient Caregiver-Transport
+Roehr, Alex
+Emergency Medical
+Other Patient Caregiver-At Scene ;Other Patient Caregiver-Transport
+{E 180721)
+Technician (EMT)
+Crew Member
+Completing this
+Report:
+Incident Location
+Other
+Incident Facility or
+711 parking lot
+incident Location
+Type:
+Location Name:
+Incident Address:
+1710 E Main St
+El Cajon, CA 92021
+Type of Service
+911 Response (Scene)
+Primary Role of the ALS Ground Transport
+Unit:
+Requested:
+Level of Care
+ALS- Paramedic
+Provided to the
+Patient:
+Response Mode to
+Non-Emergent
+Additional Response
+Lights and Sirens
+Mode Descriptors:
+Scene:
+Mc I
+MCE
+No
+Complaint Reported
+Traffic/Trans
+portation
+Incident
+by Dispatch:
+EMD Card Number:
+29
+Fireline Incident
+Is this a Fireline
+No
+Paramedic Incident?:
+Patient Travel Information
+iota UMS iwbbecans
+Pt Name:
+Gladstone , Abbie |.
+Age:
+24 Years
+D.O.B.:
+12/14/1999
+Gender:
+Female
+Race:
+White
+Page 1 of 15
+=== PAGE 1 END ===

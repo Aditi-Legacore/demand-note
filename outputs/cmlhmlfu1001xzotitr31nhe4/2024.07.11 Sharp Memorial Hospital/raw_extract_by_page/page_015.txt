@@ -1,0 +1,98 @@
+=== PAGE 15 START ===
+BOT
+A
+TEN TIS
+A
+SHC Virtual Location
+Gladstone, Abbie L
+07/11/2024 - ED in Sharp Memorial Hospital Emergency (continued)
+Labs (continued)
+Completed
+Order‘Placed as a reflex to Rainbow Draw ED Panel ordered on 07/1 24 at 1426
+Andrew Williamson, MD 07/11/24 1426
+Andrew Williamson, MD
+Andrew Williamson, MD
+a
+Standard
+3:Lab Collect
+1
+'s.Final result
+Andrew Williamson, MD (auto-released) 711112024
+2:26 PM
+Specimen Information
+JD
+Type
+Source
+Collected By
+Light Green Top
+Resulted: 07/11/24 1702, Result status: Final result
+Components
+Gomponent
+Value
+Reference Range Flag
+ba
+Extra Tube
+Hold for add-
+—
+_—
+SMHLab
+ons.
+#:Auto resulted.
+Testing Performed By
+Riva
+AS:
+RPSL
+Vala Rate
+i
+Director
+Address
+Valid Date Range
+MD
+SAN DIEGO CA 92123
+Lavender Top (Final result)
+Completed
+Order placed as a reflex to Rainbow Draw ED Panel ordered on 07/1 Vea at 1426
+Andrew Williamson, MD 07/11/24 1426
+Andrew Williamson, MD
+Andrew Williamson, MD
+Standard
+Timed Once 07/11/24 1426 - 1 occurrence
+Lab Collect
+s. Final result
+Andrew Williamson, MD (auto-released) 7/11/202
+Specimen Information
+Collected"
+Lavender Top
+Resulted: 07/11/24 1702, Result status: Final result
+Completed
+. Patricia Howard 07/11/24 1455
+»:SMH HOSPITAL LAB
+Components
+Gomponent
+Value
+Reference Range
+Flag
+hab
+yon
+:
+)
+Extra Tube
+Hold for add-
+—
+_—
+SMHLab
+ons.
+: Auto resulted.
+Testing Performed By
+Rivnntne:
+aoa
+Vata mas
+bab»
+Abbreviation
+Name
+Director
+Address
+Valid Date Range
+MD
+SAN DIEGO CA 92123
+=== PAGE 15 END ===

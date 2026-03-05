@@ -1,0 +1,75 @@
+=== PAGE 11 START ===
+ye
+EE
+ey
+e S
+SHC Virtual Location
+Gladstone, Abbie L
+07/11/2024 - ED in Sharp Memorial Hospital Emergency (continued)
+Labs (continued)
+SMHLab
+nob...
+Albumin
+EGFR
+Calculation based onthe Chronic Kidney Disease Epidemiology Collaboration (CKD-EPI) equation refit without adjustment for
+race
+Testing Performed By
+Lab -Abbreviation
+Name
+Director
+Address
+Valid Date Range
+\
+roy
+SAN DIEGO CA 92123
+Ethanol (Final result)
+Andrew Williamson, MD
+Standard
+Lab Collect
+s,Final result
+PM
+Ans’
+“Release topatient
+Immediate
+Specimen Information
+ID
+Type
+Source
+Collected By
+Ethanol (Normal)
+Resulted: 07/11/24 1550, Result status: Final result
+Components
+=
+vee
+Rope =
+SS
+Poe
+Lomponent
+Value
+Reference Range Flag
+oo
+EABoo
+Testing Performed By
+Lab
+Riva
+aa
+Mer
+wd Lab -Abbreviation
+Name
+Director
+Address
+Valid Date Range
+MD
+SAN DIEGO CA 92123
+!
+nn)
+Protime-INR (Final result)
+Andrew Williamson, MD 07/11/24 1426
+Andrew Williamson, MD
+Andrew Williamson, MD
+Standard
+ir
+oe ralease
+Andrew Williamson, MD (auto-released) 7/11/2024
+2:26 PM
+=== PAGE 11 END ===

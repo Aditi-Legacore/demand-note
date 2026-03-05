@@ -1,0 +1,84 @@
+=== PAGE 14 START ===
+ar FAA
+py TR
+EE Mw sey
+TTT
+A
+A
+ee
+|]
+Sharp Health Care
+SHC Virtual Location
+07/11/2024 - ED in Sharp Memorial Hospital Emergency (continued)
+Canceled
+Rosalinda Salazar 07/11/24 2359 [Unable to
+Obtain Specimen (never received specimen in lab)]
+‘
+ad by Patricia Howard 07/11/24 1455
+>SHARP LABORATORY SERVICES
+Light Green Top
+Result status: No result
+:.Canceled
+» Andrew Williamson, MD 07/11/24 1426
+Rosalinda Salazar 07/11/24 2359 [Unable to
+Obtain Specimen (never received specimen in lab)}
+o
+¥
+Patricia Howard 07/11/24 1455
+SHARP LABORATORY SERVICES
+Light Green Top
+Resulted: 07/11/24 1702, Result status: Final result
+;.Completed
+7,Patricia Howard 07/11/24 1455
+Components
+Reference
+ae
+wri
+me
+wee
+ree
+Component
+Value.
+Range
+Flag
+Lab
+Extra Tube
+Hold for add-
+—
+_—
+SMHLab
+ons.
+vt: Auto resulted.
+Lavender Top
+Result status: No result
+=Canceled
+Rosalinda Salazar 07/11/24 2359 [Unable to
+btain Specimen (never received specimen in lab)]
+b: SHARP LABORATORY SERVICES
+Lavender Top
+Resulted: 07/11/24 1702, Result status: Final result
+;.Completed
+ides
+Andrew Williamson, MD 07/11/24 1426
+2.SMH HOSPITAL LAB
+Components
+Reference
+Range
+Flag
+Lab
+SMHLab
+ons.
+Auto resulted.
+Testing Performed By
+wobab: Abbreviation Nam)
+Director
+:
+Valid Date Range
+Address
+3
+HOSPITAL
+7901 FROST STREET
+SAN DIEGO CA 92123
+LAB
+Light Green Top (Final result)
+=== PAGE 14 END ===

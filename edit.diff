@@ -1,0 +1,20 @@
+// Add isEmbedded state for cross button visibility based on being embedded in iframe/other site
+const [loading, setLoading] = useState(false);
+const [isEmbedded, setIsEmbedded] = useState(false);
+const router = useRouter();
+
+useEffect(() => {
+  if (typeof window !== "undefined") {
+    setIsEmbedded(window.self !== window.top);
+  }
+}, []);
+
+
+<div className="flex justify-between items-center mb-4">
+  <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-100">Intake</h2>
+  {!isEmbedded && (
+    <Button variant="ghost" size="icon" onClick={onClose} className="text-gray-400 hover:text-red-600 text-lg">
+      ✕
+    </Button>
+  )}
+</div>

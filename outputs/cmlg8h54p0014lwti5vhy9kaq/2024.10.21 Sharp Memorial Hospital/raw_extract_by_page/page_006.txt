@@ -1,0 +1,52 @@
+=== PAGE 6 START ===
+SHC Virtual Location
+Gladstone, Abbie L
+10/21/2024 - Ancillary Procedure in Sharp Rees-Stealy Mira Mesa MRI (continued)
+Imaging (continued)
+All Reviewers List
+09/25/2024
+- Orders Only in Sharp Rees-Stealy Rancho Bernardo Neurology
+Visit Information
+Provider Information
+Encounter Provider
+Justin Dominick, MD
+Department
+ce ROME.
+Address
+Phone
+Fax
+Neurology
+Floor 3
+San Diego CA 92127-1603
+Imaging
+Imaging
+MR Brain WO IV Contrast (Completed)
+Completed
+Justin Dominick, MD
+¥ Justin Dominick, MD
+Standard
+Performed
+Right sided headaches, right face
+numbness and tingling.
+Nonintractable episodic headache, unspecified headache type [R 51.9]
+Facial numbness [R 20.0]
+Questionnaire
+Question
+Answer
+i
+Manual release only
+Per medical necessity and radiology department screening,
+Yes
+orbit x-ray for foreign body is approved.
+Where should the exam be performed?
+Rees-Stealy
+:Has metal dental implant.
+Indications
+Nonintractable episodic headache, unspecified headache type [R 51.9 (ICD-10-CM)]
+Facial numbness [R 20.0 (ICD-10-CM)]
+07/18/2024 - Ancillary Procedure in Sharp Rees-Stealy Santee Ultrasound
+Visit Information
+Provider Information
+Referring Provider
+Raheleh Esfandiari, MD
+=== PAGE 6 END ===

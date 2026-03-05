@@ -1,0 +1,75 @@
+=== PAGE 10 START ===
+SHC Virtual Location
+Gladstone, Abbie L
+1
+07/11/2024 - ED in Sharp Memorial Hospital Emergency (continued)
+ED Provider Note (continued)
+This ED Note was completed using voice-recognition transcription and may contain inadvertent errors.
+Christopher Ho, MD
+Labs
+Comprehensive metabolic panel (Final result)
+Completed
+Andrew Williamson, MD 07/11/24 1426
+pr
+Andrew Williamson, MD
+Andrew Williamson, MD
+Standard
+L
+'s.Final result
+Andrew Williamson, MD (auto-released) 7/11/2024
+2:26 PM
+Questionnaire
+jon
+to patient
+Specimen Information
+2
+Type
+Source
+Patricia Howard 07/11/24 1455
+wos
+preee
+=
+too
+‘t
+Comprehensive metabolic panel (Normal)
+Resulted: 07/11/24 1550, Result status: Final result
+:Completed
+:Patricia Howard 07/11/24 1455
+3.SMH HOSPITAL LAB
+e
+Reference Ranges
+GFR Categories in Chronic Kidney Disease (CKD)
+GFR Category GFR (m L/min/1.73 square meter) Interpretation
+G 1
+90 or greater
+Normal or high*
+G 2
+60-89
+Mild decrease*
+G 3 a
+45-59
+Mild to moderate decrease
+G 3 b
+30-44
+Moderate to severe decrease
+G 4
+15-29
+Severe decrease
+GS
+14 or less
+Kidney failure
+*In the absence of evidence of kidney damage, neither GFR category G 1 nor G 2 fulfill the criteria for CKD (Kidney Int Suppl
+2013;3:1-150)
+Components
+Range
+Flag
+Lab
+SMHLab
+SMHLab
+Anion Gap
+9
+3-11 mmol/L
+—
+SMHLab
+»
+=== PAGE 10 END ===

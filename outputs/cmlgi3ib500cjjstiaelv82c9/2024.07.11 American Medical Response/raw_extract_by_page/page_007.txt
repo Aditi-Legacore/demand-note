@@ -1,0 +1,49 @@
+=== PAGE 7 START ===
+Patient Name:
+Gladstone, Abbie L
+Incident Number:
+22168897
+Unit Notified by 07/11/2024
+Current Incident
+Billed
+Status:
+This Unit's
+Transport by This EMS Unit (This Crew Only)
+Transport
+Disposition:
+12- Sharp Grossmont Hospital
+Base Hospital
+Contact D/T:
+Contacted:
+Transport Mode
+Additional Transport No Lights or Sirens
+Non-Emergent
+Mode Descriptors:
+from Scene:
+EMS Transport
+Ground-Ambulance
+Method:
+Final Acuity:
+Mild/Lower
+Acuity
+(Green)
+DESTINATION
+Requested Hospital
+31- Sharp Memorial Hospital
+Name:
+Closest Hospital
+12- Sharp Grossmont Hospital
+Name:
+Reason for Choosing
+Requested - Patient's Choice
+Destination:
+‘Type of Destination:
+Hospital-Emergency
+If Hospital -
+31- Sharp Memorial Hospital
+Destination Hospital
+Name:
+Destination Street
+Address:
+Page 7 of 15
+=== PAGE 7 END ===

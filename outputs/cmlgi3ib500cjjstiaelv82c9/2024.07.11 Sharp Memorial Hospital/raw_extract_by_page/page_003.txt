@@ -1,0 +1,77 @@
+=== PAGE 3 START ===
+ATA
+A
+SHC Virtual Location
+Gladstone, Abbie L
+1
+07/11/2024 - ED in Sharp Memorial Hospital Emergency (continued)
+ED Provider Note (continued)
+following prosthetic valve thrombosis
+Mitral: bileaflet or tilting disk
+3.0
+following prosthetic valve thrombosis
+Caged ball or caged disk (aortic or mitral)
+With additional risk factors for
+thromboembolism
+3.0
+25-35
+Glucose
+92
+Sodium
+141
+Potassium
+3.9
+Chloride
+105
+Anion Gap
+9
+BUN
+8
+Creatinine
+0.6
+Calcium
+10.2
+Alkaline Phosphatase
+58
+ALT
+10
+AST
+14
+=
+pry
+a
+Total Bilirubin
+0.6
+~
+yt
+y
+Total Protein
+83
+Albumin
+5.1
+EGFR
+>90
+Narrative:
+e GFR Reference Ranges
+GFR Categories in Chronic Kidney Disease (CKD)
+GFR Category GFR (m L/min/1.73 square meter)
+Interpretation
+G 1
+90 or greater
+Normal or
+high*
+G 2
+60-89
+Mild decrease*
+moderate decrease
+G 3 b
+30-44
+Moderate to
+severe decrease
+G 4
+15-29
+Severe decrease
+G 5
+14 or less
+Kidney failure
+=== PAGE 3 END ===

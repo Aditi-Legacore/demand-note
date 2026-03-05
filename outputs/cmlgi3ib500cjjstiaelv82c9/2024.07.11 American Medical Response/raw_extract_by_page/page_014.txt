@@ -1,0 +1,33 @@
+=== PAGE 14 START ===
+Incident Number:
+22168897
+Patient Name:
+Gladstone, Abbie L.
+D.O.B.:
+12/14/1999
+Unit Notified by 07/11/2024
+Current Incident
+Billed
+Status:
+Signature First Name: Daniel
+Signature Last Name: Carrillo
+Type of Person Signing: EMS Primary Care Provider (for this event)
+Signature Reason: EMS Provider
+Paragraph Text:
+ldo hereby attest that this information is true, accurate and complete to the nest of my knowledge and i understand that any falsification, omission,
+or concealment of material fact may subject me to the administrative, civil, or criminal liability.
+Signature Status:
+Signature Graphic:
+<
+Signature First Name: Kyle
+Signature Last Name: Litzenberg
+Type of Person Signing: Healthcare Provider
+Signature Reason: Transfer of Patient Care
+Paragraph Text:
+Signature Status:
+Signature Graphic:
+Signature First Name: Briana
+Signature Last Name: Rn
+COMMUNICABLE DISEASE EXPOSURE
+Page 14 of 15
+=== PAGE 14 END ===

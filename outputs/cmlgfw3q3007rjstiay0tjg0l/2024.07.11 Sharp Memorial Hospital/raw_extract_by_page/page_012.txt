@@ -1,0 +1,96 @@
+=== PAGE 12 START ===
+py TR
+EE Mw sey
+BOT
+ES
+ES A
+TS TNA
+SHC Virtual Location
+Gladstone, Abbie L
+07/11/2024 - ED in Sharp Memorial Hospital Emergency (continued)
+Labs (continued)
+Questionnaire
+Question
+Answer
+Release to patient
+Immediate
+Specimen Information
+i D
+Type
+Source
+Gollected By
+ald
+»:SMH HOSPITAL LAB
+DIAGNOSIS
+TARGET INR
+RANGE
+Venous Thrombosis and/or Pulmonary Embolism
+2.5
+2.0-3.0
+Prophylaxis with MI or Atrial Fibrillation
+and most other indications
+High risk patients with Mechanical Heart valves
+3.0
+2.5-3.5
+or systemic Arterial Embolism
+VALVE REPLACEMENT/MECHANICAL
+Aortic: bileaflet in NSR with normal LA size
+2.5
+2.0-3.0
+Medronic Hall tilting disk in NSR
+following prosthetic valve thrombosis
+3.5
+3.0-4.0
+Mitral: bileaflet or tilting disk
+3.0
+2.5-3.5
+following prosthetic valve thrombosis
+4.0
+3.5-4.5
+Caged ball or caged disk (aortic or mitral)
+3.0
+2.5-3.5
+With additional risk factors for thromboembolism
+3.0
+2.5-3.5
+Components
+Valin,
+71
+Component
+Value
+al
+Testing Performed By
+“HOARE Es
+Lab -Abbreviation
+Name
+Director
+Address
+Valid Date Range
+MD
+SAN DIEGO CA 92123
+Complete Blood Count With Differential (Final result)
+Completed
+Andrew Williamson, MD
+o S
+Standard
+y.Andrew Williamson, MD
+3,Lab Collect
+Final result
+:Andrew Williamson, MD (auto-released) 7/11/2024
+2:26 PM
+Questionnaire
+Question
+Answer.
+Release to patient
+Immediate
+Specimen Information
+ID
+Type
+‘
+Source
+“2
+OT
+|
+Blood
+Patricia Howard 07/11/24 1455
+=== PAGE 12 END ===

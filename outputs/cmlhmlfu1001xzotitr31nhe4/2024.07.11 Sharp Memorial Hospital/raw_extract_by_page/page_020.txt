@@ -1,0 +1,61 @@
+=== PAGE 20 START ===
+py TR
+EE Mw sey
+ROPE
+ESS
+A
+ST PMSA
+Y
+,
+Sharp Health Care
+SHC Virtual Location
+07/11/2024 - ED in Sharp Memorial Hospital Emergency (continued)
+Imaging (continued)
+Testing Performed By
+Address
+Valid Date Range
+Lab:- Abbreviation
+Name
+Director.
+Signed
+Electronically signed by William Millard, MD on 7/11/24 at 1720 PDT
+Electronically addended by William Millard, MD on 7/12/24 at 0930 PDT
+CT Reformat Spine Thoracic (Final result)
+Completed
+This order may be acted on in another encounter.
+Andrew Williamson, MD
+>.Department Process
+¥. Andrew Williamson, MD
+STAT Once 07/11/24 1426 - 1 occurrence
+Hospital Performed
+Final result
+~
+ree
+pe yey
+&. MVA
+Questionnaire
+3
+estion
+Answer
+7-day release
+Use of contrast material at the discretion of the radiologist
+CT Reformat Spine Thoracic
+Resulted: 07/11/24 1722, Result status: Final result
+ss.Completed
+Interface,
+Radiology Results In
+07/11/24 1726
+POWERSCRIBE
+EXAMINATION: CT REFORMAT SPINE THORACIC
+HISTORY:
+MVA
+COMPARISON:
+None
+TECHNIQUE: Axial, coronal, and sagittal reformatted images of the thoracic spine were generated.
+This exam was performed using dose optimization techniques including automated exposure control, adjustment of m A and/or
+k V according to patient size, and/or iterative reconstruction.
+FINDINGS:
+There is no evidence for fracture, traumaticsubluxation, or aggressive osseus lesion.
+IMPRESSION:
+No acute osseus abnormality.
+=== PAGE 20 END ===

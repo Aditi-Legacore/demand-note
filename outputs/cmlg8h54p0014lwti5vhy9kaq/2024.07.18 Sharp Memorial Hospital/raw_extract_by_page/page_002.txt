@@ -1,0 +1,53 @@
+=== PAGE 2 START ===
+PAGE
+10/011
+Fax Server
+SHC Virtual Location
+5651 Copley Drive; Suite A
+SAN DIEGO CA 92111-7903
+07/18/2024 - Ancillary Procedure in Sharp Rees-Stealy Santee Ultrasound (continued)
+Imaging (continued)
+Testing Performed By
+Lab ~Abbreviation
+Name
+Director
+Address.
+Valid Date Range
+Indications
+Signed
+Electronically signed by Amber Dechambeau, DO on 7/19/24 at 1306 PDT
+All Reviewers List
+Raheleh Esfandiari, MD on 7/25/2024 02:19
+07/18/2024 - Patient Message in Sharp Rees-Stealy La Mesa 2 nd Floor Primary Care
+Visit Information
+Provider Information
+Encounter Provider
+Anna Garcia, MD
+Department
+oo SDE.
+Address
+Phone
+Sharp Rees-Stealy La Mesa 2 nd Floor
+5525 Grossmont Center Drive
+858-499-2600
+Primary Care
+Floor 2
+Labs
+Protime-INR (Active)
+Anna Garcia, MD 07/15/24 1017
+Anna Garcia, MD
+: Anna Garcia, MD
+Questionnaire
+Question
+Specimen Information
+1 B
+Type
+Source
+Collected By
+_—
+Blood
+Blood
+_—
+Indications
+Elevated protime [R 79.1 (ICD-10-CM)]
+=== PAGE 2 END ===

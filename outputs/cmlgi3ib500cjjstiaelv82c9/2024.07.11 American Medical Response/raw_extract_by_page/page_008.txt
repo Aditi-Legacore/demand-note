@@ -1,0 +1,45 @@
+=== PAGE 8 START ===
+Incident Number:
+22168897
+Patient Name:
+Gladstone, Abbie L.
+D.O.B.:
+12/14/1999
+Unit Notified by 07/11/2024
+Current Incident
+Billed
+Status:
+Destination City:
+City of San Diego
+Destination State:
+CA
+Destination Zip:
+92123
+eeriat
+Emergency Department
+Date/Time of ED
+Admission:
+Hospital
+Hospital Procedures
+USSRMel
+uad se
+icaisd linens
+Odometer:
+Odometer:
+Unit Notified by 07/11/2024 12:37:27
+Dest. Odometer:
+7.5
+Scene To Dest
+7.5
+Disp:
+Mileage:
+Unit Enroute: 07/11/2024 12:38:18
+Ending Odometer:
+0
+To End:
+-7.5
+Total Mileage:
+0.0
+(including Transp
+Page 8 of 15
+=== PAGE 8 END ===
