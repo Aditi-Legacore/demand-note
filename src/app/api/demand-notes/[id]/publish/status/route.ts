@@ -47,19 +47,26 @@ export async function GET(
         }
 
         // 1. Check DemandFile summaryStatus == "not_summarized"
-        type DemandFileSummary = {
+        type DemandFileWithTasks = {
             summaryStatus?: string | null;
+            tasks: Array<{
+                status?: string | null;
+                endTs?: Date | null;
+                editedSummaryTs?: Date | null;
+                editedSummary?: string | null;
+                outputSummary?: string | null;
+            }>;
         };
 
-        const unsummarizedFiles = demandNote.files.filter((f: DemandFileSummary) => f.summaryStatus !== "summarized");
+        const unsummarizedFiles = demandNote.files.filter((f: DemandFileWithTasks) => f.summaryStatus !== "summarized");
         const allFilesSummarized = unsummarizedFiles.length === 0;
 
         // 2. Check Task -> editedSummaryTs match with endTs (using a small buffer if needed, but here we just check if editedSummary exists)
         // The requirement says: check Task tbl -> editedSummaryTs time and endTs time match with current time
         // Interpreting "match with current time" as "is it relatively fresh or synced"
         // 2. Check Task -> editedSummaryTs match with endTs
-        const tasksSynced = demandNote.files.every(f => {
-            const task = f.tasks[0];
+        const tasksSynced = demandNote.files.every((file: DemandFileWithTasks) => {
+            const task = file.tasks[0];
             if (!task) return false;
             if (task.status !== "completed") return false;
 
