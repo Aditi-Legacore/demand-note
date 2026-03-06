@@ -47,7 +47,11 @@ export async function GET(
         }
 
         // 1. Check DemandFile summaryStatus == "not_summarized"
-        const unsummarizedFiles = demandNote.files.filter(f => f.summaryStatus !== "summarized");
+        type DemandFileSummary = {
+            summaryStatus?: string | null;
+        };
+
+        const unsummarizedFiles = demandNote.files.filter((f: DemandFileSummary) => f.summaryStatus !== "summarized");
         const allFilesSummarized = unsummarizedFiles.length === 0;
 
         // 2. Check Task -> editedSummaryTs match with endTs (using a small buffer if needed, but here we just check if editedSummary exists)
