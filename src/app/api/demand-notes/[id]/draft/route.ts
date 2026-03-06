@@ -61,7 +61,15 @@ export async function GET(
             }
         });
 
-        const summaries = files.map(file => {
+        type DemandFileWithTasks = {
+            fileName: string;
+            tasks?: {
+                editedSummary?: string | null;
+                outputSummary?: string | null;
+            }[];
+        };
+
+        const summaries = files.map((file: DemandFileWithTasks) => {
             const task = file?.tasks[0];
             if (!task) return `### ${file.fileName}\n(No summary available)\n`;
             const summaryText = task.editedSummary || task.outputSummary || "(No summary available)";
