@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import type { MouseEvent } from "react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import {
@@ -302,6 +303,11 @@ export default function PromptManagementPage() {
     setPendingAction({ type: "revert" });
     setDialogMode("revertConfirm");
     setIsSaveDialogOpen(true);
+  };
+
+  const handleOpenRevertDialog = (event?: MouseEvent<HTMLButtonElement>) => {
+    event?.preventDefault();
+    openRevertDialog();
   };
 
   const logRevertAudit = async (item: PromptItem) => {
@@ -611,7 +617,7 @@ export default function PromptManagementPage() {
                           type="button"
                           variant="outline"
                           size="sm"
-                          onClick={openRevertDialog}
+                          onClick={handleOpenRevertDialog}
                           disabled={!previousPrompt}
                           title="Revert to previous version"
                         >

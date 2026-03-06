@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     }
 
     const userRoles = session.user.roles ?? [];
-    const isCustomer = userRoles.includes("Customer") || session.user.role === "Customer";
+    const isCustomer = userRoles.includes("Customer");
     if (!isCustomer) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }

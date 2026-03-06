@@ -55,9 +55,25 @@ export async function POST(
       return NextResponse.json({ message: "All required documents are already uploaded" });
     }
 
+    const primaryClient = demandNote.clients[0];
+    if (!primaryClient) {
+      return NextResponse.json(
+        { error: "No client found for this demand note" },
+        { status: 400 }
+      );
+    }
+
+    const clientDisplayName =
+      primaryClient.name ||
+      [primaryClient.firstName, primaryClient.lastName]
+        .filter(Boolean)
+        .join(" ")
+        .trim() ||
+      "Customer";
+
     // Prepare message content
-    const missingReportsText = missingCategories.join(', ');
-    const message = `Dear ${demandNote.client.name},
+    const missingReportsText = missingCategories.join(", ");
+    const message = `Dear ${clientDisplayName},
 
     We require the following documents for your demand note:
     ${missingReportsText}
@@ -70,25 +86,25 @@ export async function POST(
     // Send via email if available
     let sentVia = "none";
     
-    if (demandNote.client.email) {
+    if (primaryClient.email) {
      
       
       try {
         await sendEmail({
-          to: demandNote.client.email,
+          to: primaryClient.email,
           subject: "Document Request - Missing Reports Required",
           text: message,
-          name: demandNote.client.name, // Fixed: added the missing parameter
+          name: clientDisplayName,
         });
         sentVia = "email";
       } catch (emailError) {
         console.error("Failed to send email:", emailError);
         // If email fails, try SMS as fallback
-        if (demandNote.client.phone) {
+        if (primaryClient.phone) {
           try {
             await sendSMS({
-              to: demandNote.client.phone,
-              message: `Dear ${demandNote.client.name}, we require the following documents for your demand note: ${missingReportsText}. Please provide them as soon as possible. - Legal Team`,
+              to: primaryClient.phone,
+              message: `Dear ${clientDisplayName}, we require the following documents for your demand note: ${missingReportsText}. Please provide them as soon as possible. - Legal Team`,
             });
             sentVia = "sms";
           } catch (smsError) {
@@ -96,12 +112,12 @@ export async function POST(
           }
         }
       }
-    } else if (demandNote.client.phone) {
+    } else if (primaryClient.phone) {
       // Send via SMS if no email available
       try {
         await sendSMS({
-          to: demandNote.client.phone,
-          message: `Dear ${demandNote.client.name}, we require the following documents for your demand note: ${missingReportsText}. Please provide them as soon as possible. - Legal Team`,
+          to: primaryClient.phone,
+          message: `Dear ${clientDisplayName}, we require the following documents for your demand note: ${missingReportsText}. Please provide them as soon as possible. - Legal Team`,
         });
         sentVia = "sms";
       } catch (smsError) {

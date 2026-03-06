@@ -12,10 +12,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const isLegacore =
-      session.user.role === "Legacore User" ||
-      session.user.role === "admin" ||
-      session.user.role === "App admin";
+    const isLegacore = session.user.roles.some((role) =>
+            ["Legacore User", "admin", "App admin"].includes(role)
+        );
+    // const isLegacore =
+    //   session.user.role === "Legacore User" ||
+    //   session.user.role === "admin" ||
+    //   session.user.role === "App admin";
     if (!isLegacore) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }

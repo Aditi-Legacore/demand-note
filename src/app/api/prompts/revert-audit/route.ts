@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
       version,
       revertedBy: session.user.id,
       revertedByEmail: session.user.email ?? null,
-      revertedByRole: session.user.role ?? null,
+      revertedByRole: session.user.roles ?? null,
       occurredAt,
     };
 

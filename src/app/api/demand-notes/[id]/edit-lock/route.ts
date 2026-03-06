@@ -6,10 +6,8 @@ import { prisma } from "@/lib/prisma";
 const ACTIVE_WINDOW_MS = 45 * 1000;
 const LEGACORE_ROLES = ["Legacore User", "admin", "App admin"];
 
-const isLegacore = (roles?: string[] | null, role?: string | null) => {
-  if (roles && roles.some((r) => LEGACORE_ROLES.includes(r))) return true;
-  if (role && LEGACORE_ROLES.includes(role)) return true;
-  return false;
+const isLegacore = (roles?: string[] | null) => {
+  return Boolean(roles?.some((role) => LEGACORE_ROLES.includes(role)));
 };
 
 export async function GET(
@@ -22,7 +20,7 @@ export async function GET(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    if (!isLegacore(session.user.roles ?? null, session.user.role)) {
+    if (!isLegacore(session.user.roles ?? null)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
@@ -59,7 +57,7 @@ export async function POST(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    if (!isLegacore(session.user.roles ?? null, session.user.role)) {
+    if (!isLegacore(session.user.roles ?? null)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
@@ -104,7 +102,7 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    if (!isLegacore(session.user.roles ?? null, session.user.role)) {
+    if (!isLegacore(session.user.roles ?? null)) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 

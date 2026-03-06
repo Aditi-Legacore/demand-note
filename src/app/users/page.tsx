@@ -19,7 +19,7 @@ interface User {
   createdAt: string;
   updatedAt: string;
   status: boolean;
-  firstName: string;
+  firstName?: string;
   requestPassword: boolean;
   isDeletedUser: boolean;
 }

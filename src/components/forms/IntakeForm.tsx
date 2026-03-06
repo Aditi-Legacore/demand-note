@@ -15,21 +15,10 @@ import SubmitStep from "./formSteps/SubmitStep";
 import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 
-// Extend the session user type to include 'id'
-import type { DefaultUser } from "next-auth";
 import { toast } from "sonner";
 import IntakeDocuments from "./intakeDocuments/intakeDocuments";
 import SuccessPage from "./SuccessPage";
 import { Lead } from "@/types/leads";
-
-declare module "next-auth" {
-  interface Session {
-    user: DefaultUser & { id?: string | null };
-  }
-  interface User extends DefaultUser {
-    id?: string | null;
-  }
-}
 
 interface Payload {
   phoneNumber?: string;

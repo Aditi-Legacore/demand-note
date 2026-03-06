@@ -4,7 +4,7 @@ type NotificationListener = (notification: NotificationStreamPayload) => void;
 
 const listeners = new Set<NotificationListener>();
 let socket: WebSocket | null = null;
-let reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+let reconnectTimer: number | null = null;
 let stopReconnecting = false;
 
 const notifyListeners = (payload: NotificationStreamPayload) => {

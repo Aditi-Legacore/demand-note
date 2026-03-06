@@ -1,4 +1,5 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import type { Adapter } from "next-auth/adapters";
 import { prisma } from "./prisma";
 import { compare } from "bcrypt";
 import { AuthOptions } from "next-auth";
@@ -11,6 +12,7 @@ declare module "next-auth" {
     roles: string[];
     status: boolean;
     forcePasswordReset: boolean;
+    role: string;
   }
   interface Session {
     user: {
@@ -19,6 +21,7 @@ declare module "next-auth" {
       name?: string | null;
       image?: string | null;
       roles: string[];
+      role: string;
       status: boolean;
       forcePasswordReset: boolean;
     }
@@ -29,13 +32,14 @@ declare module "next-auth/jwt" {
   interface JWT {
     id: string;
     roles: string[];
+    role: string;
     status: boolean;
     forcePasswordReset: boolean;
   }
 }
 
 export const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  adapter: PrismaAdapter(prisma) as Adapter,
   providers: [
     Credentials({
       name: "Credentials",
@@ -76,6 +80,7 @@ export const authOptions: AuthOptions = {
           name: user.firstName || null,
           image: user.image || null,
           roles: rolesArray,
+          role: rolesArray[0] ?? "Customer",
           status: user.status ?? false,
           forcePasswordReset: user.forcePasswordReset ?? false,
         };
@@ -97,6 +102,7 @@ export const authOptions: AuthOptions = {
         //   (((user as { role?: string }).role ? [(user as { role?: string }).role as string] : []));
         token.id = user.id;
         token.roles = user.roles;
+        token.role = user.role;
         token.status = user.status;
         token.forcePasswordReset = user.forcePasswordReset;
       }
@@ -106,6 +112,7 @@ export const authOptions: AuthOptions = {
       if (token) {
         session.user.id = token.id;
         session.user.roles = token.roles;
+        session.user.role = token.role;
         session.user.status = token.status;
         session.user.forcePasswordReset = token.forcePasswordReset;
       }

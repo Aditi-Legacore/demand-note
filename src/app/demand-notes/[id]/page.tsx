@@ -1,6 +1,15 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback, use } from "react";
+import type { ComponentType } from "react";
+
+type ReactQuillProps = {
+  theme: string;
+  value: string;
+  onChange: (content: string, delta?: unknown, source?: unknown, editor?: unknown) => void;
+  readOnly?: boolean;
+  className?: string;
+};
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { format, formatDistanceToNow } from "date-fns";
@@ -62,6 +71,7 @@ interface FileType {
     endTs?: string | null;
     editedSummaryTs?: string | null;
   }>;
+  status?: string;
 }
 
 interface DemandNote {
@@ -125,6 +135,14 @@ interface DemandNote {
   }>;
 }
 
+interface TimelineEvent {
+  id: string;
+  type: string;
+  message: string;
+  createdAt: string;
+  metadata?: unknown;
+}
+
 interface DemandNoteViewProps {
   params: Promise<{ id: string }>;
 }
@@ -132,6 +150,12 @@ interface DemandNoteViewProps {
 interface JobState {
   publishStatus?: string;
   status?: string;
+}
+
+interface PublishDetails {
+  allFilesSummarized: boolean;
+  tasksSynced: boolean;
+  unsummarizedCount: number;
 }
 
 export default function DemandNoteView({ params }: DemandNoteViewProps) {
@@ -142,7 +166,7 @@ export default function DemandNoteView({ params }: DemandNoteViewProps) {
 
   const [isLoading, setIsLoading] = useState(true);
   const [demandNote, setDemandNote] = useState<DemandNote | null>(null);
-  const [timeline, setTimeline] = useState<unknown[]>([]);
+  const [timeline, setTimeline] = useState<TimelineEvent[]>([]);
   const initialDemandNoteLoadRef = useRef(true);
   // const [notes, setNotes] = useState<any[]>([]);
   const [previewFile, setPreviewFile] = useState<{ name: string; url: string } | null>(null);
@@ -208,7 +232,7 @@ export default function DemandNoteView({ params }: DemandNoteViewProps) {
   const [isPublishing, setIsPublishing] = useState(false);
   const [isDraftLoading, setIsDraftLoading] = useState(false);
   const [isPublishable, setIsPublishable] = useState(false);
-  const [publishDetails, setPublishDetails] = useState<unknown>(null);
+  const [publishDetails, setPublishDetails] = useState<PublishDetails | null>(null);
   // const [showFloatingDownload, setShowFloatingDownload] = useState(false);
   const [job, setJob] = useState<JobState | null>(null);
   const [isDraftEdited, setIsDraftEdited] = useState(false);
@@ -247,10 +271,10 @@ export default function DemandNoteView({ params }: DemandNoteViewProps) {
   const [isDraftPrefetching, setIsDraftPrefetching] = useState(false);
 
   // Dynamic import for ReactQuill to avoid SSR issues
-  const [ReactQuill, setReactQuill] = useState<unknown>(null);
+  const [ReactQuill, setReactQuill] = useState<ComponentType<ReactQuillProps> | null>(null);
   useEffect(() => {
     import('react-quill-new').then((mod) => {
-      setReactQuill(() => mod.default);
+      setReactQuill((mod.default as unknown) as ComponentType<ReactQuillProps>);
     });
     import('react-quill-new/dist/quill.snow.css');
   }, []);
@@ -425,6 +449,19 @@ export default function DemandNoteView({ params }: DemandNoteViewProps) {
     };
   }, [id]);
 
+  const handleCheckPublishStatus = useCallback(async () => {
+    try {
+      const response = await fetch(`/api/demand-notes/${id}/publish/status`);
+      if (response.ok) {
+        const data = await response.json();
+        setIsPublishable(data.isPublishable);
+        setPublishDetails(data.details);
+      }
+    } catch (error) {
+      console.error("Error checking publish status:", error);
+    }
+  }, [id]);
+
   useEffect(() => {
     if (demandNote?.id) {
       handleCheckPublishStatus();
@@ -584,7 +621,7 @@ export default function DemandNoteView({ params }: DemandNoteViewProps) {
     setIsUploading(true);
 
     try {
-      const uploadedFiles: unknown[] = [];
+    const uploadedFiles: FileType[] = [];
 
       for (const file of uploadFiles) {
         const formData = new FormData();
@@ -602,7 +639,7 @@ export default function DemandNoteView({ params }: DemandNoteViewProps) {
         }
 
         const result = await response.json();
-        uploadedFiles.push(result.file);
+        uploadedFiles.push(result.file as FileType);
       }
 
       setDemandNote((prev) =>
@@ -910,7 +947,6 @@ export default function DemandNoteView({ params }: DemandNoteViewProps) {
       setDemandNote(prev => prev ? {
         ...prev,
         ...updatedData,
-        client: updatedData.client || prev.client,
       } : null);
 
       setJob((prev) => ({ ...(prev ?? {}), publishStatus: "edit_basic_info" }));
@@ -970,7 +1006,7 @@ export default function DemandNoteView({ params }: DemandNoteViewProps) {
       } else {
         // Fallback to existing summary if API fails
         const file = demandNote?.files.find(f => f.id === fileId);
-        const task = (file as unknown)?.tasks?.[0];
+        const task = (file as FileType)?.tasks?.[0];
         const existingSummary = task?.outputSummary || "";
         const existingEdited = task?.editedSummary || "";
 
@@ -981,7 +1017,7 @@ export default function DemandNoteView({ params }: DemandNoteViewProps) {
       console.error("Error fetching summary:", error);
       // Fallback to existing summary
       const file = demandNote?.files.find(f => f.id === fileId);
-      const task = (file as unknown)?.tasks?.[0];
+      const task = (file as FileType)?.tasks?.[0];
       const existingSummary = task?.outputSummary || "";
       const existingEdited = task?.editedSummary || "";
 
@@ -1230,19 +1266,6 @@ export default function DemandNoteView({ params }: DemandNoteViewProps) {
     }
   };
 
-  const handleCheckPublishStatus = useCallback(async () => {
-    try {
-      const response = await fetch(`/api/demand-notes/${id}/publish/status`);
-      if (response.ok) {
-        const data = await response.json();
-        setIsPublishable(data.isPublishable);
-        setPublishDetails(data.details);
-      }
-    } catch (error) {
-      console.error("Error checking publish status:", error);
-    }
-  }, [id]);
-
   // const handleSectionDragStart = (e: React.DragEvent, sectionId: string) => {
   //   setDraggedSection(sectionId);
   //   e.dataTransfer.setData('text/plain', sectionId);
@@ -1323,7 +1346,7 @@ export default function DemandNoteView({ params }: DemandNoteViewProps) {
         });
 
         setJob((prev) => ({ ...(prev ?? {}), publishStatus: "published" }));
-        setDemandNote(prev => prev ? { ...prev, status: "sent" as string } : null);
+        setDemandNote(prev => prev ? { ...prev, status: "sent" } : null);
         toast.success("Demand note published successfully");
         setTab3Mode("idle");
         setTabLock(null);
@@ -2484,17 +2507,17 @@ export default function DemandNoteView({ params }: DemandNoteViewProps) {
                                                 <>
                                                   <p
                                                     className="text-sm text-gray-600 truncate max-w-[200px]"
-                                                    title={(file as unknown).tasks?.[0]?.outputSummary || "No summary available"}
+                                                    title={(file as FileType).tasks?.[0]?.outputSummary || "No summary available"}
                                                   >
                                                     {(() => {
-                                                      const summary = (file as unknown).tasks?.[0]?.outputSummary || (file as unknown).tasks?.[0]?.editedSummary || "No summary available";
+                                                      const summary = (file as FileType).tasks?.[0]?.outputSummary || (file as FileType).tasks?.[0]?.editedSummary || "No summary available";
                                                       return summary.length > 25 ? summary.substring(0, 25) + "..." : summary;
                                                     })()}
                                                   </p>
                                                   <div className="flex items-center gap-1 text-[10px] text-gray-400 mt-0.5">
                                                     <Clock className="h-2.5 w-2.5" />
                                                     {(() => {
-                                                      const task = (file as unknown).tasks?.[0];
+                                                      const task = (file as FileType).tasks?.[0];
                                                       if (!task) return "No data";
                                                       const ts = task.endTs;
                                                       return ts ? formatDistanceToNow(new Date(ts), { addSuffix: true }) : "No timestamp";
