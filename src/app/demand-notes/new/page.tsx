@@ -1,5 +1,10 @@
 import DemandNoteForm from "@/components/demand-notes/DemandNoteForm";
 
-export default function EditDemandNotePage({ params }: { params: { id: string } }) {
-  return <DemandNoteForm id={params.id} />;
+export default async function EditDemandNotePage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const resolvedParams = await params;
+  return <DemandNoteForm id={resolvedParams.id} />;
 }

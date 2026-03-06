@@ -3,10 +3,13 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
+type DemandNoteParams = { id: string; noteId: string };
+
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string; noteId: string } }
+  context: { params: Promise<DemandNoteParams> }
 ) {
+  const params = await context.params;
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
@@ -81,8 +84,9 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string; noteId: string } }
+  context: { params: Promise<DemandNoteParams> }
 ) {
+  const params = await context.params;
   try {
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
