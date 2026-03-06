@@ -154,7 +154,10 @@ export async function PUT(
         .filter((value): value is string => Boolean(value));
       const existingClientIds = currentDemandNote.clients
         .map((c: ClientRecord) => c.id)
-        .filter((value): value is string => Boolean(value));
+        .filter(
+          (value: string | null | undefined): value is string =>
+            Boolean(value)
+        );
 
       // 1. Delete clients not in incoming list
       const clientsToDelete = existingClientIds.filter(
