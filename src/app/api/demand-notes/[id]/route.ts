@@ -144,9 +144,17 @@ export async function PUT(
     const effectiveClientPhoneEmail = clientPhoneEmail ?? defendantPhoneEmail;
 
     // 🔍 Synchronize clients
+    interface ClientRecord {
+      id?: string | null;
+    }
+
     if (clients && Array.isArray(clients)) {
-      const incomingClientIds = clients.map(c => c.id).filter(Boolean);
-      const existingClientIds = currentDemandNote.clients.map(c => c.id);
+      const incomingClientIds = clients
+        .map((c: ClientRecord) => c.id)
+        .filter(Boolean);
+      const existingClientIds = currentDemandNote.clients
+        .map((c: ClientRecord) => c.id)
+        .filter(Boolean);
 
       // 1. Delete clients not in incoming list
       const clientsToDelete = existingClientIds.filter(id => !incomingClientIds.includes(id));
