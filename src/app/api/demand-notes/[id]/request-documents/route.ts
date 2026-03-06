@@ -54,7 +54,10 @@ export async function POST(
     const uploadedCategories = new Set(
       demandNote.files
         .map((file: DemandFileCategory) => file.fileCategory)
-        .filter((category): category is string => Boolean(category))
+        .filter(
+          (category: string | undefined | null): category is string =>
+            Boolean(category)
+        )
     );
     const requiredCategories = ['traffic', 'medical', 'bills'];
     const missingCategories = requiredCategories.filter(cat => !uploadedCategories.has(cat));
