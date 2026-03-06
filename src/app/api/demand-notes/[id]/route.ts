@@ -151,13 +151,15 @@ export async function PUT(
     if (clients && Array.isArray(clients)) {
       const incomingClientIds = clients
         .map((c: ClientRecord) => c.id)
-        .filter(Boolean);
+        .filter((value): value is string => Boolean(value));
       const existingClientIds = currentDemandNote.clients
         .map((c: ClientRecord) => c.id)
-        .filter(Boolean);
+        .filter((value): value is string => Boolean(value));
 
       // 1. Delete clients not in incoming list
-      const clientsToDelete = existingClientIds.filter(id => !incomingClientIds.includes(id));
+      const clientsToDelete = existingClientIds.filter(
+        (id) => !incomingClientIds.includes(id)
+      );
       if (clientsToDelete.length > 0) {
         await prisma.defedantClient.deleteMany({
           where: { id: { in: clientsToDelete } }
