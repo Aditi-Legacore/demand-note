@@ -161,7 +161,7 @@ export async function PUT(
 
       // 1. Delete clients not in incoming list
       const clientsToDelete = existingClientIds.filter(
-        (id) => !incomingClientIds.includes(id)
+        (id: string) => !incomingClientIds.includes(id)
       );
       if (clientsToDelete.length > 0) {
         await prisma.defedantClient.deleteMany({
