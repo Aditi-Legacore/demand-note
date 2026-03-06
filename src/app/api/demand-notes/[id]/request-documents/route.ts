@@ -8,6 +8,10 @@ import { sendSMS } from "@/lib/sendSMS";
 
 type DemandNoteIdParams = { id: string };
 
+type DemandFileCategory = {
+  fileCategory?: string | null;
+};
+
 export async function POST(
   request: NextRequest,
   context: { params: Promise<DemandNoteIdParams> }
@@ -47,7 +51,11 @@ export async function POST(
     }
 
     // Check which report categories are missing
-    const uploadedCategories = new Set(demandNote.files.map(file => file.fileCategory));
+    const uploadedCategories = new Set(
+      demandNote.files
+        .map((file: DemandFileCategory) => file.fileCategory)
+        .filter((category): category is string => Boolean(category))
+    );
     const requiredCategories = ['traffic', 'medical', 'bills'];
     const missingCategories = requiredCategories.filter(cat => !uploadedCategories.has(cat));
 
