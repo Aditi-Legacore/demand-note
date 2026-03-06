@@ -25,7 +25,8 @@ export async function GET() {
       }),
     ]);
 
-    const statusCounts = grouped.reduce<Record<string, number>>((acc, item) => {
+    const statusCounts = grouped.reduce<Record<string, number>>(
+      (acc: Record<string, number>, item) => {
       const key = (item.status ?? "").toLowerCase();
       acc[key] = item._count._all;
       return acc;
