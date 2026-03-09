@@ -57,7 +57,7 @@ async function createPromptVersion({
   });
 
   const highestVersion = existing.reduce(
-    (max, item) => Math.max(max, item.version),
+    (max: number, item) => Math.max(max, item.version),
     0
   );
   const nextVersion = highestVersion + 1;
