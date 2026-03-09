@@ -54,6 +54,7 @@ export async function POST(request: NextRequest) {
     }
 
     type LegacoreUser = Awaited<ReturnType<typeof prisma.user.findMany>>[number];
+    type NotificationRecord = Awaited<ReturnType<typeof prisma.notification.create>>;
 
     const legacoreUsers = await prisma.user.findMany({
       where: {
@@ -70,7 +71,7 @@ export async function POST(request: NextRequest) {
     const title = "Customer Requested Review";
     const message = `Customer requested review for demand note ${demandNote.clientName || ""}`.trim();
 
-    const legacoreNotifications = await Promise.all(
+    const legacoreNotifications: NotificationRecord[] = await Promise.all(
       legacoreUsers.map((user: LegacoreUser) =>
         prisma.notification.create({
           data: {
@@ -84,7 +85,7 @@ export async function POST(request: NextRequest) {
       )
     );
 
-    legacoreNotifications.forEach((notification) => {
+    legacoreNotifications.forEach((notification: NotificationRecord) => {
       broadcastNotification(toNotificationPayload(notification));
     });
 
