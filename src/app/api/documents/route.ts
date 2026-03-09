@@ -41,6 +41,7 @@ export async function GET() {
 
     type IntakeWithDocuments = Awaited<ReturnType<typeof prisma.intakeInfo.findMany>>;
     type IntakeWithDocument = IntakeWithDocuments[number];
+    type DocumentRecord = IntakeWithDocument["Document"][number];
 
     const intakes: IntakeWithDocuments = await prisma.intakeInfo.findMany({
       where: { userId: session.user.id },
@@ -63,7 +64,7 @@ export async function GET() {
       status: intake.isDraft ? "Draft" : "Hired",
       documentStatus: intake.Document.length > 0 ? "submitted" : "pending",
       createdDate: intake.createdAt.toISOString(),
-      files: intake.Document.map((doc) => doc.fileName),
+      files: intake.Document.map((doc: DocumentRecord) => doc.fileName),
     }));
 
     return NextResponse.json(result);
