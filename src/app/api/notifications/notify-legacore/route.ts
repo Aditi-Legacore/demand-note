@@ -53,6 +53,8 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    type LegacoreUser = Awaited<ReturnType<typeof prisma.user.findMany>>[number];
+
     const legacoreUsers = await prisma.user.findMany({
       where: {
         roles: { hasSome: ["Legacore User", "admin"] },
@@ -69,7 +71,7 @@ export async function POST(request: NextRequest) {
     const message = `Customer requested review for demand note ${demandNote.clientName || ""}`.trim();
 
     const legacoreNotifications = await Promise.all(
-      legacoreUsers.map((user) =>
+      legacoreUsers.map((user: LegacoreUser) =>
         prisma.notification.create({
           data: {
             userId: user.id,
