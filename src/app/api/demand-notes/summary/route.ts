@@ -3,6 +3,11 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
+type DemandNoteStatusGroup = {
+  status: string | null;
+  _count: { _all: number };
+};
+
 export async function GET() {
   try {
     const session = await getServerSession(authOptions);
@@ -26,7 +31,7 @@ export async function GET() {
     ]);
 
     const statusCounts = grouped.reduce<Record<string, number>>(
-      (acc: Record<string, number>, item) => {
+      (acc: Record<string, number>, item: DemandNoteStatusGroup) => {
       const key = (item.status ?? "").toLowerCase();
       acc[key] = item._count._all;
       return acc;
