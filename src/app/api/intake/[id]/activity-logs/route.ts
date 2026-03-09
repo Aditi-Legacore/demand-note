@@ -32,8 +32,10 @@ export async function GET(
     });
 
     // Fetch user details for each activity log
+    type ActivityLogRecord = Awaited<ReturnType<typeof prisma.activityLog.findMany>>[number];
+
     const logsWithUserNames = await Promise.all(
-      activityLogs.map(async (log) => {
+      activityLogs.map(async (log: ActivityLogRecord) => {
         const user = await prisma.user.findUnique({
           where: { uniqueUserId: log.createdBy },
           select: { firstName: true, lastName: true },
