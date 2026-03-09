@@ -4,6 +4,7 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { isAppAdminSession } from "@/lib/roles";
 type CreatorName = { email?: string | null };
+import type { Prisma } from "@prisma/client";
 
 const formatCreatorName = (creator?: CreatorName | null) => {
   if (!creator) return null;
@@ -57,7 +58,7 @@ async function createPromptVersion({
   });
 
   const highestVersion = existing.reduce(
-    (max: number, item) => Math.max(max, item.version),
+    (max: number, item: Prisma.Prompt) => Math.max(max, item.version),
     0
   );
   const nextVersion = highestVersion + 1;
