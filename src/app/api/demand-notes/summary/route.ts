@@ -1,3 +1,4 @@
+import type { Prisma } from "@prisma/client";
 import { NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -26,11 +27,13 @@ export async function GET() {
     ]);
 
     const statusCounts = grouped.reduce<Record<string, number>>(
-      (acc: Record<string, number>, item) => {
-      const key = (item.status ?? "").toLowerCase();
-      acc[key] = item._count._all;
-      return acc;
-    }, {});
+      (acc: Record<string, number>, item: any) => {
+        const key = (item.status ?? "").toLowerCase();
+        acc[key] = item._count._all;
+        return acc;
+      },
+      {}
+    );
 
     return NextResponse.json({
       total,
