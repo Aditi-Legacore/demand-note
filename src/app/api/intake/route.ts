@@ -5,7 +5,9 @@ import { prisma } from "@/lib/prisma";
 import { sendIntakeSubmissionEmail } from "@/lib/email";
 import { IntakeFormData } from "@/types/form";
 import { buildIntakeData } from "@/lib/intakeData/buildIntakeData";
-import { Prisma } from "@prisma/client";
+
+type IntakeInfoCreateData = Parameters<typeof prisma.intakeInfo.create>[0]['data'];
+type IntakeInfoUpdateData = Parameters<typeof prisma.intakeInfo.update>[0]['data'];
 
 
 export async function POST(request: NextRequest) {
@@ -51,23 +53,23 @@ export async function POST(request: NextRequest) {
           data: {
             ...buildIntakeData(data as unknown as Record<string, unknown>),
             isDraft: false, // Mark as submitted
-          } as Prisma.IntakeInfoUpdateInput,
+          } as IntakeInfoUpdateData,
         });
       } else {
         intake = await prisma.intakeInfo.create({
           data: {
             ...buildIntakeData(data as unknown as Record<string, unknown>),
             isDraft: false, // Mark as submitted
-          } as Prisma.IntakeInfoCreateInput,
+          } as IntakeInfoCreateData,
         });
       }
     } else {
-      intake = await prisma.intakeInfo.create({
-        data: {
-          ...buildIntakeData(data as unknown as Record<string, unknown>),
-          isDraft: false, // Mark as submitted
-        } as Prisma.IntakeInfoCreateInput,
-      });
+    intake = await prisma.intakeInfo.create({
+      data: {
+        ...buildIntakeData(data as unknown as Record<string, unknown>),
+        isDraft: false, // Mark as submitted
+      } as IntakeInfoCreateData,
+    });
     }
 
     console.log("data", data);
