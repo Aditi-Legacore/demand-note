@@ -4,7 +4,6 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { isAppAdminSession } from "@/lib/roles";
 type CreatorName = { email?: string | null };
-import type { Prisma } from "@prisma/client";
 
 const formatCreatorName = (creator?: CreatorName | null) => {
   if (!creator) return null;
