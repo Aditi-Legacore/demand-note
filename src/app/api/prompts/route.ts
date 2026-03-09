@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
+import type { Prompt } from "@prisma/client";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { isAppAdminSession } from "@/lib/roles";
@@ -57,7 +58,7 @@ async function createPromptVersion({
   });
 
   const highestVersion = existing.reduce(
-    (max: number, item: Prisma.Prompt) => Math.max(max, item.version),
+    (max: number, item: Prompt) => Math.max(max, item.version),
     0
   );
   const nextVersion = highestVersion + 1;
