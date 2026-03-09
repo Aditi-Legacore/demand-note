@@ -49,6 +49,8 @@ export async function PUT(
       return NextResponse.json({ error: "Prompt not found" }, { status: 404 });
     }
 
+    type PromptVersion = Awaited<ReturnType<typeof prisma.prompt.findMany>>[number];
+
     const versions = await prisma.prompt.findMany({
       where: { docType: existing.docType },
       select: { id: true, version: true },
@@ -59,7 +61,8 @@ export async function PUT(
     const cappedAtV5 = latestVersion >= 5;
 
     if (cappedAtV5) {
-      const v5Target = versions.find((v) => v.version === 5) ?? versions[0];
+      const v5Target: PromptVersion =
+        versions.find((v: PromptVersion) => v.version === 5) ?? versions[0];
 
       const [, updatedV5] = await prisma.$transaction([
         prisma.prompt.updateMany({
