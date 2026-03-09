@@ -40,6 +40,7 @@ export async function GET() {
     }
 
     type IntakeWithDocuments = Awaited<ReturnType<typeof prisma.intakeInfo.findMany>>;
+    type IntakeWithDocument = IntakeWithDocuments[number];
 
     const intakes: IntakeWithDocuments = await prisma.intakeInfo.findMany({
       where: { userId: session.user.id },
@@ -55,7 +56,7 @@ export async function GET() {
       orderBy: { createdAt: "desc" },
     });
 
-    const result = intakes.map((intake) => ({
+    const result = intakes.map((intake: IntakeWithDocument) => ({
       id: intake.id,
       clientName: intake.clientName,
       caseType: intake.Lead?.caseType || "N/A",
