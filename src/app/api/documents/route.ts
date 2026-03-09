@@ -1,8 +1,9 @@
-import { NextRequest, NextResponse, } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { del } from "@vercel/blob";
+import type { Prisma } from "@prisma/client";
 
 // for fetching uploaded documents in table
 
@@ -39,7 +40,19 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const intakes = await prisma.intakeInfo.findMany({
+    type IntakeWithDocuments = Prisma.IntakeInfoGetPayload<{
+      include: {
+        Document: true;
+        Lead: {
+          select: {
+            caseType: true;
+          };
+        };
+        user: true;
+      };
+    }>;
+
+    const intakes: IntakeWithDocuments[] = await prisma.intakeInfo.findMany({
       where: { userId: session.user.id },
       include: {
         Document: true, // ✅ Use uppercase — matches schema
@@ -53,7 +66,7 @@ export async function GET() {
       orderBy: { createdAt: "desc" },
     });
 
-    const result = intakes.map((intake) => ({
+    const result = intakes.map((intake: IntakeWithDocuments) => ({
       id: intake.id,
       clientName: intake.clientName,
       caseType: intake.Lead?.caseType || "N/A",
