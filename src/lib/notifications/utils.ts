@@ -1,8 +1,22 @@
-import type { Notification as PrismaNotification, User } from "@prisma/client";
 import { NotificationStreamPayload } from "@/lib/notifications/bus";
 
-type NotificationWithCreator = PrismaNotification & {
-  createdBy?: Pick<User, "id" | "firstName" | "lastName" | "email"> | null;
+type CreatorSummary = {
+  id: string;
+  firstName?: string | null;
+  lastName?: string | null;
+  email?: string | null;
+};
+
+type NotificationWithCreator = {
+  id: string;
+  userId: string;
+  demandNoteId: string;
+  title: string;
+  message: string;
+  createdById: string;
+  readAt: Date | null;
+  createdAt: Date;
+  createdBy?: CreatorSummary | null;
 };
 
 export function toNotificationPayload(
