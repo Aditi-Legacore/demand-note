@@ -1,38 +1,17 @@
-FROM node:22.14-slim
+FROM node:24-slim
 
-WORKDIR /app
+WORKDIR /app/frontend
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    openssl \
-    curl \
-    && rm -rf /var/lib/apt/lists/*
+# copy the source tree so the Next.js project is available inside the container
+COPY frontend/ .
 
-# Copy package files
-COPY package*.json ./
-COPY prisma ./prisma/
-
-# Install dependencies with legacy peer deps
-RUN npm install --legacy-peer-deps
-
-# Generate Prisma client
-RUN npx prisma generate
-
-# Copy application code
-COPY . .
-
-# Install TypeScript manually before build
-RUN npm install --save-dev --legacy-peer-deps --force typescript @types/node @types/react @types/react-dom
-
-ENV NEXT_TYPESCRIPT_IGNORE_BUILD_ERRORS=1
-ENV NEXT_TELEMETRY_DISABLED=1
-
-# Build the application
+# start from a completely clean slate, then install dependencies and build
+RUN rm -rf node_modules package-lock.json
+RUN npm install
 RUN npm run build
+RUN npm run dev
 
-# Remove dev dependencies
-RUN npm prune --production
-
-USER node
+ENV NODE_ENV=development
 EXPOSE 3000
-CMD ["npm", "start"]
+
+CMD ["npm", "run", "dev"]
