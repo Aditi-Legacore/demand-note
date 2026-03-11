@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest, NextResponse, } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
@@ -39,11 +39,7 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    type IntakeWithDocuments = Awaited<ReturnType<typeof prisma.intakeInfo.findMany>>;
-    type IntakeWithDocument = IntakeWithDocuments[number];
-    type DocumentRecord = IntakeWithDocument["Document"][number];
-
-    const intakes: IntakeWithDocuments = await prisma.intakeInfo.findMany({
+    const intakes = await prisma.intakeInfo.findMany({
       where: { userId: session.user.id },
       include: {
         Document: true, // ✅ Use uppercase — matches schema
@@ -57,14 +53,14 @@ export async function GET() {
       orderBy: { createdAt: "desc" },
     });
 
-    const result = intakes.map((intake: IntakeWithDocument) => ({
+    const result = intakes.map((intake) => ({
       id: intake.id,
       clientName: intake.clientName,
       caseType: intake.Lead?.caseType || "N/A",
       status: intake.isDraft ? "Draft" : "Hired",
       documentStatus: intake.Document.length > 0 ? "submitted" : "pending",
       createdDate: intake.createdAt.toISOString(),
-      files: intake.Document.map((doc: DocumentRecord) => doc.fileName),
+      files: intake.Document.map((doc) => doc.fileName),
     }));
 
     return NextResponse.json(result);

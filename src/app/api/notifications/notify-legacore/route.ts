@@ -53,7 +53,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    type LegacoreUser = Awaited<ReturnType<typeof prisma.user.findMany>>[number];
+    type LegacoreUser = { id: string };
     type NotificationRecord = Awaited<ReturnType<typeof prisma.notification.create>>;
 
     const legacoreUsers = await prisma.user.findMany({

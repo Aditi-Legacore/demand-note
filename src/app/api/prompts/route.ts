@@ -3,95 +3,12 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { isAppAdminSession } from "@/lib/roles";
-type CreatorName = { email?: string | null };
-
-const formatCreatorName = (creator?: CreatorName | null) => {
-  if (!creator) return null;
-  const fullName = [creator.email]
-    .filter((part) => typeof part === "string" && part.trim().length > 0)
-    .join(" ")
-    .trim();
-  return fullName || null;
-};
-
-const toPromptDto = (
-  item: {
-    id: string;
-    docType: string;
-    prompt: string;
-    version: number;
-    activeFlag: boolean;
-    deletedFlag: boolean;
-    createdAt: Date;
-    updatedAt: Date;
-    createdBy: string | null;
-  },
-  createdByName: string | null
-) => ({
-  id: item.id,
-  doc_type: item.docType,
-  prompt: item.prompt,
-  version: item.version,
-  active_flag: item.activeFlag,
-  deleted_flag: item.deletedFlag,
-  created_at: item.createdAt,
-  updated_at: item.updatedAt,
-  created_by: item.createdBy ?? null,
-  created_by_name: createdByName,
-});
-
-const VERSION_LIMIT = 5;
-
-async function createPromptVersion({
-  docType,
-  promptText,
-  userId,
-}: {
-  docType: string;
-  promptText: string;
-  userId: string;
-}) {
-  const existing = await prisma.prompt.findMany({
-    where: { docType, deletedFlag: false },
-    orderBy: { createdAt: "asc" },
-  });
-
-  const highestVersion = existing.reduce<number>(
-    (max, item) => Math.max(max, item.version),
-    0
-  );
-  const nextVersion = highestVersion + 1;
-  const toDeleteCount = Math.max(0, existing.length + 1 - VERSION_LIMIT);
-  const toDelete = existing.slice(0, toDeleteCount);
-
-  const created = await prisma.$transaction(async (tx) => {
-    await tx.prompt.updateMany({
-      where: { docType, activeFlag: true },
-      data: { activeFlag: false },
-    });
-    const newPrompt = await tx.prompt.create({
-      data: {
-        docType,
-        prompt: promptText,
-        version: nextVersion,
-        activeFlag: true,
-        deletedFlag: false,
-        createdBy: userId,
-      },
-    });
-    if (toDelete.length > 0) {
-      await tx.prompt.deleteMany({
-        where: { id: { in: toDelete.map((item) => item.id) } },
-      });
-    }
-    return newPrompt;
-  });
-
-  return {
-    prompt: created,
-    cappedToV5: toDelete.length > 0,
-  };
-}
+import {
+  CreatorName,
+  formatCreatorName,
+  toPromptDto,
+  createPromptVersion,
+} from "./helpers";
 
 export async function GET(request: NextRequest) {
   try {
@@ -200,3 +117,4 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+

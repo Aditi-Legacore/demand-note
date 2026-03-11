@@ -2,8 +2,18 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 
-type NoteWithCreatedBy = Awaited<ReturnType<typeof prisma.note.findMany>>[number];
+type NoteWithCreatedBy = Prisma.NoteGetPayload<{
+  include: {
+    createdBy: {
+      select: {
+        firstName: true,
+        lastName: true,
+      },
+    },
+  },
+}>;
 
 export async function GET(
   request: NextRequest,

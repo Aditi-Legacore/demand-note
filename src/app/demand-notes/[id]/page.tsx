@@ -1,15 +1,9 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback, use } from "react";
-import type { ComponentType } from "react";
+type ReactQuillComponent = typeof import("react-quill-new")["default"];
 
-type ReactQuillProps = {
-  theme: string;
-  value: string;
-  onChange: (content: string, delta?: unknown, source?: unknown, editor?: unknown) => void;
-  readOnly?: boolean;
-  className?: string;
-};
+import { useState, useEffect, useRef, useCallback, use } from "react";
+
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { format, formatDistanceToNow } from "date-fns";
@@ -271,10 +265,10 @@ export default function DemandNoteView({ params }: DemandNoteViewProps) {
   const [isDraftPrefetching, setIsDraftPrefetching] = useState(false);
 
   // Dynamic import for ReactQuill to avoid SSR issues
-  const [ReactQuill, setReactQuill] = useState<ComponentType<ReactQuillProps> | null>(null);
+const [ReactQuill, setReactQuill] = useState<ReactQuillComponent | null>(null);
   useEffect(() => {
     import('react-quill-new').then((mod) => {
-      setReactQuill((mod.default as unknown) as ComponentType<ReactQuillProps>);
+      setReactQuill(() => mod.default);
     });
     import('react-quill-new/dist/quill.snow.css');
   }, []);
