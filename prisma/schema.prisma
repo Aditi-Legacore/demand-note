@@ -32,7 +32,7 @@ model User {
   internalNotes   DemandInternalNote[]
   demandNotes     DemandNote[]
 /* statusHistories DemandStatusHistory[] */
-/*  formSubmissions FormSubmission[] */
+  formSubmissions FormSubmission[]
   intakes         IntakeInfo[]
   jobs            Job[]
   notes           Note[]
@@ -256,6 +256,14 @@ model ActivityLog {
   createdBy        String
   createdAt        DateTime   @default(now())
   intake           IntakeInfo @relation("IntakeToActivityLogs", fields: [intakeId], references: [id], onDelete: Cascade)
+}
+
+model OTP {
+  id         String   @id @default(cuid())
+  email      String
+  otp        String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
 }
 
 model DemandNote {
@@ -485,5 +493,41 @@ model Prompt {
   @@index([docType])
   @@index([docType, activeFlag])
   @@map("Prompt")
+}
+
+model Matter {
+  id              String           @id @default(cuid())
+  title           String
+  description     String?
+  status          String           @default("Open")
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  formSubmissions FormSubmission[]
+}
+
+model FormTemplate {
+  id        String           @id @default(cuid())
+  title     String
+  language  String           @default("English")
+  fields    Json
+  contacts  Json?
+  createdBy String?
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  submissions FormSubmission[]
+}
+
+model FormSubmission {
+  id         String       @id @default(cuid())
+  templateId String
+  userId     String?
+  matterId   String?
+  status     String       @default("Pending")
+  data       Json
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  template   FormTemplate @relation(fields: [templateId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  user       User?        @relation(fields: [userId], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  matter     Matter?      @relation(fields: [matterId], references: [id], onDelete: SetNull, onUpdate: Cascade)
 }
 

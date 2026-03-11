@@ -2,18 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@prisma/client";
 
-type NoteWithCreatedBy = Prisma.NoteGetPayload<{
-  include: {
-    createdBy: {
-      select: {
-        firstName: true,
-        lastName: true,
-      },
-    },
-  },
-}>;
+type NoteWithCreatedBy = {
+  id: string;
+  content: string | null;
+  createdAt: Date;
+  createdBy: {
+    firstName: string | null;
+    lastName: string | null;
+  } | null;
+};
 
 export async function GET(
   request: NextRequest,
@@ -37,7 +35,7 @@ export async function GET(
     //   return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     // }
 
-    const notes: NoteWithCreatedBy[] = await prisma.note.findMany({
+    const notes = (await prisma.note.findMany({
       where: { intakeId: id },
       include: {
         createdBy: {
@@ -48,13 +46,20 @@ export async function GET(
         },
       },
       orderBy: { createdAt: 'desc' },
+    })) as NoteWithCreatedBy[];
+    const transformedNotes = notes.map((note) => {
+      const creator = note.createdBy;
+      const createdBy = creator
+        ? `${creator.firstName || ""} ${creator.lastName || ""}`.trim() || "Unknown"
+        : "Unknown";
+
+      return {
+        id: note.id,
+        content: note.content,
+        createdAt: note.createdAt,
+        createdBy,
+      };
     });
-    const transformedNotes = notes.map((note: NoteWithCreatedBy) => ({
-      id: note.id,
-      content: note.content,
-      createdAt: note.createdAt,
-      createdBy: `${note.createdBy.firstName || ''} ${note.createdBy.lastName || ''}`.trim() || 'Unknown',
-    }));
     return NextResponse.json(transformedNotes);
   } catch (error) {
     console.error("Error fetching notes:", error);

@@ -3,12 +3,18 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { isAppAdminSession } from "@/lib/roles";
+import type { PromptRecord } from "./helpers";
 import {
   CreatorName,
   formatCreatorName,
   toPromptDto,
   createPromptVersion,
 } from "./helpers";
+
+type CreatorRecord = {
+  id: string;
+  email: string | null;
+};
 
 export async function GET(request: NextRequest) {
   try {
@@ -28,10 +34,10 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const prompts = await prisma.prompt.findMany({
+    const prompts = (await prisma.prompt.findMany({
       where: { docType, deletedFlag: false },
       orderBy: [{ createdAt: "desc" }],
-    });
+    })) as PromptRecord[];
     const creatorIds = Array.from(
       new Set(
         prompts
@@ -43,10 +49,10 @@ export async function GET(request: NextRequest) {
     if (creatorIds.length > 0) {
       console.log("creatorIds", creatorIds);
 
-      const creators = await prisma.user.findMany({
+      const creators = (await prisma.user.findMany({
         where: { id: { in: creatorIds } },
         select: { id: true, email: true },
-      });
+      })) as CreatorRecord[];
       creators.forEach((creator) => {
         creatorMap[creator.id] = creator;
       });

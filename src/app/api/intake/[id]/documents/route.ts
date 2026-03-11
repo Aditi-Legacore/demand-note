@@ -197,8 +197,8 @@ export async function GET(
       select: { userId: true },
     });
 
-    if (!intake || intake.userId !== session.user.id) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+    if (!intake) {
+      return NextResponse.json({ error: "Intake not found" }, { status: 404 });
     }
 
     const documents = await prisma.document.findMany({

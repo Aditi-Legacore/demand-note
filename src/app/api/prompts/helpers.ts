@@ -1,6 +1,18 @@
-import type { Prisma, Prompt } from "@prisma/client";
-
 import { prisma } from "@/lib/prisma";
+
+export type PromptRecord = {
+  id: string;
+  docType: string;
+  prompt: string;
+  version: number;
+  activeFlag: boolean;
+  deletedFlag: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  createdBy: string | null;
+};
+
+type BatchPayload = { count: number };
 
 export type CreatorName = { email?: string | null };
 
@@ -50,10 +62,10 @@ export async function createPromptVersion({
   promptText: string;
   userId: string;
 }) {
-  const existing = await prisma.prompt.findMany({
+  const existing = (await prisma.prompt.findMany({
     where: { docType },
     orderBy: { createdAt: "asc" },
-  });
+  })) as PromptRecord[];
 
   const highestVersion = existing.reduce(
     (max, item) => Math.max(max, item.version),
@@ -63,10 +75,7 @@ export async function createPromptVersion({
   const toDeleteCount = Math.max(0, existing.length + 1 - VERSION_LIMIT);
   const toDelete = existing.slice(0, toDeleteCount);
 
-  const statements: [
-    Prisma.PrismaPromise<Prisma.BatchPayload>,
-    Prisma.PrismaPromise<Prompt>
-  ] = [
+  const statements = [
     prisma.prompt.updateMany({
       where: { docType, activeFlag: true },
       data: { activeFlag: false },
@@ -83,7 +92,10 @@ export async function createPromptVersion({
     }),
   ];
 
-  const [, created] = await prisma.$transaction(statements);
+  const [, created] = (await prisma.$transaction(statements)) as [
+    BatchPayload,
+    PromptRecord
+  ];
   return {
     prompt: created,
     cappedToV5: toDelete.length > 0,

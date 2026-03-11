@@ -4,6 +4,22 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { del } from "@vercel/blob";
 
+type DocumentRecord = {
+  fileName: string;
+  filePath: string;
+};
+
+type IntakeWithDocuments = {
+  id: string;
+  clientName: string;
+  isDraft: boolean;
+  createdAt: Date;
+  Document: DocumentRecord[];
+  Lead: {
+    caseType?: string | null;
+  } | null;
+};
+
 // for fetching uploaded documents in table
 
 // export async function GET() {
@@ -39,7 +55,7 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const intakes = await prisma.intakeInfo.findMany({
+    const intakes = (await prisma.intakeInfo.findMany({
       where: { userId: session.user.id },
       include: {
         Document: true, // ✅ Use uppercase — matches schema
@@ -51,7 +67,7 @@ export async function GET() {
         user: true,
       },
       orderBy: { createdAt: "desc" },
-    });
+    })) as IntakeWithDocuments[];
 
     const result = intakes.map((intake) => ({
       id: intake.id,
