@@ -7,35 +7,36 @@ export default withAuth(
     const { pathname } = req.nextUrl;
     const token = req.nextauth.token;
 
-    // If the user has a valid session token
     if (token) {
-      // Check if user has roles
-      const userRoles = token.roles as string[] || [];
-      
-      // Using menuItems allowedRoles
-      const menuItem = menuItems.find(item => item.path === pathname);
+      const userRoles = (token?.roles as string[]) ?? [];
+
+      const menuItem = menuItems.find((item) => item.path === pathname);
+
       if (menuItem?.allowedRoles) {
-        const hasAccess = menuItem.allowedRoles.some(role => userRoles.includes(role));
+        const hasAccess = menuItem.allowedRoles.some((role) =>
+          userRoles.includes(role)
+        );
+
         if (!hasAccess) {
           return NextResponse.redirect(new URL("/", req.url));
         }
       }
 
-      // Prevent logged-in users from visiting auth pages
-      if (pathname === "/auth-choice" || pathname === "/login" || pathname === "/signup" || pathname === "/forgot-password") {
+      if (
+        ["/auth-choice", "/login", "/signup", "/forgot-password"].includes(
+          pathname
+        )
+      ) {
         return NextResponse.redirect(new URL("/", req.url));
       }
-      
+
       return NextResponse.next();
     }
 
-    // 🚫 No valid token (session expired or not logged in)
-    // Redirect to auth-choice page if accessing a protected route
     if (
-      pathname !== "/auth-choice" &&
-      pathname !== "/login" &&
-      pathname !== "/signup" &&
-      pathname !== "/forgot-password" &&
+      !["/auth-choice", "/login", "/signup", "/forgot-password"].includes(
+        pathname
+      ) &&
       !pathname.startsWith("/api") &&
       !pathname.startsWith("/_next") &&
       pathname !== "/favicon.ico"
@@ -43,7 +44,6 @@ export default withAuth(
       return NextResponse.redirect(new URL("/login", req.url));
     }
 
-    // Allow unauthenticated users to access auth pages
     return NextResponse.next();
   },
   {
@@ -51,12 +51,14 @@ export default withAuth(
       authorized: ({ token, req }) => {
         const { pathname } = req.nextUrl;
 
-        // Allow access to auth pages
-        if (pathname === "/auth-choice" || pathname === "/login" || pathname === "/signup" || pathname === "/forgot-password") {
+        if (
+          ["/auth-choice", "/login", "/signup", "/forgot-password"].includes(
+            pathname
+          )
+        ) {
           return true;
         }
 
-        // Require authentication for other routes
         return !!token;
       },
     },
