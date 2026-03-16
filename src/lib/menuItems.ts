@@ -9,6 +9,7 @@ import {
   Users,
   FilePenLine,
 } from "lucide-react";
+import { findMenuRouteAccess } from "./menuAccess";
 // import { Key, ReactNode } from "react";
 
 export interface MenuItem {
@@ -26,12 +27,15 @@ export interface MenuItem {
   allowedRoles?: string[]; // Optional: specify which roles can see this item
 }
 
+const allowedRolesFor = (path: string) =>
+  findMenuRouteAccess(path)?.allowedRoles;
+
 export const menuItems: MenuItem[] = [
   {
     label: "Dashboard",
     path: "/",
     icon: LayoutDashboard,
-    allowedRoles: ["admin", "App admin", "Legacore User", "Customer"],
+    allowedRoles: allowedRolesFor("/"),
     // description: undefined,
     // title: undefined,
     // href: undefined
@@ -40,7 +44,7 @@ export const menuItems: MenuItem[] = [
     label: "Users List",
     path: "/users",
     icon: Users,
-    allowedRoles: ["admin", "App admin"],
+    allowedRoles: allowedRolesFor("/users"),
     // description: undefined,
     // title: undefined,
     // href: undefined
@@ -49,7 +53,7 @@ export const menuItems: MenuItem[] = [
     label: "Leads",
     path: "/leads",
     icon: ClipboardList,
-    allowedRoles: ["admin", "App admin", "Legacore User", "Customer"],
+    allowedRoles: allowedRolesFor("/leads"),
     // description: undefined,
     // title: undefined,
     // href: undefined
@@ -59,7 +63,7 @@ export const menuItems: MenuItem[] = [
     path: "/intake-list",
     activePaths: ["/intake-list", "/intake-preview", "/intake-form"],
     icon: ListChecks,
-    allowedRoles: ["admin", "App admin", "Legacore User"],
+    allowedRoles: allowedRolesFor("/intake-list"),
     // description: undefined,
     // title: undefined,
     // href: undefined
@@ -69,7 +73,7 @@ export const menuItems: MenuItem[] = [
     label: "Stages",
     path: "/stages",
     icon: FolderTree,
-    allowedRoles: ["admin", "App admin", "Legacore User", "Customer"],
+    allowedRoles: allowedRolesFor("/stages"),
     // description: undefined,
     // title: undefined,
     // href: undefined
@@ -78,7 +82,7 @@ export const menuItems: MenuItem[] = [
     label: "Reports",
     path: "/reports",
     icon: BarChart2,
-    allowedRoles: ["admin", "App admin", "Legacore User", "Customer"],
+    allowedRoles: allowedRolesFor("/reports"),
     // description: undefined,
     // title: undefined,
     // href: undefined
@@ -87,7 +91,7 @@ export const menuItems: MenuItem[] = [
     label: "Forms",
     path: "/forms",
     icon: FileText,
-    allowedRoles: ["admin", "App admin", "Legacore User"],
+    allowedRoles: allowedRolesFor("/forms"),
     // description: undefined,
     // title: undefined,
     // href: undefined
@@ -96,7 +100,7 @@ export const menuItems: MenuItem[] = [
     label: "Form Templates",
     path: "/form-templates",
     icon: FileText,
-    allowedRoles: ["admin", "App admin", "Legacore User"],
+    allowedRoles: allowedRolesFor("/form-templates"),
     // description: undefined,
     // title: undefined,
     // href: undefined
@@ -105,7 +109,7 @@ export const menuItems: MenuItem[] = [
     label: "Documents",
     path: "/documents",
     icon: FolderOpen,
-    allowedRoles: ["admin", "App admin", "Legacore User"],
+    allowedRoles: allowedRolesFor("/documents"),
     // description: undefined,
     // title: undefined,
     // href: undefined
@@ -114,7 +118,7 @@ export const menuItems: MenuItem[] = [
     label: "Demand Notes",
     path: "/demand-notes",
     icon: FolderOpen,
-    allowedRoles: ["admin", "App admin", "Legacore User", "Customer"],
+    allowedRoles: allowedRolesFor("/demand-notes"),
     // description: undefined,
     // title: undefined,
     // href: undefined
@@ -123,7 +127,7 @@ export const menuItems: MenuItem[] = [
     label: "Prompt Management",
     path: "/prompt-management",
     icon: FilePenLine,
-    allowedRoles: ["App admin"],
+    allowedRoles: allowedRolesFor("/prompt-management"),
   },
   
 ];

@@ -1,6 +1,6 @@
 import { withAuth } from "next-auth/middleware";
 import { NextResponse } from "next/server";
-import { menuItems } from "@/lib/menuItems";
+import { findMenuRouteAccess } from "@/lib/menuAccess";
 
 export default withAuth(
   function middleware(req) {
@@ -10,10 +10,10 @@ export default withAuth(
     if (token) {
       const userRoles = (token?.roles as string[]) ?? [];
 
-      const menuItem = menuItems.find((item) => item.path === pathname);
+      const menuRoute = findMenuRouteAccess(pathname);
 
-      if (menuItem?.allowedRoles) {
-        const hasAccess = menuItem.allowedRoles.some((role) =>
+      if (menuRoute?.allowedRoles) {
+        const hasAccess = menuRoute.allowedRoles.some((role) =>
           userRoles.includes(role)
         );
 
