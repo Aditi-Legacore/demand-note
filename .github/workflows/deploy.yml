@@ -31,3 +31,4 @@ jobs:
           tags: |
             ${{ secrets.DOCKERHUB_USERNAME }}/demand-note:latest
             ${{ secrets.DOCKERHUB_USERNAME }}/demand-note:${{ github.sha }}
+            
