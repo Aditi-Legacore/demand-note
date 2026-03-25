@@ -6,7 +6,10 @@ import type { MouseEvent } from "react";
 export default function Logout() {
   const handleLogout = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    void signOut({ callbackUrl: "/login" });
+    // void signOut({ callbackUrl: "/login" });
+    void signOut({
+      callbackUrl: `${window.location.origin}/login`
+    });
   };
 
   return (
