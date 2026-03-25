@@ -25,18 +25,19 @@ RUN apt-get update && apt-get install -y \
 # Upgrade pip
 RUN pip install --upgrade pip
 
-# Copy requirements
-COPY requirements.txt .
+# Copy requirements first
+COPY requirements.txt /backend/
 
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy backend code into /backend
+# Copy backend code
 COPY . /backend
 
 # Environment variables
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONPATH=/backend
 
 # Run pipeline
 CMD ["python", "-u", "/backend/pipeline/main.py"]

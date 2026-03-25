@@ -1,6 +1,6 @@
 FROM node:20-alpine AS builder
 
-WORKDIR /app
+WORKDIR /frontend
 
 # Install dependencies
 COPY package*.json ./
@@ -21,14 +21,15 @@ COPY . .
 # Build app
 RUN npm run build
 
+
 # Production stage
 FROM node:20-alpine
 
-WORKDIR /app
+WORKDIR /frontend
 
 ENV NODE_ENV=production
 
-COPY --from=builder /app ./
+COPY --from=builder /frontend ./
 
 EXPOSE 3000
 
