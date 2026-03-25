@@ -7,6 +7,7 @@ WORKDIR /app
 # Install system dependencies required by requirements.txt
 RUN apt-get update && apt-get install -y \
     tesseract-ocr \
+    libtesseract-dev \
     poppler-utils \
     libgl1 \
     libglib2.0-0 \
