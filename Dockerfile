@@ -1,20 +1,26 @@
-# Install dependencies
-FROM node:20-alpine AS deps
+FROM node:20-alpine AS builder
+
 WORKDIR /app
+
+# Install dependencies
 COPY package*.json ./
 RUN npm install
 
-# Build app
-FROM node:20-alpine AS builder
-WORKDIR /app
+# Copy prisma first
+COPY prisma ./prisma
 
-COPY --from=deps /app/node_modules ./node_modules
+# Generate prisma client
+RUN npx prisma generate
+
+# Copy rest of code
 COPY . .
 
+# Build next app
 RUN npm run build
 
-# Production
+# Production image
 FROM node:20-alpine
+
 WORKDIR /app
 
 ENV NODE_ENV=production
