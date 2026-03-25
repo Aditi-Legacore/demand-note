@@ -37,6 +37,7 @@ COPY . .
 # Environment variables
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONPATH=/
 
 # Run pipeline
 CMD ["python", "-u", "pipeline/main.py"]
