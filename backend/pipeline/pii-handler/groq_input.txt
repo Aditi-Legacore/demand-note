@@ -1,0 +1,745 @@
+== EXTRACT PAGE 11 ==
+
+Sharp HealthCare
+11/7/2024
+3:42:58
+PM PST
+PAGE
+12/024
+Fax server
+SHC Virtual Location
+Gladstone, Abbie L
+5651 Copley Drive; Suite A
+MRN: 103089520, DOB: 12/14/1999, Sex: F
+SAN DIEGO CA 92111-7903 — Adm: 7/11/2024, D/C: 7/11/2024
+07/11/2024 - ED in Sharp Memorial Hospital Emergency (continued)
+Labs (continued)
+SMHLab
+6.0- 8.3 a/dL
+a
+3.5-5.7.o/dL
+—
+SMHLab
+>=60
+_
+SMHLab
+Albumin
+EGFR
+Calculation based onthe Chronic Kidney Disease Epidemiology Collaboration (CKD-EPI) equation refit without adjustment for
+race
+Testing Performed By
+Lab -Abbreviation
+Name
+Director
+Address
+Valid Date Range
+32- SMHLab
+SMH HOSPITAL LAB
+Arturo Mendoza,
+7901 FROST STREET
+04/03/23 0931 - Present
+SAN DIEGO CA 92123
+Ethanol (Final result)
+3
+y.Andrew Williamson, MD on 07/11/24 1426
+Completed
+Andrew Williamson, MD 07/11/24 1426
+sf. Andrew Williamson, MD
+Andrew Williamson, MD
+Standard
+STAT STAT 07/11/24 1426 - 1 occurrence
+“Release topatient
+Immediate
+Specimen Information
+ID
+Type
+Source
+Collected By
+24M-193C01021
+Blood
+Blood
+Patricia Howard 07/11/24 1455
+Ethanol (Normal)
+Resulted: 07/11/24 1550, Result status: Final result
+tes. Andrew Williamson, MD 07/11/24 1426
+:
+Completed
+, Background User 07/11/24 1550
+:Patricia Howard 07/11/24 1455
+SMH HOSPITAL LAB
+05D0700681
+Components
+Lomponent
+Value
+ReferenceRange Flag
+oo
+EABoo
+Ethanol Lvl
+<10
+<10 mg/dL
+—
+SMHLab
+Testing Performed By
+wdLab -Abbreviation
+Name
+Director
+Address
+ValidDate Range
+32- SMHLab
+SMH HOSPITAL LAB
+Arturo Mendoza,
+7901 FROST STREET
+04/03/23 0931 - Present
+MD
+SAN DIEGO CA 92123
+Protime-INR (Final result)
+:.Andrew Williamson, MD on 07/11/24 1426
+:Completed
+Andrew Williamson, MD 07/11/24 1426
+Andrew Williamson, MD
+Andrew Williamson, MD
+Standard
+2 STAT STAT 07/11/24 1426 - 1 occurrence
+i
+ir
+oe ralease
+Andrew Williamson, MD (auto-released) 7/11/2024
+2:26 PM
+Printed on 11/7/24
+3:40 PM
+Page 11
+eS
+ye
+EE
+ey
+13 - 39U/L
+nob...
+aa
+:
+SSS
+~
+;
+t
+\
+roy
+Lab Collect
+s,Final result
+PM
+Ans’
+=
+vee
+Rope =
+SS
+Poe
+~
+od
+4
+yO
+>
+-
+-
+-
+lo
+Lab
+Riva
+aa
+Mer
+.
+|
+3
+:
+|
+.
+Be
+t
+!
+nn)
+
+== EXTRACT PAGE 12 ==
+
+Sharp HealthCare
+11/7/2024
+3:42:58
+PM PST
+PAGE
+13/024
+Fax server
+SHC Virtual Location
+Gladstone, Abbie L
+5651 Copley Drive; Suite A
+MRN: 103089520, DOB: 12/14/1999, Sex: F
+SAN DIEGO CA 92111-7903 — Adm: 7/11/2024, D/C: 7/11/2024
+07/11/2024 - ED in Sharp Memorial Hospital Emergency (continued)
+Labs (continued)
+Questionnaire
+Question
+Answer
+Release to patient
+Immediate
+Specimen Information
+iD
+Type
+Source
+GollectedBy
+24M-193G00170
+Blood
+Blood
+Patricia Howard 07/11/24 1455
+ald
+Andrew Williamson, MD 07/11/24 1426
+Lab, Background User 07/11/24 1610
+»:SMH HOSPITAL LAB
+Completed
+. Patricia Howard 07/11/24 1455
+=05D0700681
+DIAGNOSIS
+TARGET INR
+RANGE
+Venous Thrombosis and/or Pulmonary Embolism
+2.5
+2.0-3.0
+Prophylaxis with MI or Atrial Fibrillation
+and most other indications
+High risk patients with Mechanical Heart valves
+3.0
+2.5-3.5
+or systemic Arterial Embolism
+VALVE REPLACEMENT/MECHANICAL
+Aortic: bileaflet in NSR with normal LA size
+2.5
+2.0-3.0
+Medronic Hall tilting disk inNSR
+with normal LA size
+2.5
+2.0-3.0
+following prosthetic valve thrombosis
+3.5
+3.0-4.0
+Mitral: bileaflet or tilting disk
+3.0
+2.5-3.5
+following prosthetic valve thrombosis
+4.0
+3.5-4.5
+Caged ball or caged disk (aortic or mitral)
+3.0
+2.5-3.5
+With additional risk factors for thromboembolism
+3.0
+2.5-3.5
+Components
+Component
+Value
+Protime
+13.1
+9.4-
+12.5 seconds
+H*
+SMHLab
+INR
+44
+0.8-1.2
+—
+SMHLab
+Testing Performed By
+Lab -Abbreviation
+Name
+Director
+Address
+ValidDate Range
+32 - SMHLab
+SMH HOSPITAL LAB
+Arturo Mendoza,
+7901 FROST STREET
+04/03/23 0931 - Present
+MD
+SAN DIEGO CA 92123
+Complete Blood Count With Differential (Final result)
+sed
+by:Andrew Williamson, MD on 07/11/24 1426
+Andrew Williamson, MD 07/11/24 1426
+c
+y.Andrew Williamson, MD
+¥. STAT STAT 07/11/24 1426 - 1 occurrence
+Completed
+Andrew Williamson, MD
+oS
+Standard
+3,Lab Collect
+Final result
+:Andrew Williamson, MD (auto-released) 7/11/2024
+2:26 PM
+Questionnaire
+Question
+Answer.
+Release to patient
+Immediate
+Specimen Information
+ID
+Type
+24M-193H00596
+Blood
+Printed on 11/7/24
+3:40 PM
+Page 12
+py TR
+EE Mw sey
+BOT
+ES
+ES A
+TS TNA
+'
+“4
+4
+|
+a
+i
+ry
+“5
+ro
+4
+J
+~
+:
+3
+“7
+4}
+foo
+a
+naan
+Valin,
+71
+al
+“HOARE Es
+‘
+Source
+“2
+OT
+|
+Blood
+Patricia Howard 07/11/24 1455
+
+== EXTRACT PAGE 13 ==
+
+Sharp HealthCare
+11/7/2024
+3:42:58
+PM PST
+PAGE
+14/024
+Fax server
+SHC Virtual Location
+Gladstone, Abbie L
+5651 Copley Drive; Suite A
+MRN: 103089520, DOB: 12/14/1999, Sex: F
+SAN DIEGO CA 92111-7903 — Adm: 7/11/2024, D/C: 7/11/2024
+07/11/2024 - ED in Sharp Memorial Hospital Emergency (continued)
+Labs (continued)
+Complete Blood Count With Differential (Normal)
+Resulted: 07/11/24 1521, Result status: Final result
+tes. Andrew Williamson, MD 07/11/24 1426
+:
+Completed
+, Background User 07/11/24 1521
+:Patricia Howard 07/11/24 1455
+tab: SMH HOSPITAL LAB
+05D0700681
+Components
+Reference Range
+Flag
+Lab
+SMHLab
+11.6 - 15.0 a/dL
+35.0 - 45.0 %
+7.5 -11.2 fh
+=
+43-77%
+=
+16 - 46 %
+=
+4-11.%
+=
+127.%
+=
+0-1.%
+=
+1.9.-.8.2 KimeL
+=
+SMHLab
+1.1,-.3.1.
+KémeL
+=
+SMHLab
+0.2 -.0.9 K/meL
+=
+SMHLab
+.
+0.0 - 0.5 K/meL
+=
+SMHLab
+Basophils Absolute
+0.0
+0.0 - 0.1
+KémcL
+_—
+SMHLab
+Testing Performed By
+ba
+HOR
+NAR
+Director
+Address
+Valid
+DateRange
+32-SMHLab-
+SMHHOSPITAL LAB
+Arturo Mendoza,
+7801 FROST STREET
+04/03/23 0931 -Present
+MD
+SAN DIEGO CA 92123
+Rainbow Draw ED Panel (Final result)
+. Andrew Williamson, MD on 07/11/24 1426
+Andrew Williamson, MD 07/11/24 1426
+st. Andrew Williamson, MD
+Andrew Williamson, MD
+Standard
+¢ STAT Once 07/11/24 1426 - 1 occurrence
+c
+:Completed
+Questionnaire
+Question
+Light. blue.
+Red top
+Lavender
+Release to patient
+Specimen Information
+ID
+Type
+Source
+Collected By
+“24M-193A00207
+Blood
+Blood
+07/11/24 1455
+Rainbow Draw ED Panel
+Light Blue Top
+Result status: No result
+Printed on 11/7/24
+3:40 PM
+Page 13
+TT
+NENmm
+spre
+ee
+es
+7
+SO
+NEN
+FNnnn
+&
+“
+Soe pe
+:
+;
+I
+'
+T“beAbbreviation
+ne
+inankas:
+Ra
+Valid atemane
+peace
+SARE
+ok
+becca
+|
+.
+S
+yy
+atey
+:
+“ot
+Immediate
+
+== EXTRACT PAGE 14 ==
+
+Sharp HealthCare
+SHC Virtual Location
+5651 Copley Drive; Suite A
+SAN DIEGO CA 92111-7903 — Adm: 7/11/2024, D/C: 7/11/2024
+11/7/2024
+3:42:58
+PM PST
+PAGE
+15/024
+Fax server
+Gladstone, Abbie L
+MRN: 103089520, DOB: 12/14/1999, Sex: F
+07/11/2024 - ED in Sharp Memorial Hospital Emergency (continued)
+Obtain Specimen (never received specimen in lab)]
+‘
+ad byPatricia Howard 07/11/24 1455
+Light Green Top
+Obtain Specimen (never received specimen in lab)}
+o
+¥
+Patricia Howard 07/11/24 1455
+Light Green Top
+3 Andrew Williamson, MD 07/11/24 1426
+Lab, Background User 07/11/24 1702
+Andrew Williamson, MD 07/11/24 1426
+Rosalinda Salazar 07/11/24 2359 [Unable to
+» Andrew Williamson, MD 07/11/24 1426
+Rosalinda Salazar 07/11/24 2359 [Unable to
+Canceled
+07/11/24 2359
+>SHARP LABORATORY SERVICES
+Result status: No result
+:.Canceled
+7111124 2359
+SHARP LABORATORY SERVICES
+Resulted: 07/11/24 1702, Result status: Final result
+;.Completed
+7,Patricia Howard 07/11/24 1455
+SMH HOSPITAL LAB
+05D0700681
+Components
+Reference
+Component
+Value.
+Range
+Flag
+Lab
+Extra Tube
+Hold for add-
+—
+_—
+SMHLab
+ons.
+vt: Auto resulted.
+Lavender Top
+btain Specimen (never received specimen in lab)]
+py Patricia Howard 07/11/24 1455
+Lavender Top
+ides
+Andrew Williamson, MD 07/11/24 1426
+:Lab, Background User 07/11/24 1702
+2.SMH HOSPITAL LAB
+Components
+Auto resulted.
+Testing Performed By
+Andrew Williamson, MD 07/11/24 1426
+Rosalinda Salazar 07/11/24 2359 [Unable to
+ons.
+Result status: No result
+=Canceled
+07/11/24 2359
+b: SHARP LABORATORY SERVICES
+Resulted: 07/11/24 1702, Result status: Final result
+;.Completed
+Patricia Howard 07/11/24 1455
+05D0700681
+Reference
+Range
+Flag
+Lab
+SMHLab
+3
+HOSPITAL
+LAB
+Light Green Top (Final result)
+Address
+7901 FROST STREET
+SAN DIEGO CA 92123
+Printed on 11/7/24
+3:40 PM
+Page 14
+ar FAA
+py TR
+EE Mw sey
+TTT
+A
+A
+ee
+|]
+ae
+wri
+me
+wee
+ree
+wobab: Abbreviation Nam)
+Director
+:
+Valid DateRange
+32 - SMHLab
+SMH
+:
+Arturo Mendoza,
+7]
+.
+“(4/03/23 0931
+- Present
+4
+MD
+TTP
+reg
+
+== EXTRACT PAGE 15 ==
+
+Sharp HealthCare
+11/7/2024
+3:42:58
+PM PST
+PAGE
+16/024
+Fax server
+SHC Virtual Location
+Gladstone, Abbie L
+5651 Copley Drive; Suite A
+MRN: 103089520, DOB: 12/14/1999, Sex: F
+SAN DIEGO CA 92111-7903 — Adm: 7/11/2024, D/C: 7/11/2024
+07/11/2024 - ED in Sharp Memorial Hospital Emergency (continued)
+Labs (continued)
+Completed
+Order‘Placed as a reflex to Rainbow Draw ED Panel ordered on 07/1 24at 1426
+Andrew Williamson, MD 07/11/24 1426
+Andrew Williamson, MD
+¢ Timed Once 07/11/24 1426- 1. occurrence
+Andrew Williamson, MD
+a
+Standard
+3:Lab Collect
+'s.Final result
+Andrew Williamson, MD (auto-released) 711112024
+2:26 PM
+Specimen Information
+1
+JD
+Type
+Source
+CollectedBy
+24M-193A00208
+Blood
+_—
+Patricia Howard 07/11/24 1455
+Light Green Top
+Resulted: 07/11/24 1702, Result status: Final result
+:, Andrew Williamson, MD 07/11/24 1426
+;Completed
+Lab, Background User 07/11/24 1702
+Patricia Howard 07/11/24 1455
+b. SMH HOSPITAL LAB
+05D0700681
+Components
+Gomponent
+Value
+Reference Range Flag
+ba
+Extra Tube
+Hold for add-
+—
+_—
+SMHLab
+ons.
+Testing Performed By
+i
+Director
+Address
+Valid Date Range
+32- SMHLab
+SMH HOSPITAL LAB
+Arturo Mendoza,
+7901 FROST STREET
+04/03/23 0931- Present
+MD
+SAN DIEGO CA 92123
+Lavender Top (Final result)
+Completed
+Order placed as a reflex to Rainbow Draw ED Panel ordered on 07/1 Vea at 1426
+Andrew Williamson, MD 07/11/24 1426
+Andrew Williamson, MD
+Andrew Williamson, MD
+Standard
+Timed Once 07/11/24 1426 - 1 occurrence
+Andrew Williamson, MD (auto-released) 7/11/202
+Specimen Information
+1D
+Type
+Source
+BY
+SSHH
+24M-193A00211
+Blood
+—
+Patricia Howard07/11/24 1455
+Lavender Top
+Resulted: 07/11/24 1702, Result status: Final result
+7 Andrew Williamson, MD 07/11/24 1426
+Lab, Background User 07/11/24 1702
+»:SMH HOSPITAL LAB
+Completed
+. Patricia Howard 07/11/24 1455
+05D0700681
+Components
+Gomponent
+Value
+Reference Range
+Flag
+hab
+Extra Tube
+Hold for add-
+—
+_—
+SMHLab
+ons.
+: Auto resulted.
+Testing Performed By
+bab»
+Abbreviation
+Name
+Director
+Address
+Valid DateRange
+32- SMHLab
+SMH HOSPITAL LAB
+Arturo Mendoza,
+7901 FROST STREET
+04/03/23 0931- Present
+MD
+SAN DIEGO CA 92123
+Printed on 11/7/24
+3:40 PM
+Page 15
+BOT
+A
+TEN TIS
+A
+#:Auto resulted.
+Riva
+AS:
+RPSL
+Vala Rate
+.
+|
+rs
+:
+7d
+.
+.
+“
+i
+Lab Collect
+s. Final result
+7724
+2:26 PM
+i
+1
+.
+Collected"
+yon
+:
+)
+Rivnntne:
+aoa
+Vata mas

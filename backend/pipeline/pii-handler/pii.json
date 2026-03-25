@@ -1,0 +1,163 @@
+{
+  "documents": [
+    {
+      "doc_id": "2024-11-13-Traffic_Collision_Report",
+      "pages": [
+        "11",
+        "12",
+        "13"
+      ]
+    },
+    {
+      "doc_id": "2024-12-12-Medical_Report",
+      "pages": [
+        "14",
+        "15"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "page_no": "11",
+      "doc_id": "2024-11-13-Traffic_Collision_Report",
+      "continuation": {
+        "prev_page_continued": "false",
+        "confidence": "high",
+        "reason": "First page with unique patient chart and incident date"
+      },
+      "category": {
+        "matching_category": "Traffic Collision Report",
+        "confidence": "high"
+      },
+      "date_of_incident": "2024-11-13",
+      "provider": {
+        "name": "San Diego Auto Injury Center",
+        "address": "241 W. 35th Street Suite B, National City , CA, 91950",
+        "phone": "619-380-3235",
+        "email": "sdinjurychiro@gmail.com"
+      }
+    },
+    {
+      "page_no": "12",
+      "doc_id": "2024-11-13-Traffic_Collision_Report",
+      "continuation": {
+        "prev_page_continued": "true",
+        "confidence": "high",
+        "reason": "Same provider, patient, date, and ongoing narrative with 'Page 2 of 48'"
+      },
+      "category": {
+        "matching_category": "Traffic Collision Report",
+        "confidence": "high"
+      },
+      "date_of_incident": "2024-11-13",
+      "provider": {
+        "name": "San Diego Auto Injury Center",
+        "address": "241 W. 35th Street Suite B, National City , CA, 91950",
+        "phone": "619-380-3235",
+        "email": "sdinjurychiro@gmail.com"
+      }
+    },
+    {
+      "page_no": "13",
+      "doc_id": "2024-11-13-Traffic_Collision_Report",
+      "continuation": {
+        "prev_page_continued": "true",
+        "confidence": "high",
+        "reason": "Same provider, patient, date, and ongoing narrative with 'Page 3 of 48'"
+      },
+      "category": {
+        "matching_category": "Traffic Collision Report",
+        "confidence": "high"
+      },
+      "date_of_incident": "2024-11-13",
+      "provider": {
+        "name": "San Diego Auto Injury Center",
+        "address": "241 W. 35th Street Suite B, National City , CA, 91950",
+        "phone": "619-380-3235",
+        "email": "sdinjurychiro@gmail.com"
+      }
+    },
+    {
+      "page_no": "14",
+      "doc_id": "2024-12-12-Medical_Report",
+      "continuation": {
+        "prev_page_continued": "false",
+        "confidence": "high",
+        "reason": "New provider, different date, and distinct medical report format"
+      },
+      "category": {
+        "matching_category": "Medical Report",
+        "confidence": "high"
+      },
+      "date_of_service": "2024-12-12",
+      "provider": {
+        "name": "PAUL A. JAIN, M.D., Q.M.E.",
+        "address": "3838 Camino Del Rio N, STE 240, San Diego, CA 92108",
+        "phone": null,
+        "email": null
+      }
+    },
+    {
+      "page_no": "15",
+      "doc_id": "2024-12-12-Medical_Report",
+      "continuation": {
+        "prev_page_continued": "true",
+        "confidence": "high",
+        "reason": "Same provider, date, and ongoing narrative with 'Page 2' reference"
+      },
+      "category": {
+        "matching_category": "Medical Report",
+        "confidence": "high"
+      },
+      "date_of_service": "2024-12-12",
+      "provider": {
+        "name": "PAUL A. JAIN, M.D., Q.M.E.",
+        "address": "3838 Camino Del Rio N, STE 240, San Diego, CA 92108",
+        "phone": null,
+        "email": null
+      }
+    }
+  ],
+  "pii": {
+    "Person Name": [
+      "Mr. Thomas Peikert",
+      "Thomas Peikert",
+      "Sergio",
+      "Zach Beatty",
+      "PAUL A. JAIN, M.D., Q.M.E.",
+      "Mr. Thomas Piekert"
+    ],
+    "Email": [
+      "peikertt@gmail.com",
+      "sdinjurychiro@gmail.com"
+    ],
+    "Phone": [
+      "619-380-3235"
+    ],
+    "SSN": [],
+    "Street Address": [
+      "852 paraiso ave",
+      "241 W. 35th Street Suite B",
+      "3838 Camino Del Rio N, STE 240"
+    ],
+    "City": [
+      "National City",
+      "San Diego"
+    ],
+    "Zip": [
+      "91950",
+      "92108"
+    ],
+    "Date of Birth": [
+      "36 year old"
+    ],
+    "Medical Record Number": [
+      "1002",
+      "862284215"
+    ],
+    "Hospital": [
+      "San Diego Auto Injury Center"
+    ],
+    "Insurance ID": []
+  }
+}

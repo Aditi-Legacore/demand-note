@@ -1,0 +1,17 @@
+You will be given a portion of a medical record.
+Your task is to extract ONLY the following, using exact wording from the text.
+Do NOT summarize, interpret, or infer.
+
+Extract:
+1. Dates and times of encounters
+2. Patient name
+3. Provider names and roles
+4. Mechanism of injury
+5. Chief complaints and symptom descriptions
+6. Abnormal or positive physical exam findings
+7. Treatments, medications, or procedures performed or ordered
+8. Imaging IMPRESSION sections (verbatim)
+9. Diagnoses or assessments explicitly stated
+
+Output as bullet points grouped under these exact headings.
+If a category is not present, omit it.

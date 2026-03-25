@@ -1,0 +1,14 @@
+You will be given extracted factual data from multiple sections of a medical record.
+
+Your task is to:
+- Remove duplicates
+- Preserve original wording
+- Preserve chronological order
+- Keep provider attribution when present
+- Do NOT summarize or rephrase
+
+Output four sections only:
+1. Encounter Timeline (chronological bullets)
+2. Clinical Findings (abnormal/positive only)
+3. Care Actions and Decisions
+4. Diagnoses (verbatim, in original order)

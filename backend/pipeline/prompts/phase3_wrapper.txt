@@ -1,0 +1,11 @@
+Using ONLY the facts provided below, generate a “Medical Care and Injuries Summary” following ALL prior constraints.
+
+Do not introduce new facts.
+Do not restate vitals or normal exams.
+Do not interpret causality or outcomes.
+
+Maintain:
+- Provider attribution
+- Event-driven narrative
+- One single paragraph
+- Omit unsupported sections
