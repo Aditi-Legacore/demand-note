@@ -2,7 +2,7 @@
 # Core dependencies (required)
 
 PyMuPDF==1.23.8           # Advanced PDF text extraction with OCR fallback
-PyPDF2==4.0.1             # Fallback extraction method (safety net)
+PyPDF2==3.0.1            # Fallback extraction method (safety net)
 
 # OCR & Image Processing
 Pillow==10.1.0            # PIL: Image processing (JPEG, PNG, etc.)
