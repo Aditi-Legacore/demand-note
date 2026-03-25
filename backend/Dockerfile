@@ -39,4 +39,4 @@ ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
 
 # Run pipeline
-CMD ["python", "pipeline/main.py"]
+CMD ["python", "-u", "pipeline/main.py"]
