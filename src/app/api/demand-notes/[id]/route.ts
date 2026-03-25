@@ -48,7 +48,16 @@ export async function GET(
         },
         files: {
           include: {
-            tasks: true,
+            tasks: {
+              select: {
+                id: true,
+                status: true,
+                outputSummary: true,
+                editedSummary: true,
+                endTs: true,
+                editedSummaryTs: true,
+              },
+            },
           },
         },
       },

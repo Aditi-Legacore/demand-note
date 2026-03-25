@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import NewIntakeModal from '@/components/NewIntakeModal';
 import Pagination from "@/components/ui/pagination";
 import LoadingSkeleton from "@/components/ui/loading-skeleton";
+import { useGlobalSearch } from "@/contexts/GlobalSearchContext";
 
 interface IntakeData {
   id: string;
@@ -25,7 +26,7 @@ interface IntakeData {
 export default function IntakeList() {
   const [intakesData, setIntakesData] = useState<IntakeData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
+  const { query: searchQuery, setQuery: setSearchQuery } = useGlobalSearch();
   const [filterValue, setFilterValue] = useState("all");
   const [caseTypeFilter, setCaseTypeFilter] = useState("all");
   const [dateFromFilter, setDateFromFilter] = useState("");
@@ -141,7 +142,7 @@ export default function IntakeList() {
       });
     }
     return filters;
-  }, [searchQuery, filterValue, caseTypeFilter, dateFromFilter, dateToFilter]);
+  }, [searchQuery, filterValue, caseTypeFilter, dateFromFilter, dateToFilter, setSearchQuery]);
 
   // Reset filters function
   const resetFilters = () => {

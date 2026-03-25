@@ -27,6 +27,7 @@ import Pagination from "@/components/ui/pagination";
 import LoadingSkeleton from "@/components/ui/loading-skeleton";
 import ActiveFilters from "@/components/ui/ActiveFilters";
 import { useRouter } from "next/navigation";
+import { useGlobalSearch } from "@/contexts/GlobalSearchContext";
 
 interface DemandNote {
   id: string;
@@ -46,10 +47,10 @@ type SummaryCounts = {
 export default function DemandNotes() {
   const router = useRouter();
   const [allDemandNotes, setAllDemandNotes] = useState<DemandNote[]>([]);
-  const [pagedDemandNotes, setPagedDemandNotes] = useState<DemandNote[]>([]);
-  const [totalDemandNotesCount, setTotalDemandNotesCount] = useState(0);
+  // const [pagedDemandNotes, setPagedDemandNotes] = useState<DemandNote[]>([]);
+  const [, setTotalDemandNotesCount] = useState(0);
   const [pendingFetches, setPendingFetches] = useState(0);
-  const [pageReloadId, setPageReloadId] = useState(0);
+  const [, setPageReloadId] = useState(0);
   const [fullReloadId, setFullReloadId] = useState(0);
   const [summaryCounts, setSummaryCounts] = useState<SummaryCounts>({
     total: 0,
@@ -58,7 +59,7 @@ export default function DemandNotes() {
     published: 0,
   });
   const [cardsLoading, setCardsLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
+  const { query: searchQuery, setQuery: setSearchQuery } = useGlobalSearch();
   const [statusFilter, setStatusFilter] = useState("all");
   const [sortColumn, setSortColumn] = useState<string>("updatedAt");
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("desc");
@@ -67,7 +68,7 @@ export default function DemandNotes() {
   const isLoading = pendingFetches > 0;
   const fullFetchReloadRef = useRef(0);
   const hasActiveFilter = searchQuery.trim().length > 0 || statusFilter !== "all";
-  const usingServerPagination = !hasActiveFilter;
+  // const usingServerPagination = !hasActiveFilter;
   const incrementPendingFetches = () =>
     setPendingFetches((prev) => prev + 1);
   const decrementPendingFetches = () =>
@@ -103,10 +104,10 @@ export default function DemandNotes() {
     return () => controller.abort();
   }, []);
 
+  // Load ALL demand notes for client-side pagination (no loading on page change)
   useEffect(() => {
-    if (!hasActiveFilter) return;
-
-    if (allDemandNotes.length > 0 && fullFetchReloadRef.current === fullReloadId) {
+    // Skip if we already have all notes loaded and no filters/search
+    if (allDemandNotes.length > 0 && fullFetchReloadRef.current === fullReloadId && !hasActiveFilter) {
       return;
     }
 
@@ -136,42 +137,10 @@ export default function DemandNotes() {
 
     void fetchFullNotes();
     return () => controller.abort();
-  }, [hasActiveFilter, fullReloadId, allDemandNotes.length]);
+  }, [fullReloadId, allDemandNotes.length, hasActiveFilter]);
 
-  useEffect(() => {
-    if (hasActiveFilter) return;
-    const controller = new AbortController();
-    const signal = controller.signal;
-
-    const fetchPageNotes = async () => {
-      incrementPendingFetches();
-      try {
-        const params = new URLSearchParams({
-          page: currentPage.toString(),
-          limit: itemsPerPage.toString(),
-        });
-        const response = await fetch(`/api/demand-notes?${params}`, { signal });
-        if (!response.ok) throw new Error("Failed to load demand notes");
-        const data = await response.json();
-        if (signal.aborted) return;
-        const notesArray = Array.isArray(data.notes) ? data.notes : [];
-        setPagedDemandNotes(notesArray);
-        setTotalDemandNotesCount(
-          typeof data.total === "number" ? data.total : notesArray.length
-        );
-      } catch (error) {
-        if (signal.aborted) return;
-        console.error("Error loading demand notes:", error);
-      } finally {
-        decrementPendingFetches();
-      }
-    };
-
-    void fetchPageNotes();
-    return () => controller.abort();
-  }, [currentPage, itemsPerPage, hasActiveFilter, pageReloadId]);
-
-  const baseNotes = hasActiveFilter ? allDemandNotes : pagedDemandNotes;
+  // Note: We no longer need the paged fetch - using client-side pagination instead
+  const baseNotes = allDemandNotes;
 
   // FILTERING
   const filteredNotes = useMemo(() => {
@@ -225,19 +194,15 @@ export default function DemandNotes() {
     return sorted;
   }, [filteredNotes, sortColumn, sortDirection]);
 
-  // Determine which slice to show
+  // Client-side pagination: always slice the sorted data for the current page
   const displayedNotes = useMemo(() => {
-    if (usingServerPagination) {
-      return sortedNotes;
-    }
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     return sortedNotes.slice(startIndex, endIndex);
-  }, [sortedNotes, currentPage, itemsPerPage, usingServerPagination]);
+  }, [sortedNotes, currentPage, itemsPerPage]);
 
-  const paginationTotalItems = usingServerPagination
-    ? totalDemandNotesCount
-    : filteredNotes.length;
+  // Total items for pagination is always the filtered count
+  const paginationTotalItems = filteredNotes.length;
 
   // show active filters above the table when search or status filter is applied
   const activeFilters = useMemo(() => {
@@ -268,7 +233,7 @@ export default function DemandNotes() {
     }
 
     return filters;
-  }, [searchQuery, statusFilter]);
+  }, [searchQuery, setSearchQuery, statusFilter]);
 
   // Reset to page 1 when filters change
   useEffect(() => {
@@ -377,7 +342,7 @@ export default function DemandNotes() {
                 >
                   <DropdownMenuLabel>Clients</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <div className="px-2 py-1 text-sm break-words">
+                  <div className="px-2 py-1 text-sm wrap-break-word">
                     {clientNamesList.join(", ")}
                   </div>
                 </DropdownMenuContent>
@@ -597,7 +562,7 @@ export default function DemandNotes() {
             </div>
 
             <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger className="w-[200px]">
+              <SelectTrigger className="w-50">
                 <Filter className="h-4 w-4 mr-2" />
                 <SelectValue placeholder="All Statuses" />
               </SelectTrigger>

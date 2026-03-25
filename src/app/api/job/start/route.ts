@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { spawn } from "child_process";
+import { spawnPythonProcess } from "@/lib/pythonRunner";
 
 export async function POST(request: NextRequest) {
     try {
@@ -99,41 +99,18 @@ export async function POST(request: NextRequest) {
         // });
 
         // Spawn Python Process
-        const pythonScriptPath = "D:\\demandnote\\backend\\pipeline\\main.py";
-        const pythonExecutable = "C:\\Users\\user\\AppData\\Local\\Programs\\Python\\Python312\\python.exe";
-
-        console.log("🐍 Spawning Python process...");
-        console.log("   Executable:", pythonExecutable);
-        console.log("   Script:", pythonScriptPath);
-        console.log("   Job ID:", job.id);
-
-        const pythonProcess = spawn(pythonExecutable, [pythonScriptPath, job.id], {
-            shell: true, // Important for Windows
+        const result = await spawnPythonProcess({
+            args: [job.id],
             detached: true,
-            stdio: ['ignore', 'pipe', 'pipe'],
+            logOutput: true,
         });
 
-        pythonProcess.on('error', (err) => {
-            console.error('❌ Failed to start Python process:', err);
-        });
-
-        pythonProcess.on('spawn', () => {
-            console.log('✅ Python process spawned successfully, PID:', pythonProcess.pid);
-        });
-
-        pythonProcess.stdout?.on('data', (data) => {
-            console.log(`🐍 [STDOUT]: ${data.toString().trim()}`);
-        });
-
-        pythonProcess.stderr?.on('data', (data) => {
-            console.error(`🐍 [STDERR]: ${data.toString().trim()}`);
-        });
-
-        pythonProcess.on('close', (code) => {
-            console.log(`🐍 Python process exited with code ${code}`);
-        });
-
-        pythonProcess.unref(); // Allow node process to complete without waiting for python child
+        if (!result.success) {
+            return NextResponse.json(
+                { error: "Failed to spawn Python process", details: result.error },
+                { status: 500 }
+            );
+        }
 
         return NextResponse.json({
             success: true,

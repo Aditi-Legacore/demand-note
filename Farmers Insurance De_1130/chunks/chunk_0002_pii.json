@@ -1,0 +1,24 @@
+{
+  "Person Name": [
+    "Mr. Freer",
+    "Dr. Powell",
+    "Capelouto",
+    "Johansen"
+  ],
+  "Email": [],
+  "Phone": [],
+  "SSN": [],
+  "Street Address": [],
+  "City": [],
+  "Zip": [],
+  "Date of Birth": [],
+  "Medical Record Number": [],
+  "Hospital": [
+    "American Medical Response",
+    "Inland Valley Medical Center",
+    "Total Care Family Medical Center",
+    "Temecula Valley Imaging",
+    "Kaiser Foundation Hospitals"
+  ],
+  "Insurance ID": []
+}

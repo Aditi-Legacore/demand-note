@@ -1,0 +1,38 @@
+{
+  "Person Name": [
+    "James Freer",
+    "Dinh Hu Vo",
+    "Guillermo Garcia",
+    "Zeljka Kostich",
+    "Naimah Powell",
+    "Charlie Crum"
+  ],
+  "Email": [],
+  "Phone": [
+    "619-333-5555",
+    "619-878-6635",
+    "616-954-6223",
+    "877-217-1389"
+  ],
+  "SSN": [],
+  "Street Address": [
+    "1899 McKee St \u2013 San Diego, CA 92110",
+    "PO Box 268994"
+  ],
+  "City": [
+    "San Diego",
+    "Oklahoma City"
+  ],
+  "Zip": [
+    "92110",
+    "73126-8894"
+  ],
+  "Date of Birth": [],
+  "Medical Record Number": [],
+  "Hospital": [
+    "Inland Valley Medical Center",
+    "Total Care Family Medical Center",
+    "Temecula Valley Imaging"
+  ],
+  "Insurance ID": []
+}

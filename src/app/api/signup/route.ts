@@ -20,6 +20,9 @@ export async function POST(req: Request) {
     // Generate a unique user ID like USER-AB12CD34
     const uniqueUserId = `USER-${Math.random().toString(36).substring(2, 10).toUpperCase()}`;
 
+    const normalizedRole =
+      typeof role === "string" && role.trim().length > 0 ? role.trim() : "Customer";
+
     const user = await prisma.user.create({
       data: {
         salutation,
@@ -27,7 +30,7 @@ export async function POST(req: Request) {
         lastName,
         dob: new Date(dob),
         email,
-        roles: [role], // Store role as an array
+        roles: [normalizedRole], // Store role as an array
         password: hashed,
         uniqueUserId,
       },

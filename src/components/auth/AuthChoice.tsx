@@ -10,7 +10,7 @@ import LoginLogoBg from "../../../public/assets/images/auth/logo.png";
 
 export default function AuthChoice() {
   return (
-    <div className="min-h-screen flex flex-col justify-center md:flex-row bg-white">
+    <div className="min-h-screen flex flex-col justify-center md:flex-row bg-white dark:bg-gray-900">
       {/* Left side: Illustration */}
       <div className="hidden lg:flex lg:w-1/2 relative items-center justify-center bg-gradient-to-br">
         <div className="relative w-full h-[70vh] lg:h-[80vh] xl:h-[90vh]">
@@ -25,7 +25,7 @@ export default function AuthChoice() {
       </div>
 
       {/* Right side: Choice */}
-      <div className="lg:w-1/2 flex items-center justify-center p-8">
+      <div className="lg:w-1/2 flex items-center justify-center p-8 ">
         <div className="w-full max-w-md space-y-8">
           {/* Logo and Title */}
           <div className="space-y-2 text-center">

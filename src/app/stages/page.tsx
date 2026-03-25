@@ -9,9 +9,10 @@ import Pagination from "@/components/ui/pagination";
 import CommonTable from "@/components/ui/CommonTable";
 import { Layers3, PlayCircle, Activity, CheckCircle2 } from "lucide-react";
 import LoadingSkeleton from "@/components/ui/loading-skeleton";
+import { useGlobalSearch } from "@/contexts/GlobalSearchContext";
 
 export default function StagesPage() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const { query: searchQuery, setQuery: setSearchQuery } = useGlobalSearch();
   const [statusFilter, setStatusFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
@@ -79,7 +80,7 @@ export default function StagesPage() {
       });
     }
     return filters;
-  }, [searchQuery, statusFilter]);
+  }, [searchQuery, setSearchQuery, statusFilter]);
 
   return (
     <main className="min-h-screen">

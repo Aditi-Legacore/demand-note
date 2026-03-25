@@ -3,6 +3,7 @@
 import * as React from "react"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { XIcon } from "lucide-react"
+import * as VisuallyHidden from "@radix-ui/react-visually-hidden"
 
 import { cn } from "@/lib/utils"
 
@@ -63,7 +64,8 @@ function SheetContent({
       <DialogPrimitive.Content
         data-slot="sheet-content"
         className={cn(
-          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 gap-4 rounded-lg border p-6 shadow-lg duration-200",
+          "bg-background data-[state=open]:animate-in data-[state=closed]:animate-out fixed z-50 gap-4 rounded-lg border p-6 shadow-lg",
+          "data-[state=open]:duration-500 data-[state=closed]:duration-500 data-[state=open]:ease-out data-[state=closed]:ease-in",
           // Base styles for all sides
           isRight && "data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right top-0 right-0 h-full w-full max-w-md",
           isLeft && "data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left top-0 left-0 h-full w-full max-w-md",
@@ -73,6 +75,9 @@ function SheetContent({
         )}
         {...props}
       >
+        <VisuallyHidden.Root>
+          <DialogPrimitive.Title>Sheet dialog</DialogPrimitive.Title>
+        </VisuallyHidden.Root>
         {children}
         <DialogPrimitive.Close className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
           <XIcon />
@@ -119,7 +124,7 @@ function SheetTitle({
   return (
     <DialogPrimitive.Title
       data-slot="sheet-title"
-      className={cn("text-lg leading-none font-semibold", className)}
+      className={cn("text-sm leading-none font-normal", className)}
       {...props}
     />
   )

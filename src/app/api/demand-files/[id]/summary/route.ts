@@ -43,6 +43,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
                 editedSummary: true,
                 editedSummaryTs: true,
                 endTs: true,
+                promptVersionId: true,
             }
         });
 
@@ -62,6 +63,8 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
             editedSummary: task?.editedSummary,
             editedSummaryTs: task?.editedSummaryTs,
             summaryTs: task?.endTs,
+            taskId: task?.id ?? null,
+            promptVersionId: task?.promptVersionId ?? null,
         });
 
     } catch (error) {

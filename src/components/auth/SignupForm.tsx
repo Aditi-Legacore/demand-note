@@ -179,7 +179,7 @@ export default function SignupForm() {
               /> */}
 
               {/* Salutation, First Name, Last Name in one row on tablet and laptop */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 {/* Salutation */}
                 <FormField
                   control={form.control}
@@ -189,7 +189,7 @@ export default function SignupForm() {
                       <FormControl>
                         <select
                           {...field}
-                          className="h-12 border-gray-300 rounded-lg ring-2 ring-gray-300 focus:border-transparent"
+                          className="w-full h-12 border-gray-300 rounded-lg px-3 ring-2 ring-gray-300 focus:border-transparent"
                         >
                           <option value="">Select Salutation</option>
                           <option value="Mr.">Mr.</option>

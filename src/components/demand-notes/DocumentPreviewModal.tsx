@@ -1,7 +1,7 @@
 import React from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Download } from 'lucide-react';
+import { Download, X } from 'lucide-react';
 
 interface DocumentPreviewModalProps {
   isOpen: boolean;
@@ -29,44 +29,42 @@ export function DocumentPreviewModal({
   const isPdf = fileName.toLowerCase().endsWith('.pdf');
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-6xl w-full max-h-[90vh] p-0 overflow-hidden">
-        <DialogHeader className="px-6 pt-6 pb-0">
-          <div className="flex items-center justify-between">
-            <DialogTitle className="text-base font-medium truncate max-w-[70%]">
-              {fileName}
-            </DialogTitle>
+    <Sheet open={isOpen} onOpenChange={onClose}>
+      <SheetContent side="right" className="w-full max-w-3xl border-0 p-0">
+        <SheetHeader className="flex flex-row items-center justify-between w-full px-2 py-2 border-b border-gray-200">
+          <SheetTitle className="text-gray-900 font-normal text-sm truncate max-w-[60%] m-0">
+            {fileName}
+          </SheetTitle>
+          <div className="flex items-center gap-2">
             <Button
               variant="outline"
               size="sm"
               onClick={handleDownload}
-              className="flex items-center gap-2 shrink-0"
+              className="flex items-center gap-2 shrink-0 bg-gray-200"
             >
               <Download className="w-4 h-4" />
               Download
             </Button>
+            <Button
+              variant="default"
+              size="sm"
+              onClick={onClose}
+              className="flex items-center gap-2 shrink-0 bg-red-600 hover:bg-red-700 text-white"
+            >
+              <X className="w-4 h-4" />
+              Close
+            </Button>
           </div>
-        </DialogHeader>
+        </SheetHeader>
         <div className="flex-1 p-6 pt-4">
           {fileUrl ? (
-            <div className="w-full h-[75vh] border border-gray-200 rounded-lg overflow-hidden bg-gray-50">
+            <div className="w-full h-[85vh] border border-gray-200 rounded-lg overflow-auto bg-gray-500">
               {isPdf ? (
-                <object
-                  data={`${fileUrl}#view=FitH&toolbar=0&navpanes=0`}
-                  type="application/pdf"
-                  className="w-full h-full"
+                <iframe
+                  src={`${fileUrl}#toolbar=0&navpanes=0&scrollbar=1`}
+                  className="w-full h-full min-h-[80vh]"
                   title={`Preview of ${fileName}`}
-                >
-                  <div className="w-full h-full flex flex-col items-center justify-center p-4">
-                    <p className="text-muted-foreground mb-4">
-                      Unable to display PDF. Please download it instead.
-                    </p>
-                    <Button onClick={handleDownload} variant="outline">
-                      <Download className="w-4 h-4 mr-2" />
-                      Download PDF
-                    </Button>
-                  </div>
-                </object>
+                />
               ) : (
                 <iframe
                   src={fileUrl}
@@ -76,12 +74,12 @@ export function DocumentPreviewModal({
               )}
             </div>
           ) : (
-            <div className="w-full h-[75vh] border border-gray-200 rounded-lg flex items-center justify-center bg-gray-50">
+            <div className="w-full h-[85vh] border border-gray-200 rounded-lg flex items-center justify-center bg-gray-500">
               <p className="text-muted-foreground">No preview available</p>
             </div>
           )}
         </div>
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
-} 
+}

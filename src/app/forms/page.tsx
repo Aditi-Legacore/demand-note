@@ -14,6 +14,7 @@ import FilterSidebar from '@/components/ui/FilterSidebar';
 import ActiveFilters from '@/components/ui/ActiveFilters';
 import CommonTable, { Column, Action } from '@/components/ui/CommonTable';
 import LoadingSkeleton from '@/components/ui/loading-skeleton';
+import { useGlobalSearch } from '@/contexts/GlobalSearchContext';
 
 export default function FormsPage() {
   const [submissions, setSubmissions] = useState<FormSubmission[]>([]);
@@ -21,7 +22,7 @@ export default function FormsPage() {
   const [templates, setTemplates] = useState<FormTemplate[]>([]);
 
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
+  const { query: searchQuery, setQuery: setSearchQuery } = useGlobalSearch();
   const [statusFilter, setStatusFilter] = useState('all');
   const [dateFromFilter, setDateFromFilter] = useState('');
   const [dateToFilter, setDateToFilter] = useState('');
@@ -146,7 +147,7 @@ export default function FormsPage() {
       });
     }
     return filters;
-  }, [searchQuery, statusFilter, dateFromFilter, dateToFilter]);
+  }, [searchQuery, statusFilter, dateFromFilter, dateToFilter, setSearchQuery]);
 
   // Loading state removed - now handled inline with table
 

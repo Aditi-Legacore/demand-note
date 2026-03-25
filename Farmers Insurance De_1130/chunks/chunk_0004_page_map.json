@@ -1,0 +1,53 @@
+{
+  "chunk_id": 4,
+  "documents": [
+    {
+      "doc_id": "unknown-Medical_Re",
+      "pages": [
+        "13"
+      ]
+    },
+    {
+      "doc_id": "unknown-Medical_Re-1",
+      "pages": [
+        "14"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "page_no": "13",
+      "doc_id": "unknown-Medical_Re",
+      "continuation": {
+        "prev_page_continued": "false",
+        "confidence": "high",
+        "reason": "different content type"
+      },
+      "category": {
+        "matching_category": "Medical Report",
+        "confidence": "high"
+      },
+      "date_of_service": null,
+      "date_of_incident": null,
+      "bill_date": null,
+      "provider": null
+    },
+    {
+      "page_no": "14",
+      "doc_id": "unknown-Medical_Re-1",
+      "continuation": {
+        "prev_page_continued": "false",
+        "confidence": "high",
+        "reason": "different content type"
+      },
+      "category": {
+        "matching_category": "Medical Report",
+        "confidence": "medium"
+      },
+      "date_of_service": null,
+      "date_of_incident": null,
+      "bill_date": null,
+      "provider": null
+    }
+  ]
+}

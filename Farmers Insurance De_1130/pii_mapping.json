@@ -1,0 +1,183 @@
+{
+  "pii_mappings": {
+    "James Freer": {
+      "dummy": "Alice Johnson",
+      "type": "Person Name"
+    },
+    "Dinh Hu Vo": {
+      "dummy": "Robert Williams",
+      "type": "Person Name"
+    },
+    "Guillermo Garcia": {
+      "dummy": "Emma Davis",
+      "type": "Person Name"
+    },
+    "Zeljka Kostich": {
+      "dummy": "James Miller",
+      "type": "Person Name"
+    },
+    "Naimah Powell": {
+      "dummy": "Olivia Wilson",
+      "type": "Person Name"
+    },
+    "Charlie Crum": {
+      "dummy": "Benjamin Moore",
+      "type": "Person Name"
+    },
+    "1899 McKee St \u2013 San Diego, CA 92110": {
+      "dummy": "100 Dummy Street, City A, State 12345",
+      "type": "Street Address"
+    },
+    "Total Care Family Medical Center": {
+      "dummy": "St. Mary's Hospital",
+      "type": "Hospital"
+    },
+    "Inland Valley Medical Center": {
+      "dummy": "County General Hospital",
+      "type": "Hospital"
+    },
+    "Temecula Valley Imaging": {
+      "dummy": "City Medical Center",
+      "type": "Hospital"
+    },
+    "PO Box 268994": {
+      "dummy": "200 Sample Lane, City B, State 67890",
+      "type": "Street Address"
+    },
+    "Oklahoma City": {
+      "dummy": "New York",
+      "type": "City"
+    },
+    "619-333-5555": {
+      "dummy": "555-000-0001",
+      "type": "Phone"
+    },
+    "619-878-6635": {
+      "dummy": "555-000-0002",
+      "type": "Phone"
+    },
+    "616-954-6223": {
+      "dummy": "555-000-0003",
+      "type": "Phone"
+    },
+    "877-217-1389": {
+      "dummy": "555-000-0004",
+      "type": "Phone"
+    },
+    "73126-8894": {
+      "dummy": "10001",
+      "type": "Zip"
+    },
+    "San Diego": {
+      "dummy": "Los Angeles",
+      "type": "City"
+    },
+    "92110": {
+      "dummy": "90001",
+      "type": "Zip"
+    },
+    "Mr. Freer": {
+      "dummy": "Sophia Taylor",
+      "type": "Person Name"
+    },
+    "Dr. Powell": {
+      "dummy": "Lucas Anderson",
+      "type": "Person Name"
+    },
+    "Capelouto": {
+      "dummy": "Mia Thompson",
+      "type": "Person Name"
+    },
+    "Johansen": {
+      "dummy": "Daniel Harris",
+      "type": "Person Name"
+    },
+    "Kaiser Foundation Hospitals": {
+      "dummy": "Community Health Clinic",
+      "type": "Hospital"
+    },
+    "American Medical Response": {
+      "dummy": "Regional Medical Facility",
+      "type": "Hospital"
+    },
+    "Paul Batta": {
+      "dummy": "PERSON_11",
+      "type": "Person Name"
+    },
+    "Din Hu Vo": {
+      "dummy": "Robert Williams",
+      "type": "Person Name"
+    },
+    "Paul Batta, Esq.": {
+      "dummy": "PERSON_12",
+      "type": "Person Name"
+    },
+    "paul@battafulkerson.com": {
+      "dummy": "dummy1@example.com",
+      "type": "Email"
+    }
+  },
+  "dummy_to_original": {
+    "Alice Johnson": "James Freer",
+    "Robert Williams": "Dinh Hu Vo",
+    "Emma Davis": "Guillermo Garcia",
+    "James Miller": "Zeljka Kostich",
+    "Olivia Wilson": "Naimah Powell",
+    "Benjamin Moore": "Charlie Crum",
+    "100 Dummy Street, City A, State 12345": "1899 McKee St \u2013 San Diego, CA 92110",
+    "St. Mary's Hospital": "Total Care Family Medical Center",
+    "County General Hospital": "Inland Valley Medical Center",
+    "City Medical Center": "Temecula Valley Imaging",
+    "200 Sample Lane, City B, State 67890": "PO Box 268994",
+    "New York": "Oklahoma City",
+    "555-000-0001": "619-333-5555",
+    "555-000-0002": "619-878-6635",
+    "555-000-0003": "616-954-6223",
+    "555-000-0004": "877-217-1389",
+    "10001": "73126-8894",
+    "Los Angeles": "San Diego",
+    "90001": "92110",
+    "Sophia Taylor": "Mr. Freer",
+    "Lucas Anderson": "Dr. Powell",
+    "Mia Thompson": "Capelouto",
+    "Daniel Harris": "Johansen",
+    "Community Health Clinic": "Kaiser Foundation Hospitals",
+    "Regional Medical Facility": "American Medical Response",
+    "PERSON_11": "Paul Batta",
+    "PERSON_12": "Paul Batta, Esq.",
+    "dummy1@example.com": "paul@battafulkerson.com"
+  },
+  "pii_types": {
+    "James Freer": "Person Name",
+    "Dinh Hu Vo": "Person Name",
+    "Guillermo Garcia": "Person Name",
+    "Zeljka Kostich": "Person Name",
+    "Naimah Powell": "Person Name",
+    "Charlie Crum": "Person Name",
+    "1899 McKee St \u2013 San Diego, CA 92110": "Street Address",
+    "Total Care Family Medical Center": "Hospital",
+    "Inland Valley Medical Center": "Hospital",
+    "Temecula Valley Imaging": "Hospital",
+    "PO Box 268994": "Street Address",
+    "Oklahoma City": "City",
+    "619-333-5555": "Phone",
+    "619-878-6635": "Phone",
+    "616-954-6223": "Phone",
+    "877-217-1389": "Phone",
+    "73126-8894": "Zip",
+    "San Diego": "City",
+    "92110": "Zip",
+    "Mr. Freer": "Person Name",
+    "Dr. Powell": "Person Name",
+    "Capelouto": "Person Name",
+    "Johansen": "Person Name",
+    "Kaiser Foundation Hospitals": "Hospital",
+    "American Medical Response": "Hospital",
+    "Paul Batta": "Person Name",
+    "Din Hu Vo": "Person Name",
+    "Paul Batta, Esq.": "Person Name",
+    "paul@battafulkerson.com": "Email"
+  },
+  "total_mappings": 29,
+  "timestamp": "2026-03-20T11:31:07.047785"
+}

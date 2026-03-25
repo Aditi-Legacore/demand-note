@@ -1,0 +1,30 @@
+Incidentdate: 01/09/2025
+Incidentdescription: Multi-vehicle collision on State Route 22 westbound, Orange County, involving four vehicles. Client Alice Johnson was a passenger in a vehicle rear-ended by the insured Robert Williams, who failed to slow for stopped traffic, causing a chain reaction collision. The incident violated California Vehicle Code §22350.
+Medicalcaretimeline:
+  Date: 01/01/2025
+  Description: Client reported back pain and numbness in legs after the accident. Called 911 for severe back pain and was transported to County General Hospital Emergency Department. Treated with Toradol and Dexamethasone. CT scans of thoracic and lumbar spine performed; results not detailed in the report.
+  Date: 02/06/2025
+  Description: Evaluated by Dr. Olivia Wilson at St. Mary's Hospital for mid-back pain. Noted tenderness and decreased range of motion in thoracic and lumbar regions. Prescribed Cyclobenzaprine and Ibuprofen. MRI of thoracic and lumbar spine ordered. Client reported ongoing back pain preventing return to work in construction. Mental health history of depression and suicidal ideation documented.
+  Date: 02/21/2025
+  Description: MRI of thoracic and lumbar spine performed by Dr. Benjamin Moore; results not detailed in the report.
+  Date: 04/01/2025
+  Description: Follow-up with Dr. Olivia Wilson for persistent thoracic spine pain. Client experienced vasovagal reaction to Toradol injection. Referred to physical therapy. Prescribed Cyclobenzaprine, Ibuprofen, and Imiquimod cream. Advised to continue non-drug therapies (ice, heat, stretching).
+Injuries:
+  - Moderate to severe lower back pain with decreased lumbar range of motion
+  - Thoracic spine pain described as acute, sharp, and pinching
+  - Numbness in legs
+  - Tenderness to palpation in thoracic and lumbar regions
+Treatments:
+  - Toradol and Dexamethasone (ED)
+  - Lidoderm patches, Prednisone, Motrin (discharge medications)
+  - Cyclobenzaprine and Ibuprofen
+  - Physical therapy referral
+  - MRI of thoracic and lumbar spine
+  - Topical treatments (Imiquimod cream)
+Functionalimpact: Client unable to return to work in construction due to ongoing back pain. Unable to engage in leisure activities (bicycling, gardening, surfing). Developed fear of driving on freeways. Mental health concerns including depression and anxiety documented.
+Disabilitystatus: Placed on temporary disability due to work restrictions.
+Missinginformation:
+  - CT scan results (01/10/2025)
+  - MRI findings (02/21/2025)
+  - Specific thoracic/lumbar spine diagnoses
+Legalcontext: Settlement demand under CCP § 999.1 for bodily injury claims. Special damages totaling $52,292.61 claimed. General damages for pain and suffering, loss of enjoyment of life, and emotional distress requested.

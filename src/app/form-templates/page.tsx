@@ -14,6 +14,7 @@ import ActiveFilters from '@/components/ui/ActiveFilters';
 import CommonTable, { Column, Action } from '@/components/ui/CommonTable';
 import LoadingSkeleton from '@/components/ui/loading-skeleton';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import { useGlobalSearch } from '@/contexts/GlobalSearchContext';
 
 // FormTemplatesTable component using CommonTable
 function FormTemplatesTable({ templates, onDelete, router, deletingId }: { templates: FormTemplate[], onDelete: (id: string) => void, router: AppRouterInstance, deletingId: string | null }) {
@@ -75,7 +76,7 @@ export default function FormTemplatesPage() {
   const [templates, setTemplates] = useState<FormTemplate[]>([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const { query: searchQuery, setQuery: setSearchQuery } = useGlobalSearch();
   const [languageFilter, setLanguageFilter] = useState('all');
   const [dateFromFilter, setDateFromFilter] = useState('');
   const [dateToFilter, setDateToFilter] = useState('');
@@ -207,7 +208,7 @@ export default function FormTemplatesPage() {
       });
     }
     return filters;
-  }, [searchQuery, languageFilter, dateFromFilter, dateToFilter]);
+  }, [searchQuery, languageFilter, dateFromFilter, dateToFilter, setSearchQuery]);
 
   // Loading state removed - now handled inline with table
 

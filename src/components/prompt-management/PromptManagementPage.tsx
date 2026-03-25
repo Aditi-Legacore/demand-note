@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { format, formatDistanceToNow } from "date-fns";
 import type { MouseEvent } from "react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
@@ -8,6 +9,7 @@ import {
   Copy,
   Eye,
   EyeOff,
+  Filter,
   Loader2,
   RefreshCcw,
   Save,
@@ -31,6 +33,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import LoadingSkeleton from "@/components/ui/loading-skeleton";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { useSummaries } from "@/hooks/use-summaries";
+import { formatPromptVersionLabel } from "@/lib/format-prompt-version";
+import type { SummaryCommentRow } from "@/types/summary";
 
 type PromptItem = {
   id: string;
@@ -73,9 +79,20 @@ export default function PromptManagementPage() {
   const [deleteDialogPrompt, setDeleteDialogPrompt] = useState<PromptItem | null>(null);
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [expandedSummaryId, setExpandedSummaryId] = useState<string | null>(null);
+  const [isMainCommentHovered, setIsMainCommentHovered] = useState(false);
 
   const canUseRevert = isAppAdminSession(session);
-
+  const {
+    summaries,
+    filters,
+    updateFilters,
+    resetFilters,
+    isLoading: summariesLoading,
+    error: summariesError,
+    refresh: refreshSummaries,
+  } = useSummaries();
+  const [isSummaryExplorerOpen, setIsSummaryExplorerOpen] = useState(false);
   const selectedPrompt = useMemo(
     () => prompts.find((p) => p.id === selectedPromptId) ?? null,
     [prompts, selectedPromptId]
@@ -109,6 +126,286 @@ export default function PromptManagementPage() {
     return historyList[activeIndex + 1] ?? null;
   }, [activePrompt, historyList]);
   // const currentVersionNumber = selectedPrompt?.version ?? activePrompt?.version ?? null;
+
+  useEffect(() => {
+    setExpandedSummaryId(null);
+  }, [summaries]);
+
+  const copyCommentToClipboard = useCallback(async (text: string) => {
+    if (!text) {
+      toast.error("Nothing to copy");
+      return;
+    }
+
+    if (typeof navigator === "undefined" || !navigator.clipboard) {
+      toast.error("Clipboard access is unavailable");
+      return;
+    }
+
+    try {
+      await navigator.clipboard.writeText(text);
+      toast.success("Comment copied");
+    } catch (error) {
+      console.error("Failed to copy comment", error);
+      toast.error("Failed to copy comment");
+    }
+  }, []);
+
+  function renderCommentCell(
+    summary: SummaryCommentRow,
+    className = "px-3 py-3",
+    onHoverChange?: (hovering: boolean) => void
+  ) {
+    const commentText = summary.comment ?? "No comment available.";
+    const commenter =
+      summary.user?.firstName ??
+      summary.user?.email ??
+      "Unknown user";
+    const relativeTime = formatDistanceToNow(new Date(summary.createdAt), {
+      addSuffix: true,
+    });
+    const handleMouseEnter = () => onHoverChange?.(true);
+    const handleMouseLeave = () => onHoverChange?.(false);
+
+    return (
+      <td className={className}>
+        <div
+          className="group relative inline-flex max-w-[240px] flex-col gap-1"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <div className="space-y-1">
+            <p className="text-sm text-slate-700 truncate">{commentText}</p>
+            <span className="text-xs text-slate-400">
+              {commenter} · {relativeTime}
+            </span>
+          </div>
+          <div className="pointer-events-none absolute left-0 top-full z-40 mt-2 w-[320px] scale-95 opacity-0 transition-all duration-150 ease-out group-hover:pointer-events-auto group-hover:scale-100 group-hover:opacity-100">
+            <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-xl shadow-slate-900/10">
+              <div className="flex items-center justify-between gap-2">
+                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                  Comment
+                </p>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="p-0"
+                  aria-label="Copy comment"
+                  onClick={() => copyCommentToClipboard(commentText)}
+                  type="button"
+                >
+                  <Copy className="h-4 w-4 text-slate-500" />
+                </Button>
+              </div>
+              <p className="mt-3 text-sm text-slate-700 whitespace-pre-wrap break-words">
+                {commentText}
+              </p>
+            </div>
+          </div>
+        </div>
+      </td>
+    );
+  };
+
+  const summaryExplorerSection = (
+    <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:bg-gray-900">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <p className="text-xl font-bold text-foreground">Summary Explorer</p>
+          <p className="mt-1 text-sm text-slate-500">
+            Filter summary comments by date or prompt version and inspect each entry&apos;s context.
+          </p>
+        </div>
+        <div className="flex items-center gap-2">
+          <Badge variant="secondary">Summary comments: {summaries.length}</Badge>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={refreshSummaries}
+            disabled={summariesLoading}
+          >
+            <RefreshCcw className="h-4 w-4" />
+            Refresh
+          </Button>
+        </div>
+      </div>
+      <div className="mt-4 grid gap-4 md:grid-cols-4">
+        <div className="space-y-2">
+          <Label htmlFor="summary-from-date">From date</Label>
+          <input
+            id="summary-from-date"
+            type="date"
+            value={filters.fromDate}
+            onChange={(event) => updateFilters({ fromDate: event.target.value })}
+            className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="summary-to-date">To date</Label>
+          <input
+            id="summary-to-date"
+            type="date"
+            value={filters.toDate}
+            onChange={(event) => updateFilters({ toDate: event.target.value })}
+            className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="summary-prompt-version">Prompt version</Label>
+          <select
+            id="summary-prompt-version"
+            value={filters.promptVersionId}
+            onChange={(event) =>
+              updateFilters({ promptVersionId: event.target.value })
+            }
+            className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+          >
+            <option value="">All versions</option>
+            {prompts.map((option) => (
+              <option key={option.id} value={option.id}>
+                {formatPromptVersionLabel(option.version)}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="space-y-2">
+          <Label className="opacity-0 md:block">Action</Label>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={resetFilters}
+              disabled={summariesLoading}
+            >
+              Clear filters
+            </Button>
+          </div>
+        </div>
+      </div>
+      {summariesLoading ? (
+        <LoadingSkeleton
+          message="Loading summary records..."
+          rowCount={4}
+          cardClassName="mt-4 rounded-lg border border-slate-200 shadow-sm"
+          contentClassName="p-4 space-y-3"
+        />
+      ) : (
+        <div className="mt-4 overflow-visible rounded-lg border border-slate-200 bg-white">
+          <table className="min-w-full text-left text-sm text-slate-700">
+            <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+              <tr>
+                <th className="px-3 py-2">Date</th>
+                <th className="px-3 py-2">Client</th>
+                <th className="px-3 py-2">Prompt version</th>
+                <th className="px-3 py-2">Summary</th>
+                <th className="px-3 py-2">Comment</th>
+                <th className="px-3 py-2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {summaries.length === 0 && (
+                <tr>
+                  <td
+                    colSpan={6}
+                    className="px-3 py-6 text-center text-sm text-slate-500"
+                  >
+                    No summaries match the filters.
+                  </td>
+                </tr>
+              )}
+              {summaries.map((summary) => {
+                const summaryText =
+                  summary.editedSummary ??
+                  summary.outputSummary ??
+                  "No summary available.";
+                const commentText = summary.comment ?? "No comment available.";
+                const commenter =
+                  summary.user?.firstName ??
+                  summary.user?.email ??
+                  "Unknown user";
+                const isExpanded = expandedSummaryId === summary.id;
+                return (
+                  <Fragment key={summary.id}>
+                    <tr className="border-b border-slate-200">
+                      <td className="px-3 py-3 font-medium">
+                        {format(new Date(summary.createdAt), "MMM d, yyyy h:mm a")}
+                      </td>
+                      <td className="px-3 py-3">
+                        {summary.demandNote?.clientName ??
+                          summary.demandFile?.clientName ??
+                          "Unknown client"}
+                      </td>
+                      <td className="px-3 py-3">
+                        {summary.promptVersionNumber != null
+                          ? formatPromptVersionLabel(summary.promptVersionNumber)
+                          : summary.promptVersionId ?? "—"}
+                      </td>
+                      <td className="px-3 py-3 max-w-[220px]">
+                        <p className="text-sm text-slate-700 truncate">{summaryText}</p>
+                      </td>
+                      {renderCommentCell(summary)}
+                      <td className="px-3 py-3">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() =>
+                            setExpandedSummaryId(isExpanded ? null : summary.id)
+                          }
+                        >
+                          {isExpanded ? "Hide" : "View"}
+                        </Button>
+                      </td>
+                    </tr>
+                    {isExpanded && (
+                      <tr>
+                        <td colSpan={6} className="px-3 py-5 bg-slate-50">
+                          <div className="space-y-4">
+                            <div>
+                              <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                Full summary
+                              </p>
+                              <p className="mt-2 text-sm text-slate-700 whitespace-pre-wrap">
+                                {summaryText}
+                              </p>
+                            </div>
+                            <div className="space-y-3">
+                              <div className="flex items-center justify-between">
+                                <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                  Comment
+                                </p>
+                                <span className="text-xs text-slate-500">{commenter}</span>
+                              </div>
+                              <div className="rounded-2xl border border-slate-200 bg-white p-3">
+                                <div className="flex items-center justify-between text-xs text-slate-500">
+                                  <p className="font-semibold text-slate-900">{commenter}</p>
+                                  <span>
+                                    {formatDistanceToNow(new Date(summary.createdAt), {
+                                      addSuffix: true,
+                                    })}
+                                  </span>
+                                </div>
+                                <p className="mt-2 text-sm text-slate-700 whitespace-pre-wrap">
+                                  {commentText}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </Fragment>
+                );
+              })}
+            </tbody>
+
+          </table>
+        </div>
+      )}
+      {summariesError && (
+        <p className="mt-3 text-sm text-rose-600">{summariesError}</p>
+      )}
+    </section>
+  );
 
   const selectedPromptBusy = selectedPrompt ? actionLoadingId === selectedPrompt.id : false;
   const disableActivateButton =
@@ -478,7 +775,223 @@ export default function PromptManagementPage() {
 
   return (
     <main className="min-h-screen">
+      <Sheet
+        open={isSummaryExplorerOpen}
+        onOpenChange={setIsSummaryExplorerOpen}
+        modal={true}
+      >
+        <SheetContent side="right" className="p-0 max-w-5xl w-full">
+          <div className="h-full w-full max-h-screen overflow-y-auto bg-transparent px-6 py-6">
+            {summaryExplorerSection}
+          </div>
+        </SheetContent>
+      </Sheet>
       <div className="mx-auto max-w-8xl space-y-5 ">
+        <section className="hidden rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:bg-gray-900">
+          <div className="flex flex-wrap items-start justify-between gap-3">
+            <div>
+              <p className="text-xl font-bold text-foreground">Summary Explorer</p>
+              <p className="mt-1 text-sm text-slate-500">
+                Filter summary comments by date or prompt version and drill in on each entry.
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Badge variant="secondary">Summary comments: {summaries.length}</Badge>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={refreshSummaries}
+                disabled={summariesLoading}
+              >
+                <RefreshCcw className="h-4 w-4" />
+                Refresh
+              </Button>
+            </div>
+          </div>
+          <div className="mt-4 grid gap-4 md:grid-cols-4">
+            <div className="space-y-2">
+              <Label htmlFor="summary-from-date">From date</Label>
+              <input
+                id="summary-from-date"
+                type="date"
+                value={filters.fromDate}
+                onChange={(event) => updateFilters({ fromDate: event.target.value })}
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="summary-to-date">To date</Label>
+              <input
+                id="summary-to-date"
+                type="date"
+                value={filters.toDate}
+                onChange={(event) => updateFilters({ toDate: event.target.value })}
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="summary-prompt-version">Prompt version</Label>
+              <select
+                id="summary-prompt-version"
+                value={filters.promptVersionId}
+                onChange={(event) =>
+                  updateFilters({ promptVersionId: event.target.value })
+                }
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+              >
+                <option value="">All versions</option>
+                {prompts.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {formatPromptVersionLabel(option.version)}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="space-y-2">
+              <Label className="opacity-0 md:block">Action</Label>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={resetFilters}
+                  disabled={summariesLoading}
+                >
+                  Clear filters
+                </Button>
+              </div>
+            </div>
+          </div>
+          {summariesLoading ? (
+            <LoadingSkeleton
+              message="Loading summary records..."
+              rowCount={4}
+              cardClassName="mt-4 rounded-lg border border-slate-200 shadow-sm"
+              contentClassName="p-4 space-y-3"
+            />
+          ) : (
+          <div
+            className={`mt-4 ${
+              isMainCommentHovered ? "overflow-x-visible" : "overflow-x-auto"
+            } overflow-y-visible rounded-lg border border-slate-200 bg-white`}
+          >
+              <table className="min-w-full text-left text-sm text-slate-700">
+                <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+                  <tr>
+                    <th className="px-3 py-2">Date</th>
+                    <th className="px-3 py-2">Demand note</th>
+                    <th className="px-3 py-2">Client</th>
+                    <th className="px-3 py-2">Prompt ID</th>
+                    <th className="px-3 py-2">Prompt version</th>
+                    <th className="px-3 py-2">Summary</th>
+                    <th className="px-3 py-2">Comment</th>
+                    <th className="px-3 py-2">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {summaries.length === 0 && (
+                    <tr>
+                      <td
+                        colSpan={8}
+                        className="px-3 py-6 text-center text-sm text-slate-500"
+                      >
+                        No summaries match the filters.
+                      </td>
+                    </tr>
+                  )}
+                  {summaries.map((summary) => {
+                    const summaryText =
+                      summary.editedSummary ??
+                      summary.outputSummary ??
+                      "No summary available.";
+                    const commentText = summary.comment ?? "No comment available.";
+                    const commenter =
+                      summary.user?.firstName ??
+                      summary.user?.email ??
+                      "Unknown user";
+                    const isExpanded = expandedSummaryId === summary.id;
+                    return (
+                      <Fragment key={summary.id}>
+                        <tr className="border-b border-slate-200">
+                          <td className="px-3 py-3 font-medium">
+                            {format(new Date(summary.createdAt), "MMM d, yyyy h:mm a")}
+                          </td>
+                          <td className="px-3 py-3">
+                            {summary.demandFile?.demandNoteId ?? "—"}
+                          </td>
+                          <td className="px-3 py-3">
+                            {summary.demandFile?.clientName ?? "Unknown client"}
+                          </td>
+                          <td className="px-3 py-3">{summary.promptId ?? "—"}</td>
+                          <td className="px-3 py-3">
+                            {summary.promptVersionNumber != null
+                              ? formatPromptVersionLabel(summary.promptVersionNumber)
+                              : summary.promptVersionId ?? "—"}
+                          </td>
+                          <td className="px-3 py-3 max-w-[220px]">
+                            <p className="text-sm text-slate-700 truncate">{summaryText}</p>
+                          </td>
+                           {renderCommentCell(summary, undefined, setIsMainCommentHovered)}
+                          <td className="px-3 py-3">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() =>
+                                setExpandedSummaryId(isExpanded ? null : summary.id)
+                              }
+                            >
+                              {isExpanded ? "Hide" : "View"}
+                            </Button>
+                          </td>
+                        </tr>
+                        {isExpanded && (
+                          <tr>
+                            <td colSpan={8} className="px-3 py-5 bg-slate-50">
+                              <div className="space-y-4">
+                                <div>
+                                  <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                    Full summary
+                                  </p>
+                                  <p className="mt-2 text-sm text-slate-700 whitespace-pre-wrap">
+                                    {summaryText}
+                                  </p>
+                                </div>
+                                <div className="space-y-3">
+                                  <div className="flex items-center justify-between">
+                                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
+                                      Comment
+                                    </p>
+                                    <span className="text-xs text-slate-500">{commenter}</span>
+                                  </div>
+                                  <div className="rounded-2xl border border-slate-200 bg-white p-3">
+                                    <div className="flex items-center justify-between text-xs text-slate-500">
+                                      <p className="font-semibold text-slate-900">{commenter}</p>
+                                      <span>
+                                        {formatDistanceToNow(new Date(summary.createdAt), {
+                                          addSuffix: true,
+                                        })}
+                                      </span>
+                                    </div>
+                                    <p className="mt-2 text-sm text-slate-700 whitespace-pre-wrap">
+                                      {commentText}
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </Fragment>
+                    );
+                  })}
+                </tbody>
+
+              </table>
+            </div>
+          )}
+          {summariesError && (
+            <p className="mt-3 text-sm text-rose-600">{summariesError}</p>
+          )}
+        </section>
         {isLoading ? (
           <LoadingSkeleton
             message={null}
@@ -488,10 +1001,22 @@ export default function PromptManagementPage() {
           />
         ) : (
           <div className="rounded-xl border  p-5 dark:bg-gray-900">
-            <p className="text-xl font-bold text-foreground">Prompt Management</p>
-            <p className="mt-1 text-sm text-slate-600">
-              Versioned prompts with App Admin controls and active/inactive state management.
-            </p>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="text-xl font-bold text-foreground">Prompt Management</p>
+                <p className="mt-1 text-sm text-slate-600">
+                  Versioned prompts with App Admin controls and active/inactive state management.
+                </p>
+              </div>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setIsSummaryExplorerOpen(true)}
+              >
+                <Filter className="h-4 w-4" />
+                <span className="sr-only">Open Summary Explorer</span>
+              </Button>
+            </div>
             <div className="mt-3 flex flex-wrap gap-2">
               <Badge variant="secondary">Version Cap: v5</Badge>
               <Badge variant="secondary">

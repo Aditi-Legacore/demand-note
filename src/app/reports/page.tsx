@@ -9,6 +9,7 @@ import FilterSidebar from "@/components/ui/FilterSidebar";
 import ActiveFilters from "@/components/ui/ActiveFilters";
 import LoadingSkeleton from "@/components/ui/loading-skeleton";
 import { utils, writeFile } from 'xlsx';
+import { useGlobalSearch } from "@/contexts/GlobalSearchContext";
 
 interface IntakeData {
   id: string;
@@ -45,7 +46,7 @@ interface DocumentData {
 
 export default function ReportsPage() {
   const [activeTab, setActiveTab] = useState<"intakes" | "leads" | "documents">("intakes");
-  const [searchQuery, setSearchQuery] = useState("");
+  const { query: searchQuery, setQuery: setSearchQuery } = useGlobalSearch();
   const [filterValue, setFilterValue] = useState("all");
   const [showFiltersSidebar, setShowFiltersSidebar] = useState(false);
   const [dateFromFilter, setDateFromFilter] = useState("");
@@ -397,7 +398,7 @@ const getFormattedDate = () => {
       });
     }
     return filters;
-  }, [searchQuery, filterValue, caseTypeFilter, referralSourceFilter, dateFromFilter, dateToFilter]);
+  }, [searchQuery, filterValue, caseTypeFilter, referralSourceFilter, dateFromFilter, dateToFilter, setSearchQuery]);
 
   const columns = reportColumns[activeTab];
   const data = filteredData;

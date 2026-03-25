@@ -563,7 +563,7 @@ export default function DemandNoteForm({ id }: { id?: string }) {
                     onChange={(e) => setAdditionalNotes(e.target.value)}
                     placeholder="Enter any additional notes"
                     rows={4}
-                    className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-h-[80px]"
+                    className="flex w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 min-h-20"
                     required={isLegacoreUser}
                   />
                 </div>
@@ -587,7 +587,7 @@ export default function DemandNoteForm({ id }: { id?: string }) {
 
               <div className="border-t border-border pt-6">
                 <FileUploadGroup
-                  title="Medical Reports"
+                  title="Medical Reports *"
                   description="Upload doctor notes, diagnoses, imaging reports."
                   folderPath="/medical"
                   files={medicalFiles}
@@ -712,7 +712,7 @@ export default function DemandNoteForm({ id }: { id?: string }) {
               disabled={
                 isNotifying ||
                 clients.some(c => !c.firstName.trim() || !c.lastName.trim()) ||
-                trafficFiles.length === 0 ||
+                medicalFiles.length === 0 ||
                 (isLegacoreUser &&
                   (!defendantName.trim() ||
                     !claimNumber.trim() ||

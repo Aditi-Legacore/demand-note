@@ -129,7 +129,7 @@ export default function AddUserModal({ open, onClose, onSuccess, userData }: Add
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md bg-white dark:bg-gray-900 dark:text-slate-100" >
+      <DialogContent className="sm:max-w-md bg-white dark:bg-gray-900 dark:text-slate-100 p-6 sm:p-7">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>

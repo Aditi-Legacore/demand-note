@@ -5,18 +5,30 @@ import { Search } from 'lucide-react';
 
 interface SearchbarProps {
   placeholder?: string;
+  value?: string;
   onChange?: (value: string) => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 const Searchbar: React.FC<SearchbarProps> = ({ 
-  placeholder = "Search…", 
-  onChange 
+  placeholder = "Search...", 
+  value,
+  onChange,
+  onFocus,
+  onBlur,
+  onKeyDown,
 }) => {
-  const [value, setValue] = useState('');
+  const [internalValue, setInternalValue] = useState('');
+  const isControlled = value !== undefined;
+  const inputValue = isControlled ? value : internalValue;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
-    setValue(newValue);
+    if (!isControlled) {
+      setInternalValue(newValue);
+    }
     onChange?.(newValue);
   };
 
@@ -25,8 +37,11 @@ const Searchbar: React.FC<SearchbarProps> = ({
       <Search className="w-4 h-4 text-gray-500 dark:text-gray-400" />
       <input
         type="text"
-        value={value}
+        value={inputValue}
         onChange={handleChange}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onKeyDown={onKeyDown}
         placeholder={placeholder}
         className="bg-transparent outline-none w-full text-sm text-gray-700 dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
       />
@@ -35,3 +50,4 @@ const Searchbar: React.FC<SearchbarProps> = ({
 };
 
 export default Searchbar;
+

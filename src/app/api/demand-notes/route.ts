@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
         const {
             clients, // Array<{ salutation, firstName, middleName, lastName, email, phone }>
             defendantPhoneEmail,
-
+            clientPhoneEmail,
             demandCreatedDate,
             dateOfLoss,
             status = "draft",
@@ -33,7 +33,6 @@ export async function POST(request: NextRequest) {
 
             internalNotes,
             additionalNotes,
-            description,
             totalAmount = 0,
             files = {},
         } = data;
@@ -63,16 +62,28 @@ export async function POST(request: NextRequest) {
         // Generate a title based on the first client
         const firstClient = clients[0];
         const primaryClientName = `${firstClient.firstName} ${firstClient.lastName}`.trim();
+        
+        // Build client info from first client for DemandNote fields
+        const fullClientName = `${firstClient.salutation ? firstClient.salutation + ' ' : ''}${firstClient.firstName} ${firstClient.middleName ? firstClient.middleName + ' ' : ''}${firstClient.lastName}`.trim();
+        // const clientPhoneEmail = firstClient.email || firstClient.phone || null;
 
         // 📝 Create demand note first
         const demandNote = await prisma.demandNote.create({
             data: {
                 createdById: session.user.id,
                 title: `Demand Note for ${primaryClientName}${clients.length > 1 ? ` and ${clients.length - 1} more` : ""}`,
-                description: description || null,
+                description: additionalNotes || null,
                 totalAmount,
                 dueDate: dueDateValue,
                 status,
+                // Client fields from first client
+                clientName: fullClientName,
+                clientPhoneEmail: clientPhoneEmail,
+                salutation: firstClient.salutation,
+                firstName: firstClient.firstName,
+                middleName: firstClient.middleName,
+                lastName: firstClient.lastName,
+                // Defendant fields
                 defendantName,
                 defendantPhoneEmail,
                 claimNumber,
@@ -184,11 +195,6 @@ export async function GET(request: NextRequest) {
         if (!session?.user?.id) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
-
-        // const canAccessAll =
-        //     session.user.role === "Legacore User" ||
-        //     session.user.role === "admin" ||
-        //     session.user.role === "App admin";
 
         const canAccessAll = session.user.roles.some((role) =>
             ["Legacore User", "admin", "App admin"].includes(role)

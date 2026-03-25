@@ -1,0 +1,94 @@
+{
+  "chunk_id": 2,
+  "documents": [
+    {
+      "doc_id": "unknown-Medical_Re",
+      "pages": [
+        "5"
+      ]
+    },
+    {
+      "doc_id": "unknown-Medical_Bi",
+      "pages": [
+        "6"
+      ]
+    },
+    {
+      "doc_id": "unknown-Others",
+      "pages": [
+        "7",
+        "8"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "page_no": "5",
+      "doc_id": "unknown-Medical_Re",
+      "continuation": {
+        "prev_page_continued": "false",
+        "confidence": "high",
+        "reason": "Content unrelated to previous page"
+      },
+      "category": {
+        "matching_category": "Medical Report",
+        "confidence": "medium"
+      },
+      "date_of_service": null,
+      "date_of_incident": null,
+      "bill_date": null,
+      "provider": null
+    },
+    {
+      "page_no": "6",
+      "doc_id": "unknown-Medical_Bi",
+      "continuation": {
+        "prev_page_continued": "false",
+        "confidence": "high",
+        "reason": "Different content from previous page"
+      },
+      "category": {
+        "matching_category": "Medical Bill",
+        "confidence": "high"
+      },
+      "date_of_service": null,
+      "date_of_incident": null,
+      "bill_date": null,
+      "provider": "American Medical Response"
+    },
+    {
+      "page_no": "7",
+      "doc_id": "unknown-Others",
+      "continuation": {
+        "prev_page_continued": "false",
+        "confidence": "high",
+        "reason": "Different content from previous page"
+      },
+      "category": {
+        "matching_category": "Others",
+        "confidence": "medium"
+      },
+      "date_of_service": null,
+      "date_of_incident": null,
+      "bill_date": null,
+      "provider": null
+    },
+    {
+      "page_no": "8",
+      "doc_id": "unknown-Others",
+      "continuation": {
+        "prev_page_continued": "true",
+        "confidence": "high",
+        "reason": "Continues settlement letter from previous page"
+      },
+      "category": {
+        "matching_category": "Others",
+        "confidence": "medium"
+      },
+      "date_of_service": null,
+      "date_of_incident": null,
+      "bill_date": null,
+      "provider": null
+    }
+  ]
+}

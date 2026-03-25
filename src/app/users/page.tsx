@@ -10,6 +10,7 @@ import FilterBar from "@/components/ui/FilterBar";
 import FilterSidebar from "@/components/ui/FilterSidebar";
 import ActiveFilters from "@/components/ui/ActiveFilters";
 import LoadingSkeleton from "@/components/ui/loading-skeleton";
+import { useGlobalSearch } from "@/contexts/GlobalSearchContext";
 
 interface User {
   id: string;
@@ -30,7 +31,7 @@ const UsersList = () => {
   const [refreshKey, setRefreshKey] = useState(0);
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
+  const { query: searchQuery, setQuery: setSearchQuery } = useGlobalSearch();
   const [statusFilter, setStatusFilter] = useState("all"); // Renamed from filterValue
   const [roleFilter, setRoleFilter] = useState("all");
   const [showFiltersSidebar, setShowFiltersSidebar] = useState(false);
@@ -144,7 +145,7 @@ const UsersList = () => {
       });
     }
     return filters;
-  }, [searchQuery, statusFilter, roleFilter]);
+  }, [searchQuery, statusFilter, roleFilter, setSearchQuery]);
 
   // Calculate counts for each role (only for non-deleted users)
   const roleCounts = useMemo(() => {

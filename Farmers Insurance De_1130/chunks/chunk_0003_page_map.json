@@ -1,0 +1,103 @@
+{
+  "chunk_id": 3,
+  "documents": [
+    {
+      "doc_id": "unknown-Others",
+      "pages": [
+        "9"
+      ]
+    },
+    {
+      "doc_id": "2025-01-09-Others",
+      "pages": [
+        "10",
+        "11"
+      ]
+    },
+    {
+      "doc_id": "unknown-Traffic_Co",
+      "pages": [
+        "12"
+      ]
+    }
+  ],
+  "pages": [
+    {
+      "page_no": "9",
+      "doc_id": "unknown-Others",
+      "continuation": {
+        "prev_page_continued": "true",
+        "confidence": "high",
+        "reason": "Starts with citation continuing settlement demand from previous page"
+      },
+      "category": {
+        "matching_category": "Others",
+        "confidence": "high"
+      },
+      "date_of_service": null,
+      "date_of_incident": null,
+      "bill_date": null,
+      "provider": {
+        "value": "BATTA FULKERSON, LLP",
+        "confidence": "high"
+      }
+    },
+    {
+      "page_no": "10",
+      "doc_id": "2025-01-09-Others",
+      "continuation": {
+        "prev_page_continued": "false",
+        "confidence": "high",
+        "reason": "Content shifts to asset declaration, different topic"
+      },
+      "category": {
+        "matching_category": "Others",
+        "confidence": "high"
+      },
+      "date_of_service": null,
+      "date_of_incident": "2025-01-09",
+      "bill_date": null,
+      "provider": {
+        "value": "Din Hu Vo",
+        "confidence": "medium"
+      }
+    },
+    {
+      "page_no": "11",
+      "doc_id": "2025-01-09-Others",
+      "continuation": {
+        "prev_page_continued": "true",
+        "confidence": "high",
+        "reason": "Continues asset declaration from previous page"
+      },
+      "category": {
+        "matching_category": "Others",
+        "confidence": "high"
+      },
+      "date_of_service": null,
+      "date_of_incident": "2025-01-09",
+      "bill_date": null,
+      "provider": {
+        "value": "Din Hu Vo",
+        "confidence": "medium"
+      }
+    },
+    {
+      "page_no": "12",
+      "doc_id": "unknown-Traffic_Co",
+      "continuation": {
+        "prev_page_continued": "false",
+        "confidence": "high",
+        "reason": "Starts new exhibit, not continuation"
+      },
+      "category": {
+        "matching_category": "Traffic Collision Report",
+        "confidence": "high"
+      },
+      "date_of_service": null,
+      "date_of_incident": null,
+      "bill_date": null,
+      "provider": null
+    }
+  ]
+}

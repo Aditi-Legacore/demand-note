@@ -8,6 +8,7 @@ import DocumentsTable from "@/components/table/DocumentsTable";
 import FilterBar from "@/components/ui/FilterBar";
 import FilterSidebar from "@/components/ui/FilterSidebar";
 import ActiveFilters from "@/components/ui/ActiveFilters";
+import { useGlobalSearch } from "@/contexts/GlobalSearchContext";
 
 interface DocumentType {
   id: string;
@@ -22,7 +23,7 @@ interface DocumentType {
 export default function DocumentsPage() {
   const [documents, setDocuments] = useState<DocumentType[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
+  const { query: searchQuery, setQuery: setSearchQuery } = useGlobalSearch();
   const [filterValue, setFilterValue] = useState("all");
   const [caseTypeFilter, setCaseTypeFilter] = useState("all");
   const [dateFromFilter, setDateFromFilter] = useState("");
@@ -125,7 +126,7 @@ export default function DocumentsPage() {
       });
     }
     return filters;
-  }, [searchQuery, filterValue, caseTypeFilter, dateFromFilter, dateToFilter]);
+  }, [searchQuery, filterValue, caseTypeFilter, dateFromFilter, dateToFilter, setSearchQuery]);
 
   return (
     <main className="min-h-screen">

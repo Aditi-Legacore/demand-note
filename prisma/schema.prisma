@@ -32,7 +32,7 @@ model User {
   internalNotes   DemandInternalNote[]
   demandNotes     DemandNote[]
 /* statusHistories DemandStatusHistory[] */
-  formSubmissions FormSubmission[]
+/*  formSubmissions FormSubmission[] */
   intakes         IntakeInfo[]
   jobs            Job[]
   notes           Note[]
@@ -43,6 +43,7 @@ model User {
   notifications        Notification[]       @relation("UserNotifications")
   createdNotifications Notification[]       @relation("CreatedNotifications")
   demandNoteEditLocks  DemandNoteEditLock[]
+  summaryComments      SummaryComment[]
 }
 
 model IntakeInfo {
@@ -258,18 +259,12 @@ model ActivityLog {
   intake           IntakeInfo @relation("IntakeToActivityLogs", fields: [intakeId], references: [id], onDelete: Cascade)
 }
 
-model OTP {
-  id         String   @id @default(cuid())
-  email      String
-  otp        String
-  expiresAt  DateTime
-  createdAt  DateTime @default(now())
-}
-
 model DemandNote {
   id              String    @id @default(cuid())
   createdById     String
   title           String
+  applicationType String?
+  projectId       String?
   description     String?
   referenceNumber String?   @unique
   totalAmount     Float     @default(0)
@@ -310,6 +305,7 @@ model DemandNote {
   /* statusHistory DemandStatusHistory[] */
   timeline      DemandTimeline[]
   jobs          Job?
+  summaryComments SummaryComment[]
 }
 
 model DefedantClient {
@@ -337,6 +333,7 @@ model DemandFile {
   id            String     @id @default(cuid())
   demandNoteId  String
   uploadedById  String
+  sourceDocumentId   String?
   fileName      String
   fileUrl       String
   fileType      String?
@@ -366,6 +363,7 @@ model Job {
   tasks           Task[]
 }
 
+/*
 model Task {
   id              String     @id @default(cuid())
   jobId           String
@@ -384,6 +382,36 @@ model Task {
   editedSummaryTs DateTime?
   demandFile      DemandFile @relation(fields: [demandFileId], references: [id])
   job             Job        @relation(fields: [jobId], references: [id], onDelete: Cascade)
+}
+*/
+
+model Task {
+  id                String   @id @default(cuid())
+  jobId             String
+  fileName          String
+  filePath          String
+  status            String   @default("pending")
+  pid               Int?
+  startTs           DateTime?
+  endTs             DateTime?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  outputSummary     String?
+  editedSummary     String?
+  editedSummaryTs   DateTime?
+
+  outputFilePath    String?
+  demandFileId      String
+
+  promptVersionId   String?
+
+  // Relations
+  demandFile        DemandFile @relation(fields: [demandFileId], references: [id])
+  job               Job        @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  comments          SummaryComment[]
+  promptVersion     Prompt?    @relation("TaskPromptVersion", fields: [promptVersionId], references: [id])
 }
 
 model DemandInternalNote {
@@ -478,7 +506,7 @@ model Notification {
   @@index([userId, createdAt])
 }
 
-model Prompt {
+model Prompt { 
   id         String   @id @default(cuid())
   docType    String   @map("doc_type")
   prompt     String
@@ -493,41 +521,28 @@ model Prompt {
   @@index([docType])
   @@index([docType, activeFlag])
   @@map("Prompt")
+  tasks Task[] @relation("TaskPromptVersion")
+  summaryComments SummaryComment[] @relation("PromptSummaryComments")
 }
 
-model Matter {
-  id              String           @id @default(cuid())
-  title           String
-  description     String?
-  status          String           @default("Open")
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-  formSubmissions FormSubmission[]
+model SummaryComment {
+  id        String   @id @default(cuid())
+  taskId    String
+  userId    String
+  comment   String
+  promptId  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  demandNoteId String?
+  demandNote   DemandNote? @relation(fields: [demandNoteId], references: [id], onDelete: Cascade)
+  prompt       Prompt?      @relation("PromptSummaryComments", fields: [promptId], references: [id], onDelete: SetNull)
+
+  @@index([demandNoteId])
+  @@index([promptId])
 }
 
-model FormTemplate {
-  id        String           @id @default(cuid())
-  title     String
-  language  String           @default("English")
-  fields    Json
-  contacts  Json?
-  createdBy String?
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
-  submissions FormSubmission[]
-}
 
-model FormSubmission {
-  id         String       @id @default(cuid())
-  templateId String
-  userId     String?
-  matterId   String?
-  status     String       @default("Pending")
-  data       Json
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  template   FormTemplate @relation(fields: [templateId], references: [id], onDelete: Restrict, onUpdate: Cascade)
-  user       User?        @relation(fields: [userId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  matter     Matter?      @relation(fields: [matterId], references: [id], onDelete: SetNull, onUpdate: Cascade)
-}
 

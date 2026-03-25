@@ -4,6 +4,7 @@ import { ThemeProvider } from 'next-themes';
 import { SessionProvider } from 'next-auth/react';
 import { Toaster } from 'sonner';
 import { ThemeProvider as CustomThemeProvider } from '@/contexts/ThemeContext';
+import { GlobalSearchProvider } from '@/contexts/GlobalSearchContext';
 
 interface ProvidersProps {
   children: React.ReactNode;
@@ -19,8 +20,10 @@ export const Providers: React.FC<ProvidersProps> = ({ children }) => {
         disableTransitionOnChange
       >
         <CustomThemeProvider>
-          {children}
-          <Toaster />
+          <GlobalSearchProvider>
+            {children}
+            <Toaster />
+          </GlobalSearchProvider>
         </CustomThemeProvider>
       </ThemeProvider>
     </SessionProvider>

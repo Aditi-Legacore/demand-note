@@ -10,9 +10,10 @@ import FilterSidebar from "@/components/ui/FilterSidebar";
 import ActiveFilters from "@/components/ui/ActiveFilters";
 import LoadingSkeleton from "@/components/ui/loading-skeleton";
 import { BarChart3, Clock3, Sparkles } from "lucide-react";
+import { useGlobalSearch } from "@/contexts/GlobalSearchContext";
 
 export default function LeadsPage() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const { query: searchQuery, setQuery: setSearchQuery } = useGlobalSearch();
   const [statusFilter, setStatusFilter] = useState("all");
   const [caseTypeFilter, setCaseTypeFilter] = useState("all");
   const [dateFromFilter, setDateFromFilter] = useState("");
@@ -152,7 +153,7 @@ export default function LeadsPage() {
       });
     }
     return filters;
-  }, [searchQuery, statusFilter, caseTypeFilter, referralSourceFilter, dateFromFilter, dateToFilter]);
+  }, [searchQuery, statusFilter, caseTypeFilter, referralSourceFilter, dateFromFilter, dateToFilter, setSearchQuery]);
 
   return (
     <main className="min-h-screen">

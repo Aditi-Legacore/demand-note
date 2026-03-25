@@ -1,0 +1,42 @@
+[
+  {
+    "chunk_id": 1,
+    "start_page": 1,
+    "end_page": 4,
+    "num_pages": 4,
+    "character_count": 6820,
+    "word_count": 1100,
+    "line_count": 111,
+    "timestamp": "2026-03-20T11:31:07.072234"
+  },
+  {
+    "chunk_id": 2,
+    "start_page": 5,
+    "end_page": 8,
+    "num_pages": 4,
+    "character_count": 7755,
+    "word_count": 1205,
+    "line_count": 136,
+    "timestamp": "2026-03-20T11:31:07.073524"
+  },
+  {
+    "chunk_id": 3,
+    "start_page": 9,
+    "end_page": 12,
+    "num_pages": 4,
+    "character_count": 3764,
+    "word_count": 550,
+    "line_count": 80,
+    "timestamp": "2026-03-20T11:31:07.074633"
+  },
+  {
+    "chunk_id": 4,
+    "start_page": 13,
+    "end_page": 14,
+    "num_pages": 2,
+    "character_count": 99,
+    "word_count": 18,
+    "line_count": 9,
+    "timestamp": "2026-03-20T11:31:07.075149"
+  }
+]

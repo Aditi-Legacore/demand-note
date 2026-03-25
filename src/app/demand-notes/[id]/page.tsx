@@ -2,29 +2,31 @@
 
 type ReactQuillComponent = typeof import("react-quill-new")["default"];
 
-import { useState, useEffect, useRef, useCallback, use } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback, use } from "react";
 
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
-import { format, formatDistanceToNow } from "date-fns";
+import { format, formatDistanceToNow, isToday, isYesterday } from "date-fns";
 import {
   ArrowLeft,
   Bell,
+  Calendar,
+  ChevronDown,
+  Copy,
   Download,
   Edit,
-  FileText,
-  Calendar,
-  Clock,
   Eye,
+  FileDown,
+  FileText,
   Loader2,
   Pencil,
-  Upload,
-  Trash2,
-  Sparkles,
-  Copy,
-  X,
   Save,
-  FileDown,
+  Send,
+  Sparkles,
+  Trash2,
+  Upload,
+  X,
+  Clock
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -48,6 +50,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import DefaultCardComponent from "@/components/default-card-component";
 import { Textarea } from "@/components/ui/textarea";
 import LoadingSkeleton from "@/components/ui/loading-skeleton";
+import { useSummaryComments } from "@/hooks/use-comments";
+import { hasCommentAccess } from "@/lib/comment-access";
+import { cn } from "@/lib/utils";
+import type { SummaryCommentWithUser } from "@/types/summary";
 
 interface FileType {
   createdAt: string | null;
@@ -59,6 +65,7 @@ interface FileType {
   uploadedAt: string | null;
   summaryStatus?: string | null;
   tasks?: Array<{
+    id: string;
     status?: string;
     outputSummary?: string | null;
     editedSummary?: string | null;
@@ -155,6 +162,9 @@ interface PublishDetails {
 export default function DemandNoteView({ params }: DemandNoteViewProps) {
   const router = useRouter();
   const { data: session, status } = useSession();
+  const sessionRoles = session?.user?.roles ?? [];
+  const canAccessSummaryComments = hasCommentAccess(sessionRoles);
+  const currentUserId = session?.user?.id ?? null;
   const { id } = use(params);
   // const contentRef = useRef<HTMLDivElement | null>(null);
 
@@ -254,6 +264,9 @@ export default function DemandNoteView({ params }: DemandNoteViewProps) {
   const [modalAiSummary, setModalAiSummary] = useState<string>("");
   const [modalEditedSummary, setModalEditedSummary] = useState<string>("");
   const [modalSummaryMode, setModalSummaryMode] = useState<"ai" | "edited">("ai");
+  const [commentDraft, setCommentDraft] = useState("");
+  const [areCommentsExpanded, setCommentsExpanded] = useState(false);
+  const [summaryTaskId, setSummaryTaskId] = useState<string | null>(null);
   const [isModalLoading, setIsModalLoading] = useState(false);
   const [isSavingSummary, setIsSavingSummary] = useState(false);
 
@@ -264,8 +277,79 @@ export default function DemandNoteView({ params }: DemandNoteViewProps) {
   const [summaryInvalidated, setSummaryInvalidated] = useState(false);
   const [isDraftPrefetching, setIsDraftPrefetching] = useState(false);
 
+  const {
+    comments,
+    isLoading: commentsLoading,
+    isPosting: isPostingComment,
+    error: commentsError,
+    addComment,
+    deleteComment,
+    deletingCommentId,
+  } = useSummaryComments(canAccessSummaryComments ? summaryTaskId : null);
+  const summaryTabsGridClass = "grid-cols-2";
+  const messageListRef = useRef<HTMLDivElement | null>(null);
+  const prevCommentCountRef = useRef(0);
+  const sortedComments = useMemo(() => {
+    const list = comments ?? [];
+    return [...list].sort((a, b) => {
+      const first = new Date(a.createdAt).getTime();
+      const second = new Date(b.createdAt).getTime();
+      return first - second;
+    });
+  }, [comments]);
+
+  const commentGroups = useMemo(() => {
+    const groups: Array<{
+      key: string;
+      label: string;
+      comments: SummaryCommentWithUser[];
+    }> = [];
+    const groupIndex = new Map<string, number>();
+
+    sortedComments.forEach((comment) => {
+      const createdAt = comment.createdAt ? new Date(comment.createdAt) : null;
+      const isValidDate = createdAt && !Number.isNaN(createdAt.getTime());
+      const key = isValidDate
+        ? createdAt!.toISOString().split("T")[0]
+        : "unknown-date";
+      const label = isValidDate
+        ? isToday(createdAt!)
+          ? "Today"
+          : isYesterday(createdAt!)
+            ? "Yesterday"
+            : format(createdAt!, "MMMM d, yyyy")
+        : "Unknown date";
+
+      if (!groupIndex.has(key)) {
+        groupIndex.set(key, groups.length);
+        groups.push({ key, label, comments: [] });
+      }
+
+      groups[groupIndex.get(key)!].comments.push(comment);
+    });
+
+    return groups;
+  }, [sortedComments]);
+
+  useEffect(() => {
+    const count = comments?.length ?? 0;
+    if (count > prevCommentCountRef.current) {
+      setCommentsExpanded(true);
+    }
+    prevCommentCountRef.current = count;
+  }, [comments]);
+
+  useEffect(() => {
+    if (messageListRef.current) {
+      messageListRef.current.scrollTo({
+        top: messageListRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [sortedComments]);
+
   // Dynamic import for ReactQuill to avoid SSR issues
-const [ReactQuill, setReactQuill] = useState<ReactQuillComponent | null>(null);
+  const [ReactQuill, setReactQuill] = useState<ReactQuillComponent | null>(null);
   useEffect(() => {
     import('react-quill-new').then((mod) => {
       setReactQuill(() => mod.default);
@@ -636,14 +720,20 @@ const [ReactQuill, setReactQuill] = useState<ReactQuillComponent | null>(null);
         uploadedFiles.push(result.file as FileType);
       }
 
-      setDemandNote((prev) =>
-        prev
-          ? {
-            ...prev,
-            files: [...prev.files, ...uploadedFiles],
-          }
-          : null
-      );
+      setDemandNote((prev) => {
+        if (!prev) return null;
+        const merged = new Map(prev.files.map((f) => [f.id, f]));
+        for (const file of uploadedFiles) {
+          merged.set(file.id, {
+            ...file,
+            uploadedAt: file.uploadedAt || file.createdAt || new Date().toISOString(),
+          });
+        }
+        return {
+          ...prev,
+          files: Array.from(merged.values()),
+        };
+      });
 
       const timelineResponse = await fetch(
         `/api/demand-notes/${id}/timeline`
@@ -986,6 +1076,10 @@ const [ReactQuill, setReactQuill] = useState<ReactQuillComponent | null>(null);
     setIsSummaryModalOpen(true);
     setIsModalLoading(true);
     setModalSummaryMode("ai");
+    const fallbackTaskId =
+      (demandNote?.files.find((f) => f.id === fileId) as FileType)?.tasks?.[0]?.id ??
+      null;
+    setSummaryTaskId(fallbackTaskId);
 
     try {
       const response = await fetch(`/api/demand-files/${fileId}/summary`);
@@ -997,6 +1091,7 @@ const [ReactQuill, setReactQuill] = useState<ReactQuillComponent | null>(null);
 
         setModalAiSummary(ai);
         setModalEditedSummary(edited);
+        setSummaryTaskId(data.taskId ?? fallbackTaskId);
       } else {
         // Fallback to existing summary if API fails
         const file = demandNote?.files.find(f => f.id === fileId);
@@ -1006,6 +1101,7 @@ const [ReactQuill, setReactQuill] = useState<ReactQuillComponent | null>(null);
 
         setModalAiSummary(existingSummary);
         setModalEditedSummary(existingEdited);
+        setSummaryTaskId(task?.id ?? fallbackTaskId);
       }
     } catch (error) {
       console.error("Error fetching summary:", error);
@@ -1017,6 +1113,7 @@ const [ReactQuill, setReactQuill] = useState<ReactQuillComponent | null>(null);
 
       setModalAiSummary(existingSummary);
       setModalEditedSummary(existingEdited);
+      setSummaryTaskId(task?.id ?? fallbackTaskId);
     } finally {
       setIsModalLoading(false);
     }
@@ -1029,6 +1126,8 @@ const [ReactQuill, setReactQuill] = useState<ReactQuillComponent | null>(null);
     setModalAiSummary("");
     setModalEditedSummary("");
     setModalSummaryMode("ai");
+    setSummaryTaskId(null);
+    setCommentDraft("");
   };
 
   // NEW: Save Edited Summary
@@ -1084,6 +1183,57 @@ const [ReactQuill, setReactQuill] = useState<ReactQuillComponent | null>(null);
     URL.revokeObjectURL(url);
 
     toast.success("Summary exported successfully");
+  };
+
+  const handlePostComment = async () => {
+    if (!canAccessSummaryComments || !summaryTaskId || !commentDraft.trim()) return;
+    setCommentsExpanded(true);
+    try {
+      await addComment(commentDraft);
+      setCommentDraft("");
+      toast.success("Comment posted");
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : "Failed to post comment");
+    }
+  };
+
+  const handleDeleteComment = useCallback(
+    async (commentId: string) => {
+      if (!commentId || commentId.startsWith("temp-")) return;
+
+      try {
+        await deleteComment(commentId);
+        toast.success("Comment deleted");
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : "Failed to delete comment");
+      }
+    },
+    [deleteComment]
+  );
+
+  const getCommentAuthorName = (user?: { firstName?: string | null; lastName?: string | null; email?: string | null } | null) => {
+    if (!user) return "Unknown user";
+    const parts = [user.firstName, user.lastName].filter(Boolean);
+    if (parts.length) return parts.join(" ");
+    return user.email ?? "Unknown user";
+  };
+
+  const getCommentAuthorInitials = (user?: { firstName?: string | null; lastName?: string | null; email?: string | null } | null) => {
+    if (!user) return "??";
+    const parts = [user.firstName, user.lastName]
+      .map((part) => part?.trim())
+      .filter((part): part is string => Boolean(part));
+
+    if (parts.length === 0) {
+      const fallbackChar = user.email?.trim().charAt(0);
+      return fallbackChar ? fallbackChar.toUpperCase() : "?";
+    }
+
+    if (parts.length === 1) {
+      return parts[0].slice(0, 2).toUpperCase();
+    }
+
+    return `${parts[0].charAt(0)}${parts[1].charAt(0)}`.toUpperCase();
   };
 
   // const handleOpenSummaryPanel = async (fileId: string, fileName: string) => {
@@ -2270,7 +2420,7 @@ const [ReactQuill, setReactQuill] = useState<ReactQuillComponent | null>(null);
                                     <td className="px-4 py-2">
                                       <div className="flex items-center gap-3">
                                         <FileText className="h-5 w-5 text-blue-500 flex-shrink-0" />
-                                        <span className="text-sm font-medium text-gray-900">
+                                        <span className="text-sm font-medium text-gray-900 dark:text-gray-400 truncate" title={file.fileName}>
                                           {file.fileName}
                                         </span>
                                       </div>
@@ -2294,7 +2444,7 @@ const [ReactQuill, setReactQuill] = useState<ReactQuillComponent | null>(null);
                                       </Badge>
                                     </td>
                                     <td className="px-4 py-2">
-                                      <div className="flex gap-1 justify-end">
+                                      <div className="flex gap-1">
                                         <Button
                                           variant="ghost"
                                           size="icon"
@@ -2465,7 +2615,7 @@ const [ReactQuill, setReactQuill] = useState<ReactQuillComponent | null>(null);
                                         >
                                           <div className="flex items-center gap-3">
                                             <FileText className="h-5 w-5 text-blue-500 flex-shrink-0" />
-                                            <span className="text-sm font-medium text-gray-900">
+                                            <span className="text-sm font-medium text-gray-900 dark:text-gray-400">
                                               {file.fileName}
                                             </span>
                                           </div>
@@ -2720,8 +2870,15 @@ const [ReactQuill, setReactQuill] = useState<ReactQuillComponent | null>(null);
                 </div>
               ) : (
                 <div className="flex flex-1 flex-col overflow-y-auto px-6 py-5 space-y-6">
-                  <Tabs value={modalSummaryMode} onValueChange={(v) => setModalSummaryMode(v as "ai" | "edited")}>
-                    <TabsList className="grid w-full grid-cols-2 bg-slate-100 p-1 rounded-full">
+                  <Tabs
+                    value={modalSummaryMode}
+                    onValueChange={(value) =>
+                      setModalSummaryMode(value as "ai" | "edited")
+                    }
+                  >
+                    <TabsList
+                      className={`grid w-full gap-1 bg-slate-100 p-1 rounded-full ${summaryTabsGridClass}`}
+                    >
                       <TabsTrigger
                         value="ai"
                         className="flex items-center gap-2 rounded-full data-[state=active]:bg-white data-[state=active]:shadow"
@@ -2771,11 +2928,198 @@ const [ReactQuill, setReactQuill] = useState<ReactQuillComponent | null>(null);
                         />
                       </div>
                     </TabsContent>
+
                   </Tabs>
                 </div>
               )}
 
-              <div className="px-6 py-4 border-t bg-white/80 backdrop-blur">
+              <div className="px-6 py-4 border-t bg-white/80 backdrop-blur space-y-4">
+                {canAccessSummaryComments && (
+                  <div className="relative flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-slate-50/70 shadow-sm">
+                    <button
+                      type="button"
+                      className="flex items-center justify-between w-full px-5 py-3 text-left transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300"
+                      onClick={() => setCommentsExpanded((prev) => !prev)}
+                      aria-expanded={areCommentsExpanded}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-lg leading-none" aria-hidden="true">
+                          💬
+                        </span>
+                        <span className="text-sm font-semibold text-slate-900">
+                          Summary Comments
+                        </span>
+                        <Badge variant="outline" className="px-2 py-0.5 text-xs font-semibold">
+                          {comments.length}
+                        </Badge>
+                      </div>
+                      <ChevronDown
+                        className={cn(
+                          "h-4 w-4 transition-transform duration-200",
+                          areCommentsExpanded ? "rotate-180" : "rotate-0"
+                        )}
+                      />
+                    </button>
+                    <div
+                      className={cn(
+                        "relative flex flex-col overflow-hidden transition-[max-height,opacity] duration-200 ease-out",
+                        areCommentsExpanded ? "opacity-100" : "opacity-0"
+                      )}
+                      style={{ maxHeight: areCommentsExpanded ? 520 : 0 }}
+                      aria-hidden={!areCommentsExpanded}
+                    >
+                      <div className="flex flex-1 flex-col overflow-hidden">
+                        <div
+                          ref={messageListRef}
+                          className="flex-1 min-h-0 overflow-y-auto px-5 pb-3 pr-1"
+                          style={{ maxHeight: 320 }}
+                        >
+                          {commentsLoading ? (
+                            <div className="flex items-center justify-center gap-2 text-sm text-slate-500">
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                              Loading comments...
+                            </div>
+                          ) : commentGroups.length === 0 ? (
+                            <div className="rounded-2xl border border-dashed border-slate-200 bg-white/70 p-4 text-sm text-slate-500">
+                              No comments yet. Be the first to leave feedback.
+                            </div>
+                          ) : (
+                            <div className="space-y-4">
+                              {commentGroups.map((group) => (
+                                <div key={`group-${group.key}`} className="space-y-2">
+                                  <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.25em] text-slate-500">
+                                    <span>{group.label}</span>
+                                    <span className="flex-1 h-px bg-slate-200" />
+                                  </div>
+                                  <div className="space-y-2">
+                                    {group.comments.map((comment) => {
+                                      const isDeleting = deletingCommentId === comment.id;
+                                      const isTempComment = comment.id.startsWith("temp-");
+
+                                      const isOwnComment =
+                                        !!(
+                                          comment.user?.id &&
+                                          currentUserId &&
+                                          comment.user.id === currentUserId
+                                        );
+
+                                      const showDeleteButton = !isTempComment && isOwnComment;
+
+                                      // ✅ Safe date handling
+                                      const createdAt = comment.createdAt
+                                        ? new Date(comment.createdAt)
+                                        : null;
+
+                                      const hasValidDate =
+                                        createdAt !== null && !Number.isNaN(createdAt.getTime());
+
+                                      const relativeTime = hasValidDate
+                                        ? formatDistanceToNow(createdAt, { addSuffix: true })
+                                        : "Unknown time";
+
+                                      const formattedTime = hasValidDate
+                                        ? format(createdAt, "h:mm aa")
+                                        : "Unknown time";
+
+                                      const roleLabel = isOwnComment ? "You" : "Collaborator";
+
+                                      return (
+                                        <div
+                                          key={comment.id}
+                                          className="group flex items-start gap-3 rounded-xl px-3 py-2 transition-colors hover:bg-slate-100"
+                                        >
+                                          <div
+                                            className={cn(
+                                              "flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-[10px] font-semibold uppercase shadow-sm",
+                                              "bg-primary text-primary-foreground"
+                                            )}
+                                          >
+                                            {getCommentAuthorInitials(comment.user)}
+                                          </div>
+
+                                          <div className="flex-1 min-w-0">
+                                            <div className="flex items-start justify-between gap-2">
+                                              <p className="text-sm font-semibold text-slate-900">
+                                                {getCommentAuthorName(comment.user)}
+                                              </p>
+                                              <span className="text-[11px] text-slate-500">
+                                                {relativeTime}
+                                              </span>
+                                            </div>
+
+                                            <p
+                                              className="mt-1 text-sm text-slate-800 leading-5 overflow-hidden"
+                                              style={{
+                                                display: "-webkit-box",
+                                                WebkitLineClamp: 2,
+                                                WebkitBoxOrient: "vertical",
+                                              }}
+                                              title={comment.comment}
+                                            >
+                                              {comment.comment}
+                                            </p>
+
+                                            <p className="mt-1 text-[11px] text-slate-500">
+                                              {roleLabel} · {formattedTime}
+                                            </p>
+                                          </div>
+
+                                          <div className="flex items-start">
+                                            {showDeleteButton && (
+                                              <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                className="text-slate-400 opacity-0 transition-opacity duration-150 group-hover:opacity-100 focus-visible:opacity-100"
+                                                onClick={() => handleDeleteComment(comment.id)}
+                                                disabled={isDeleting}
+                                              >
+                                                {isDeleting ? (
+                                                  <Loader2 className="h-4 w-4 animate-spin" />
+                                                ) : (
+                                                  <Trash2 className="h-4 w-4" />
+                                                )}
+                                                <span className="sr-only">Delete comment</span>
+                                              </Button>
+                                            )}
+                                          </div>
+                                        </div>
+                                      );
+                                    })}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        <div className="border-t border-slate-200 bg-white/90 px-5 py-3 shadow-[0_-2px_8px_rgba(15,23,42,0.08)] backdrop-blur">
+                          <div className="flex items-center gap-2">
+                            <Input
+                              id="summary-comment"
+                              value={commentDraft}
+                              onChange={(event) => setCommentDraft(event.target.value)}
+                              placeholder="Share feedback or clarify the summary..."
+                              className="flex-1 bg-white border-slate-200 focus:border-indigo-400 focus:ring-indigo-200"
+                              disabled={!summaryTaskId || isPostingComment}
+                            />
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={handlePostComment}
+                              disabled={!summaryTaskId || !commentDraft.trim() || isPostingComment}
+                              aria-label="Post comment"
+                              className="h-10 w-10 p-0"
+                            >
+                              <Send className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </div>
+                        {commentsError && (
+                          <p className="px-5 pb-3 pt-2 text-xs text-rose-600">{commentsError}</p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
                 <div className="flex items-center justify-between">
                   <div className="flex gap-2">
                     <Button
@@ -2836,7 +3180,7 @@ const [ReactQuill, setReactQuill] = useState<ReactQuillComponent | null>(null);
             onClick={handleNotifyLegacore}
             // disabled={isNotifying || notifyDisabled || demandNote?.status === "editing"}
             disabled={demandNote?.status === "editing"}
-            className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg rounded-full px-5 py-2.5 h-auto flex items-center gap-2 border border-blue-500/70 backdrop-blur supports-[backdrop-filter]:bg-blue-600/95"
+            className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg rounded-full px-5 py-2.5 h-auto flex items-center gap-2 border border-blue-500/70 backdrop-blur supports-backdrop-filter:bg-blue-600/95"
           >
             {isNotifying ? (
               <>
@@ -2870,7 +3214,7 @@ const [ReactQuill, setReactQuill] = useState<ReactQuillComponent | null>(null);
             </div>
           </Button>
         </div>
-      )}
+      )} 
     </div>
   );
 }
