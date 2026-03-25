@@ -1,0 +1,57 @@
+# Production Requirements - PDF Extraction Pipeline
+# Core dependencies (required)
+
+PyMuPDF==1.23.8           # Advanced PDF text extraction with OCR fallback
+PyPDF2==4.0.1             # Fallback extraction method (safety net)
+
+# OCR & Image Processing
+Pillow==10.1.0            # PIL: Image processing (JPEG, PNG, etc.)
+pytesseract==0.3.10       # Python wrapper for Tesseract OCR
+opencv-python==4.8.1      # cv2: Advanced image preprocessing (denoising, contrast, threshold)
+numpy==1.24.3             # Array operations for image processing
+pdf2image==1.16.3         # Convert PDF pages to images (requires Poppler system package)
+
+groq==0.9.0               # Groq API client for LLM inference
+psycopg2-binary==2.9.9    # PostgreSQL database adapter
+requests==2.31.0          # HTTP library for API calls
+
+# Optional dependencies (uncomment if using semantic search)
+# chromadb==0.4.24
+# sentence-transformers==2.2.2
+
+# Notes:
+# - Embedding engine (chromadb + sentence-transformers) is fully optional
+#   Pipeline will skip it gracefully if not installed
+# - For CLI/batch deployment (no web service needed)
+#
+# IMPORTANT: System Dependencies (not in pip)
+# Two system packages required for OCR and PDF rendering:
+#
+# 1. Tesseract OCR engine:
+#    Windows:
+#      choco install tesseract
+#      or download: https://github.com/UB-Mannheim/tesseract/wiki
+#    macOS:
+#      brew install tesseract
+#    Linux (Ubuntu/Debian):
+#      sudo apt-get install tesseract-ocr
+#    Linux (CentOS/RHEL):
+#      sudo yum install tesseract
+#
+# 2. Poppler (for pdf2image):
+#    Windows:
+#      choco install poppler
+#      or download: https://github.com/oschwartz10612/poppler-windows/releases
+#      Set POPPLER_PATH env variable if installed manually
+#    macOS:
+#      brew install poppler
+#    Linux (Ubuntu/Debian):
+#      sudo apt-get install poppler-utils
+#    Linux (CentOS/RHEL):
+#      sudo yum install poppler-utils
+#
+# Note:
+# - pytesseract is just a Python wrapper; Tesseract binary must be installed
+# - pdf2image requires Poppler binaries on your system
+# - If either is missing, PDF extraction will gracefully fall back to PyMuPDF
+# - All standard library modules are included by default
