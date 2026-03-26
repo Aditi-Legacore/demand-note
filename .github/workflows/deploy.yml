@@ -1,24 +1,22 @@
-name: Build and Push Docker Images
+name: Build and Push Backend & Frontend Images
 
 on:
   push:
     branches:
-      - release/v1.0.1
-
-env:
-  BACKEND_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/demand-note-backend
-  FRONTEND_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/demand-note-frontend
-  BACKEND_PORT: 8000
-  FRONTEND_PORT: 3000
+      - development
 
 jobs:
-
-  # -------------------------
-  # Backend
-  # -------------------------
-  backend:
-    name: Build & Push Backend Image
+  build-images:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: backend
+            context: backend
+            dockerfile: backend/Dockerfile
+          - name: frontend
+            context: frontend
+            dockerfile: frontend/Dockerfile
 
     steps:
       - name: Checkout repo
@@ -30,53 +28,20 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build & Push Backend
+      - name: Build and Push ${{ matrix.name }} image
         uses: docker/build-push-action@v5
         with:
-          context: ./backend
+          context: ${{ matrix.context }}
+          file: ${{ matrix.dockerfile }}
           push: true
           tags: |
-            ${{ env.BACKEND_IMAGE }}:latest
-            ${{ env.BACKEND_IMAGE }}:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/demand-note-${{ matrix.name }}:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/demand-note-${{ matrix.name }}:${{ github.sha }}
 
-      - name: Deploy Backend (Coolify)
-        run: |
-          curl -X POST "http://143.244.141.58:8000/api/v1/deploy?uuid=BACKEND_UUID&force=true"
-
-
-  # -------------------------
-  # Frontend
-  # -------------------------
-  frontend:
-    name: Build & Push Frontend Image
+  trigger-deploy:
+    needs: build-images
     runs-on: ubuntu-latest
-    needs: backend  # Ensure backend builds first
-
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Login DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Set Frontend Env Variable for Backend
+      - name: Trigger Coolify Deploy
         run: |
-          echo "REACT_APP_BACKEND_URL=http://backend:${{ env.BACKEND_PORT }}" >> $GITHUB_ENV
-
-      - name: Build & Push Frontend
-        uses: docker/build-push-action@v5
-        with:
-          context: ./frontend
-          push: true
-          tags: |
-            ${{ env.FRONTEND_IMAGE }}:latest
-            ${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
-          build-args: |
-            REACT_APP_BACKEND_URL=${{ env.REACT_APP_BACKEND_URL }}
-
-      - name: Deploy Frontend (Coolify)
-        run: |
-          curl -X POST "http://143.244.141.58:8000/api/v1/deploy?uuid=FRONTEND_UUID&force=true"
+          curl -X POST "http://143.244.141.58:8000/api/v1/deploy?uuid=zb433vr4scqn2wh7jhok6lfn&force=false"
