@@ -98,16 +98,11 @@ export async function POST(request: NextRequest) {
         //     data: tasksData,
         // });
 
-        // Spawn Python Process
-        const result = await spawnPythonProcess({
-            args: [job.id],
-            detached: true,
-            logOutput: true,
-        });
+        const startResult = await triggerBackendJob(job.id);
 
-        if (!result.success) {
+        if (!startResult.success) {
             return NextResponse.json(
-                { error: "Failed to spawn Python process", details: result.error },
+                { error: "Failed to trigger job runner", details: startResult.error },
                 { status: 500 }
             );
         }
@@ -125,4 +120,46 @@ export async function POST(request: NextRequest) {
             { status: 500 }
         );
     }
+}
+
+interface TriggerResult {
+    success: boolean;
+    error?: string;
+}
+
+async function triggerBackendJob(jobId: string): Promise<TriggerResult> {
+    const backendUrl = process.env.BACKEND_JOB_START_URL?.trim();
+
+    if (backendUrl) {
+        try {
+            const response = await fetch(backendUrl, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ jobId }),
+            });
+
+            if (!response.ok) {
+                const details = await response.text();
+                return {
+                    success: false,
+                    error: `Backend responded ${response.status} ${response.statusText}: ${details}`,
+                };
+            }
+
+            return { success: true };
+        } catch (error) {
+            return {
+                success: false,
+                error: error instanceof Error ? error.message : "Unknown error",
+            };
+        }
+    }
+
+    return spawnPythonProcess({
+        args: [jobId],
+        detached: true,
+        logOutput: true,
+    });
 }
