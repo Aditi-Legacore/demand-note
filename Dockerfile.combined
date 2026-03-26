@@ -1,6 +1,6 @@
 FROM python:3.11-slim
 
-ARG DATABASE_URL="postgresql://user:password@localhost:5432/db"
+ARG DATABASE_URL="postgresql://neondb_owner:npg_6wF7xiacSkGd@ep-odd-boat-adwdup95-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
 ENV PYTHONUNBUFFERED=1 \
     DEBIAN_FRONTEND=noninteractive \
     LANG=C.UTF-8 \
