@@ -30,12 +30,12 @@ COPY backend ./backend
 RUN pip install --no-cache-dir -r backend/requirements.txt
 
 # Copy frontend dependencies and run npm install before copying the full app
-COPY frontend/frontend/package*.json ./frontend/
-COPY frontend/frontend/prisma ./frontend/prisma
+COPY frontend/package*.json ./frontend/
+COPY frontend/prisma ./frontend/prisma
 RUN cd frontend && npm install
 
 # Copy the rest of the frontend source
-COPY frontend/frontend ./frontend
+COPY frontend ./frontend
 
 # Generate Prisma client and build the Next.js app
 RUN cd frontend && DATABASE_URL="postgresql://user:password@localhost:5432/db" npx prisma generate
