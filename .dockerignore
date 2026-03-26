@@ -1,11 +1,11 @@
 node_modules
-frontend/frontend/node_modules
-frontend/frontend/.next
-frontend/frontend/logs
-frontend/frontend/outputs
-frontend/frontend/.env
+frontend/node_modules
+frontend/.next
+frontend/logs
+frontend/outputs
+frontend/.env
 backend/__pycache__/
-frontend/frontend/__pycache__/
+frontend/__pycache__/
 **/__pycache__/
 *.pyc
 *.log

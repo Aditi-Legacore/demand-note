@@ -38,8 +38,9 @@ RUN cd frontend && npm install
 COPY frontend ./frontend
 
 # Generate Prisma client and build the Next.js app
-RUN cd frontend && DATABASE_URL="postgresql://user:password@localhost:5432/db" npx prisma generate
-RUN cd frontend && npm run build
+ENV DATABASE_URL="postgresql://user:password@localhost:5432/db"
+RUN npx prisma generate
+RUN npm run build
 
 WORKDIR /app/frontend
 
