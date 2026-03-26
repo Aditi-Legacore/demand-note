@@ -13,10 +13,10 @@ jobs:
         include:
           - name: backend
             context: backend
-            dockerfile: backend/Dockerfile
+            dockerfile: Dockerfile
           - name: frontend
             context: frontend
-            dockerfile: frontend/Dockerfile
+            dockerfile: Dockerfile
 
     steps:
       - name: Checkout repo
