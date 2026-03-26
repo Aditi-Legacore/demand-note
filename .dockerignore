@@ -1,0 +1,14 @@
+node_modules
+frontend/frontend/node_modules
+frontend/frontend/.next
+frontend/frontend/logs
+frontend/frontend/outputs
+frontend/frontend/.env
+backend/__pycache__/
+frontend/frontend/__pycache__/
+**/__pycache__/
+*.pyc
+*.log
+.git
+.gitignore
+.github

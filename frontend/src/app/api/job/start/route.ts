@@ -97,7 +97,8 @@ export async function POST(request: NextRequest) {
         // await prisma.task.createMany({
         //     data: tasksData,
         // });
-        
+
+        // Spawn Python Process
         const result = await spawnPythonProcess({
             args: [job.id],
             detached: true,
@@ -117,8 +118,8 @@ export async function POST(request: NextRequest) {
             message: "Job started successfully",
         });
 
-  } catch (error) {
-        console.error("❌ Job start error:", error);
+    } catch (error) {
+        console.error("[ERROR] Job start error:", error);
         return NextResponse.json(
             { error: "Failed to start job", details: error instanceof Error ? error.message : "Unknown error" },
             { status: 500 }
