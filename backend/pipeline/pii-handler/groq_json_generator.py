@@ -169,7 +169,7 @@ INSTRUCTIONS:
 
     message = client.chat.completions.create(
         model=model,
-        reasoning_format="hidden",
+       # reasoning_format="hidden",
         messages=[
             {
                 "role": "user",
