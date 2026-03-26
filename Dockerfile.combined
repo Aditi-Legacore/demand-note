@@ -6,6 +6,7 @@ ENV PYTHONUNBUFFERED=1 \
     LANG=C.UTF-8 \
     NODE_ENV=production \
     DATABASE_URL=${DATABASE_URL}
+    
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
