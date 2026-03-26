@@ -3,7 +3,7 @@ name: Build and Push Backend & Frontend Images
 on:
   push:
     branches:
-      - development
+      - release/v1.0.1
 
 jobs:
   build-images:
