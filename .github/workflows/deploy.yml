@@ -1,4 +1,4 @@
-name: Build and Push Backend & Frontend Images
+name: Build and Push Combined Image
 
 on:
   push:
@@ -6,17 +6,8 @@ on:
       - release/v1.0.1
 
 jobs:
-  build-images:
+  build-and-push:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        include:
-          - name: backend
-            context: backend
-            dockerfile: Dockerfile
-          - name: frontend
-            context: frontend
-            dockerfile: Dockerfile
 
     steps:
       - name: Checkout repo
@@ -28,18 +19,18 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build and Push ${{ matrix.name }} image
+      - name: Build and Push Combined Image
         uses: docker/build-push-action@v5
         with:
-          context: ${{ matrix.context }}
-          file: ${{ matrix.dockerfile }}
+          context: .
+          file: Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/demand-note-${{ matrix.name }}:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/demand-note-${{ matrix.name }}:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/demand-note:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/demand-note:${{ github.sha }}
 
   trigger-deploy:
-    needs: build-images
+    needs: build-and-push
     runs-on: ubuntu-latest
     steps:
       - name: Trigger Coolify Deploy
