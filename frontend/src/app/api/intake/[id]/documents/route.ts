@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { put, del } from "@vercel/blob";
+import {
+  buildSpacesKey,
+  deleteFromSpaces,
+  extractKeyFromSpacesUrl,
+  getSpacesPublicUrl,
+  uploadToSpaces,
+} from "@/lib/digitalOceanSpaces";
 import { prisma } from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
@@ -75,11 +81,14 @@ export async function POST(
 
       const timestamp = Date.now();
       const storedFileName = `${id}_${timestamp}_${file.name.replace(/\s+/g, "_")}`;
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const storageKey = buildSpacesKey("intakes", id, storedFileName);
 
-      // ✅ Upload to Vercel Blob
-      const blob = await put(storedFileName, file, {
-        access: "public",
-        token: process.env.legasys_dev_blob_READ_WRITE_TOKEN,
+      await uploadToSpaces({
+        key: storageKey,
+        body: buffer,
+        contentType: file.type,
+        contentLength: file.size,
       });
 
       console.log("Creating document record...");
@@ -87,7 +96,7 @@ export async function POST(
         data: {
           intakeId: id,
           fileName: file.name,
-          filePath: blob.url,
+          filePath: storageKey,
           mimeType: file.type,
         },
       });
@@ -218,7 +227,12 @@ export async function GET(
       orderBy: { uploadedAt: "desc" }, // optional, newest first
     });
 
-    return NextResponse.json(documents);
+    const documentsWithUrls = documents.map((doc) => ({
+      ...doc,
+      fileUrl: getSpacesPublicUrl(doc.filePath) ?? doc.filePath,
+    }));
+
+    return NextResponse.json(documentsWithUrls);
   } catch (error) {
     console.error("Error fetching document files:", error);
     return NextResponse.json(
@@ -265,10 +279,14 @@ export async function DELETE(
     //   return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
     // }
 
-    // ✅ Delete file from Vercel Blob storage
-    await del(document.filePath, {
-      token: process.env.legasys_dev_blob_READ_WRITE_TOKEN, // ✅ same token as POST route
-    });
+    const documentKey = extractKeyFromSpacesUrl(document.filePath) ?? document.filePath;
+    if (documentKey) {
+      try {
+        await deleteFromSpaces(documentKey);
+      } catch (error) {
+        console.warn("Failed to delete document from DigitalOcean Spaces:", error);
+      }
+    }
 
     // ✅ Remove database record
     await prisma.document.delete({

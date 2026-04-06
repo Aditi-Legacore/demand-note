@@ -2,7 +2,7 @@ import { NextRequest, NextResponse, } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
-import { del } from "@vercel/blob";
+import { deleteFromSpaces, extractKeyFromSpacesUrl } from "@/lib/digitalOceanSpaces";
 
 type DocumentRecord = {
   fileName: string;
@@ -130,9 +130,10 @@ export async function DELETE(request: NextRequest) {
     // ✅ Optionally delete each file from Vercel Blob storage
     for (const doc of intake.Document) {
       try {
-        await del(doc.filePath, {
-          token: process.env.legasys_dev_blob_READ_WRITE_TOKEN,
-        });
+        const fileKey = extractKeyFromSpacesUrl(doc.filePath) ?? doc.filePath;
+        if (fileKey) {
+          await deleteFromSpaces(fileKey);
+        }
       } catch (err) {
         console.warn(`Failed to delete blob for ${doc.fileName}:`, err);
       }

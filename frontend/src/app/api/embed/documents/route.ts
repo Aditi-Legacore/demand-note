@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { put } from "@vercel/blob";
+import { buildSpacesKey, uploadToSpaces } from "@/lib/digitalOceanSpaces";
 import { prisma } from "@/lib/prisma";
 
 // for uploading documents to db and uploads/documents folder
@@ -65,11 +65,14 @@ export async function POST(request: NextRequest) {
 
       const timestamp = Date.now();
       const storedFileName = `${intakeId}_${timestamp}_${file.name.replace(/\s+/g, "_")}`;
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const storageKey = buildSpacesKey("intakes", intakeId, storedFileName);
 
-      // ✅ Upload to Vercel Blob
-      const blob = await put(storedFileName, file, {
-        access: "public",
-        token: process.env.legasys_dev_blob_READ_WRITE_TOKEN,
+      await uploadToSpaces({
+        key: storageKey,
+        body: buffer,
+        contentType: file.type,
+        contentLength: file.size,
       });
 
       console.log("Creating document record...");
@@ -77,7 +80,7 @@ export async function POST(request: NextRequest) {
         data: {
           intakeId: intakeId,
           fileName: file.name,
-          filePath: blob.url,
+          filePath: storageKey,
           mimeType: file.type,
         },
       });

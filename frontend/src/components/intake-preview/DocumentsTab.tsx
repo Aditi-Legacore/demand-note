@@ -16,6 +16,7 @@ interface Document {
   uploadedAt: string;
   filePath: string;
   uploadedBy: string;
+  fileUrl: string;
 }
 
 interface DocumentsTabProps {
@@ -25,7 +26,7 @@ interface DocumentsTabProps {
   intake: IntakeData;
   showPlaintiffCard: boolean;
   setShowPlaintiffCard: (show: boolean) => void;
-  onPreview: (filePath: string, type: string) => void;
+  onPreview: (fileUrl: string, type: string) => void;
   onDelete: (documentId: string) => void;
   onUpload?: (files: FileList) => void;
 }
@@ -176,7 +177,7 @@ export default function DocumentsTab({
                         <Button
                           variant="outline"
                           size="sm"
-                          onClick={() => onPreview(doc.filePath, doc.type)}
+                          onClick={() => onPreview(doc.fileUrl, doc.type)}
                         >
                           <Eye className="w-4 h-4" />
                         </Button>

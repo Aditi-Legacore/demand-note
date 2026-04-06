@@ -8,7 +8,7 @@ import Image from "next/image";
 interface FileItem {
   id: string;
   fileName: string;
-  filePath: string;
+  fileUrl: string;
   mimeType: string;
 }
 
@@ -21,11 +21,18 @@ export default function DocumentFilesPage() {
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const res = await fetch(`/api/intake/${id}/documents`);
-        if (res.ok) {
-          const data = await res.json();
-          setFiles(data);
-        }
+      const res = await fetch(`/api/intake/${id}/documents`);
+      if (res.ok) {
+        const data = await res.json();
+        setFiles(
+          data.map((file: { id: string; fileName: string; fileUrl: string; mimeType: string }) => ({
+            id: file.id,
+            fileName: file.fileName,
+            fileUrl: file.fileUrl,
+            mimeType: file.mimeType,
+          }))
+        );
+      }
       } catch (error) {
         console.error("Error fetching files:", error);
       } finally {
@@ -61,13 +68,13 @@ export default function DocumentFilesPage() {
             >
               {file.mimeType.startsWith("image/") ? (
                 <Image
-                src={file.filePath}
-                alt={file.fileName}
-                width={300}
-                height={200}
-                unoptimized
-                className="w-full h-40 object-cover rounded-md"
-              />
+                  src={file.fileUrl}
+                  alt={file.fileName}
+                  width={300}
+                  height={200}
+                  unoptimized
+                  className="w-full h-40 object-cover rounded-md"
+                />
 
               ) : (
                 <div className="flex flex-col items-center justify-center h-40 text-gray-500 dark:text-gray-400">
@@ -77,7 +84,7 @@ export default function DocumentFilesPage() {
               )}
 
               <a
-                href={file.filePath}
+                href={file.fileUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-2 text-xs text-blue-600 dark:text-blue-400 hover:underline"

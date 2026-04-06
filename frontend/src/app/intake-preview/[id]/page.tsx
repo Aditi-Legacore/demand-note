@@ -25,6 +25,7 @@ interface DocumentRecord {
   mimeType?: string;
   uploadedAt?: string;
   filePath: string;
+  fileUrl?: string;
   intake?: {
     clientName?: string;
   };
@@ -45,7 +46,7 @@ export default function IntakePreviewPage() {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [notes, setNotes] = useState<{ id: string; content: string; createdAt: string; createdBy: string }[]>([]);
   const [activityLogs, setActivityLogs] = useState<{ id: string; shortDescription: string; longDescription?: string; createdAt: string; createdBy: string; createdByName?: string }[]>([]);
-  const [documents, setDocuments] = useState<{ id: string; name: string; type: string; uploadedAt: string; filePath: string; uploadedBy: string }[]>([]);
+  const [documents, setDocuments] = useState<{ id: string; name: string; type: string; uploadedAt: string; filePath: string; fileUrl: string; uploadedBy: string }[]>([]);
   const [loadingNotes, setLoadingNotes] = useState(false);
   const [loadingActivity, setLoadingActivity] = useState(false);
   const [loadingDocuments, setLoadingDocuments] = useState(false);
@@ -137,6 +138,7 @@ export default function IntakePreviewPage() {
         type: doc.mimeType?.split("/")[1]?.toUpperCase() || "N/A",
         uploadedAt: doc.uploadedAt || new Date().toISOString(),
         filePath: doc.filePath,
+        fileUrl: doc.fileUrl ?? doc.filePath,
         uploadedBy: doc.intake?.clientName || "Unknown",
       }));
 
@@ -336,25 +338,25 @@ export default function IntakePreviewPage() {
   //     toast.error('Preview not supported for this file type.');
   //   }
   // };
-  const handleDocumentPreview = (filePath: string, type: string) => {
+  const handleDocumentPreview = (fileUrl: string, type: string) => {
     const normalizedType = type.toLowerCase();
 
     // ✅ Image Preview
     if (["image/png", "image/jpeg", "image/jpg"].includes(normalizedType)) {
-      setImageUrl(filePath);
+      setImageUrl(fileUrl);
       setShowImagePreview(true);
       return;
     }
 
     // ✅ PDF Preview
-    if (normalizedType === "application/pdf" || filePath.endsWith(".pdf")) {
-      window.open(filePath, "_blank"); // open directly in a new tab
+    if (normalizedType === "application/pdf" || fileUrl.endsWith(".pdf")) {
+      window.open(fileUrl, "_blank"); // open directly in a new tab
       return;
     }
 
     // ✅ Plain Text Preview
-    if (normalizedType === "text/plain" || filePath.endsWith(".txt")) {
-      window.open(filePath, "_blank");
+    if (normalizedType === "text/plain" || fileUrl.endsWith(".txt")) {
+      window.open(fileUrl, "_blank");
       return;
     }
 
@@ -362,11 +364,11 @@ export default function IntakePreviewPage() {
     if (
       normalizedType === "application/msword" ||
       normalizedType === "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ||
-      filePath.endsWith(".doc") ||
-      filePath.endsWith(".docx")
+      fileUrl.endsWith(".doc") ||
+      fileUrl.endsWith(".docx")
     ) {
       // Use Office Online Viewer for a better experience
-      const officeViewerUrl = `https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(filePath)}`;
+      const officeViewerUrl = `https://view.officeapps.live.com/op/view.aspx?src=${encodeURIComponent(fileUrl)}`;
       window.open(officeViewerUrl, "_blank");
       return;
     }

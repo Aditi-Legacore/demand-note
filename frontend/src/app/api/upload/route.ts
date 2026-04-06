@@ -3,8 +3,13 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import type { Prisma } from "@prisma/client";
-import { writeFile } from "fs/promises";
 import path from "path";
+import {
+  buildSpacesKey,
+  deleteFromSpaces,
+  extractKeyFromSpacesUrl,
+  uploadToSpaces,
+} from "@/lib/digitalOceanSpaces";
 
 let upload_status_post: string | null | undefined;
 
@@ -275,8 +280,6 @@ export async function POST(request: NextRequest) {
       `;
     }
 
-    // new code to handle file upload 12/01/2026
-
     const categoryFolderMap: Record<string, string> = {
       medical: "medical reports",
       traffic: "traffic reports",
@@ -287,39 +290,24 @@ export async function POST(request: NextRequest) {
       return name.replace(/[^a-zA-Z0-9._-]/g, "_");
     };
 
-    // Resolve folder based on category
-    const categoryFolder = categoryFolderMap[fileCategory];
-
-    // Build safe filename: demandId_originalFilename
+    const categoryFolder = categoryFolderMap[fileCategory] || fileCategory;
     const safeOriginalName = sanitizeFilename(file.name);
-    const finalFilename = `${demandNoteId}_${safeOriginalName}`;
+    const finalFilename = `${Date.now()}_${safeOriginalName}`;
 
-    // Directory: public/uploads/<category folder>
-    const uploadDir = path.join(
-      process.cwd(),
-      "public",
-      "uploads",
-      categoryFolder
-    );
-
-    // Full file path
-    const filePath = path.join(uploadDir, finalFilename);
-
-    // Public URL
-    const fileUrl = `/uploads/${categoryFolder}/${finalFilename}`;
-
-    // Convert file to buffer
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // Ensure directory exists
-    const fs = await import("fs");
-    if (!fs.existsSync(uploadDir)) {
-      fs.mkdirSync(uploadDir, { recursive: true });
-    }
-
-    // Save file to disk
-    await writeFile(filePath, buffer);
+    const { key: storedKey, url: fileUrl } = await uploadToSpaces({
+      key: buildSpacesKey(
+        "demand-notes",
+        categoryFolder,
+        demandNoteId,
+        finalFilename
+      ),
+      body: buffer,
+      contentType: file.type,
+      contentLength: buffer.length,
+    });
 
     // Prepare data object for demand file creation
     const demandFileData: Prisma.DemandFileUncheckedCreateInput = {
@@ -328,7 +316,7 @@ export async function POST(request: NextRequest) {
       fileName: file.name,
       size: buffer.length,
       fileUrl,
-      filePath,
+      filePath: storedKey,
       status: "uploaded",
       uploadedById: session.user.id,
     };
@@ -460,18 +448,59 @@ export async function DELETE(request: NextRequest) {
       );
     }
 
-    // Delete from filesystem
     const fs = await import("fs");
-    const filePath = file.filePath
-      ? file.filePath
-      : path.join(
-          process.cwd(),
-          "public",
-          file.fileUrl.replace(/^\/+/, "")
-        );
 
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
+    const attemptSpacesDelete = async (maybeKey?: string | null) => {
+      if (!maybeKey) {
+        return false;
+      }
+
+      try {
+        await deleteFromSpaces(maybeKey);
+        return true;
+      } catch (error) {
+        console.warn("Failed to delete file from DigitalOcean Spaces:", error);
+        return false;
+      }
+    };
+
+    const attemptLocalDelete = (localPath?: string | null) => {
+      if (!localPath) return false;
+      if (fs.existsSync(localPath)) {
+        fs.unlinkSync(localPath);
+        return true;
+      }
+      return false;
+    };
+
+    const isLikelySpacesKey = (value?: string | null) => {
+      if (!value) return false;
+      if (value.startsWith("http") || value.includes("\\")) return false;
+      return !path.isAbsolute(value);
+    };
+
+    let deletedFromSpaces = false;
+
+    if (isLikelySpacesKey(file.filePath)) {
+      deletedFromSpaces = await attemptSpacesDelete(file.filePath);
+    }
+
+    if (!deletedFromSpaces && file.fileUrl) {
+      const keyFromUrl = extractKeyFromSpacesUrl(file.fileUrl);
+      if (keyFromUrl) {
+        deletedFromSpaces = await attemptSpacesDelete(keyFromUrl);
+      } else if (file.fileUrl.startsWith("/")) {
+        attemptLocalDelete(path.join(process.cwd(), file.fileUrl.replace(/^\/+/, "")));
+      }
+    }
+
+    if (!deletedFromSpaces) {
+      const candidateLocalPath = file.filePath
+        ? path.isAbsolute(file.filePath)
+          ? file.filePath
+          : path.join(process.cwd(), file.filePath.replace(/^\/+/, ""))
+        : null;
+      attemptLocalDelete(candidateLocalPath);
     }
 
     // Delete from database
