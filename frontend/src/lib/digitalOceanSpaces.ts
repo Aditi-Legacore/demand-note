@@ -1,30 +1,63 @@
-import { DeleteObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import {
+  DeleteObjectCommand,
+  PutObjectCommand,
+  S3Client,
+  ObjectCannedACL,
+} from "@aws-sdk/client-s3";
 
-const bucket = process.env.DO_SPACES_BUCKET?.trim();
-const endpoint = process.env.DO_SPACES_ENDPOINT?.trim();
-const accessKey = process.env.DO_SPACES_ACCESS_KEY?.trim();
-const secretKey = process.env.DO_SPACES_SECRET_KEY?.trim();
-const region = process.env.DO_SPACES_REGION?.trim() || "sfo3";
+/*
+|--------------------------------------------------------------------------
+| Lazy Config Loader (Fix Next.js Build Error)
+|--------------------------------------------------------------------------
+*/
 
-if (!bucket || !endpoint || !accessKey || !secretKey) {
-  throw new Error(
-    "Missing DigitalOcean Spaces configuration. Please set DO_SPACES_BUCKET, DO_SPACES_ENDPOINT, DO_SPACES_ACCESS_KEY, and DO_SPACES_SECRET_KEY."
-  );
-}
+const getSpacesConfig = () => {
+  const bucket = process.env.DO_SPACES_BUCKET?.trim();
+  const endpoint = process.env.DO_SPACES_ENDPOINT?.trim();
+  const accessKey = process.env.DO_SPACES_ACCESS_KEY?.trim();
+  const secretKey = process.env.DO_SPACES_SECRET_KEY?.trim();
+  const region = process.env.DO_SPACES_REGION?.trim() || "sfo3";
 
-const endpointUrl = new URL(endpoint);
-const spacesHost = `${bucket}.${endpointUrl.hostname}`;
-const baseUrl = (process.env.DO_SPACES_BASE_URL?.trim() || `https://${spacesHost}`).replace(/\/+$/, "");
+  if (!bucket || !endpoint || !accessKey || !secretKey) {
+    throw new Error(
+      "Missing DigitalOcean Spaces configuration. Please set DO_SPACES_BUCKET, DO_SPACES_ENDPOINT, DO_SPACES_ACCESS_KEY, and DO_SPACES_SECRET_KEY."
+    );
+  }
 
-const s3Client = new S3Client({
-  endpoint,
-  region,
-  credentials: {
-    accessKeyId: accessKey,
-    secretAccessKey: secretKey,
-  },
-  forcePathStyle: false,
-});
+  const endpointUrl = new URL(endpoint);
+  const spacesHost = `${bucket}.${endpointUrl.hostname}`;
+
+  const baseUrl = (
+    process.env.DO_SPACES_BASE_URL?.trim() || `https://${spacesHost}`
+  ).replace(/\/+$/, "");
+
+  const s3Client = new S3Client({
+    endpoint,
+    region,
+    credentials: {
+      accessKeyId: accessKey,
+      secretAccessKey: secretKey,
+    },
+    forcePathStyle: false,
+  });
+
+  return {
+    bucket,
+    endpoint,
+    accessKey,
+    secretKey,
+    region,
+    spacesHost,
+    baseUrl,
+    s3Client,
+  };
+};
+
+/*
+|--------------------------------------------------------------------------
+| Helpers
+|--------------------------------------------------------------------------
+*/
 
 const sanitizeSegment = (value: string) =>
   value
@@ -36,7 +69,10 @@ const sanitizeSegment = (value: string) =>
 
 export const buildSpacesKey = (...segments: (string | null | undefined)[]) =>
   segments
-    .filter((segment): segment is string => typeof segment === "string" && segment.length > 0)
+    .filter(
+      (segment): segment is string =>
+        typeof segment === "string" && segment.length > 0
+    )
     .map((segment) => sanitizeSegment(segment))
     .filter(Boolean)
     .join("/");
@@ -48,18 +84,36 @@ const normalizeKey = (key: string) =>
     .filter(Boolean)
     .join("/");
 
+/*
+|--------------------------------------------------------------------------
+| Types
+|--------------------------------------------------------------------------
+*/
+
 export type SpacesUploadResult = {
   key: string;
   url: string;
 };
 
-export const getSpacesPublicUrl = (key: string | null | undefined): string | null => {
+/*
+|--------------------------------------------------------------------------
+| URL Helpers
+|--------------------------------------------------------------------------
+*/
+
+export const getSpacesPublicUrl = (
+  key: string | null | undefined
+): string | null => {
   if (!key) return null;
+
+  const { baseUrl } = getSpacesConfig();
+
   return `${baseUrl}/${encodeURI(key)}`.replace(/([^:]\/\/)\/+/g, "$1");
 };
 
 export const isSpacesUrl = (value: string) => {
   try {
+    const { spacesHost } = getSpacesConfig();
     const parsed = new URL(value);
     return parsed.hostname === spacesHost;
   } catch {
@@ -67,8 +121,11 @@ export const isSpacesUrl = (value: string) => {
   }
 };
 
-export const extractKeyFromSpacesUrl = (value: string): string | null => {
+export const extractKeyFromSpacesUrl = (
+  value: string
+): string | null => {
   if (!isSpacesUrl(value)) return null;
+
   try {
     const parsed = new URL(value);
     return parsed.pathname.replace(/^\/+/, "");
@@ -77,11 +134,11 @@ export const extractKeyFromSpacesUrl = (value: string): string | null => {
   }
 };
 
-type ObjectCannedACL =
-  | "private"
-  | "public-read"
-  | "public-read-write"
-  | "authenticated-read"
+/*
+|--------------------------------------------------------------------------
+| Upload
+|--------------------------------------------------------------------------
+*/
 
 export const uploadToSpaces = async ({
   key,
@@ -94,9 +151,12 @@ export const uploadToSpaces = async ({
   body: Buffer;
   contentType?: string;
   contentLength?: number;
-  acl?: "private" | "public-read" | string;
+  acl?: ObjectCannedACL;
 }): Promise<SpacesUploadResult> => {
+  const { s3Client, bucket } = getSpacesConfig();
+
   const normalizedKey = normalizeKey(key);
+
   if (!normalizedKey) {
     throw new Error("DigitalOcean Spaces key cannot be empty");
   }
@@ -108,20 +168,33 @@ export const uploadToSpaces = async ({
       Body: body,
       ContentType: contentType,
       ContentLength: contentLength,
-      ACL: acl as ObjectCannedACL,
+      ACL: acl,
     })
   );
 
   const url = getSpacesPublicUrl(normalizedKey);
+
   if (!url) {
     throw new Error("Failed to compose DigitalOcean Spaces URL");
   }
 
-  return { key: normalizedKey, url };
+  return {
+    key: normalizedKey,
+    url,
+  };
 };
+
+/*
+|--------------------------------------------------------------------------
+| Delete
+|--------------------------------------------------------------------------
+*/
 
 export const deleteFromSpaces = async (key?: string | null) => {
   if (!key) return;
+
+  const { s3Client, bucket } = getSpacesConfig();
+
   await s3Client.send(
     new DeleteObjectCommand({
       Bucket: bucket,
@@ -130,5 +203,11 @@ export const deleteFromSpaces = async (key?: string | null) => {
   );
 };
 
-export const spacesBaseUrl = baseUrl;
-export const spacesBucketHost = spacesHost;
+/*
+|--------------------------------------------------------------------------
+| Exposed Values
+|--------------------------------------------------------------------------
+*/
+
+export const spacesBaseUrl = () => getSpacesConfig().baseUrl;
+export const spacesBucketHost = () => getSpacesConfig().spacesHost;

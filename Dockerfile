@@ -43,6 +43,7 @@ RUN cd frontend && NODE_ENV=development npm install
 COPY frontend ./frontend
 
 # Generate Prisma client and build the Next.js app
+RUN cd frontend && NODE_ENV=production npm install
 RUN cd frontend && NODE_ENV=production npx prisma generate
 RUN cd frontend && NODE_ENV=production npm run build
 
