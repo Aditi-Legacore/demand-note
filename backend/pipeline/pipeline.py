@@ -22,6 +22,7 @@ import importlib.util
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 from datetime import datetime
+import requests
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
@@ -202,7 +203,54 @@ def fetch_pdf_from_database(demand_file_id: str) -> bytes:
     if not file_path:
         raise ValueError(f"File path not found for DemandFile {demand_file_id}")
 
+    _logger.log(f"[DEBUG] Raw file_path from DB: {file_path}", "INFO")
+
+     # ============================================================
+    # Case 1: Direct URL (DigitalOcean Spaces / S3)
+    # ============================================================
+    if str(file_path).startswith("http://") or str(file_path).startswith("https://"):
+        try:
+            _logger.log(f"[INFO] Downloading PDF from URL: {file_path}", "INFO")
+
+            response = requests.get(file_path, timeout=120)
+            response.raise_for_status()
+
+            return response.content
+
+        except Exception as e:
+            raise RuntimeError(f"Failed to download PDF from URL: {str(e)}")
+
+    # ============================================================
+    # Case 2: Convert Key → DigitalOcean Spaces URL
+    # ============================================================
+    SPACES_BASE_URL = os.getenv(
+        "DO_SPACES_BASE_URL",
+        "https://demand-note-uploads.sfo3.digitaloceanspaces.com"
+    )
+
+    if not str(file_path).startswith("http"):
+        url = f"{SPACES_BASE_URL.rstrip('/')}/{str(file_path).lstrip('/')}"
+        _logger.log(f"[INFO] Converted Spaces URL: {url}", "INFO")
+
+        try:
+            response = requests.get(url, timeout=120)
+            response.raise_for_status()
+
+            return response.content
+
+        except Exception as e:
+            _logger.log(
+                f"[WARN] Failed Spaces download, trying local path: {str(e)}",
+                "WARNING"
+            )
+
+    # ============================================================
+    # Case 3: Local File (Fallback)
+    # ============================================================
     resolved_path = _resolve_pdf_path(str(file_path))
+
+    _logger.log(f"[INFO] Using local file: {resolved_path}", "INFO")
+
     with open(resolved_path, "rb") as f:
         return f.read()
 
