@@ -4,9 +4,8 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 export default defineConfig({
-  // schema: "prisma/schema.prisma",    // path to your schema
-  schema : "postgresql",
+  schema: "prisma/schema.prisma",
   datasource: {
-    url: env("DATABASE_URL"),        // loads URL from .env
+    url: env("DATABASE_URL"),
   },
 });
